@@ -1,8 +1,9 @@
 package com.gssg.gssgbe.user.service;
 
+import com.gssg.gssgbe.common.exception.ErrorCode;
+import com.gssg.gssgbe.common.exception.custom.BusinessException;
 import com.gssg.gssgbe.user.entity.User;
 import com.gssg.gssgbe.user.repository.UserRepository;
-import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class UserLoginService {
 
   public void login(String loginId, String password) {
     User user = userRepository.findByLoginId(loginId)
-        .orElseThrow(EntityNotFoundException::new);
+        .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
     validatePassword(password, user);
   }
 
