@@ -25,3 +25,7 @@ logging:
         type:
           descriptor:
             sql: trace
+
+application:
+  encryption:
+    encryptionKey: ${ENCRYPTION_KEY:DEV____DUMMY_KEY}

@@ -30,3 +30,7 @@ logging:
         type:
           descriptor:
             sql: info
+
+application:
+  encryption:
+    encryptionKey: ${ENCRYPTION_KEY:PROD___DUMMY_KEY}

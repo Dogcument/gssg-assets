@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active:
+      on-profile: test
+
+application:
+  encryption:
+    encryptionKey: ${ENCRYPTION_KEY:TEST___DUMMY_KEY}

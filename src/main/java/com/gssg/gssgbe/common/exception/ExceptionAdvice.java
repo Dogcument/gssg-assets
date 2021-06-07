@@ -1,6 +1,7 @@
 package com.gssg.gssgbe.common.exception;
 
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
+import com.gssg.gssgbe.common.exception.custom.CustomSecurityException;
 import java.nio.file.AccessDeniedException;
 import java.util.UUID;
 import javax.security.sasl.AuthenticationException;
@@ -135,6 +136,11 @@ public class ExceptionAdvice {
 
   @ExceptionHandler(BusinessException.class)
   protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex) {
+    return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
+  }
+
+  @ExceptionHandler(CustomSecurityException.class)
+  protected ResponseEntity<ErrorResponse> handleBusinessException(CustomSecurityException ex) {
     return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
   }
 

@@ -1,7 +1,9 @@
 package com.gssg.gssgbe.user.entity;
 
+import com.gssg.gssgbe.common.convert.EncryptConverter;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -28,6 +30,7 @@ public class User {
   @Column(name = "login_id")
   private String loginId;
 
+  @Convert(converter = EncryptConverter.class)
   @Column(name = "password")
   private String password;
 

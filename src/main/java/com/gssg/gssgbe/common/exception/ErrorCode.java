@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
+  // 암호화
+  FAIL_ENCRYPT("0001", HttpStatus.CONFLICT, "암호화 실패"),
+  FAIL_DECRYPT("00002", HttpStatus.CONFLICT, "복호화 실패"),
+
   // 기타
   BAD_REQUEST("0400", HttpStatus.BAD_REQUEST, "잘못된 입력 값"),
   UNAUTHORIZED("0401", HttpStatus.UNAUTHORIZED, "인증 실패"),
