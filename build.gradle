@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'jacoco'
     id 'java'
 }
 
@@ -32,4 +33,19 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    jacocoTestReport
 }
+
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
