@@ -62,6 +62,14 @@ public class ErrorResponse {
         .build();
   }
 
+  public static ErrorResponse whtioutDetail(ErrorCode errorCode, UUID logId) {
+    return ErrorResponse.builder()
+        .code(errorCode.getCode())
+        .time(LocalDateTime.now())
+        .logId(logId)
+        .build();
+  }
+
   public static ErrorResponse of(MethodArgumentTypeMismatchException ex, UUID logId) {
     String value = (ex.getValue() == null) ? "" : ex.getValue().toString();
     List<FieldError> errors = Collections.singletonList(FieldError.of(ex.getName(), value, ex.getErrorCode()));

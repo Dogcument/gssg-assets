@@ -10,7 +10,10 @@ public enum ErrorCode {
 
   // 암호화
   FAIL_ENCRYPT("0001", HttpStatus.CONFLICT, "암호화 실패"),
-  FAIL_DECRYPT("00002", HttpStatus.CONFLICT, "복호화 실패"),
+  FAIL_DECRYPT("0002", HttpStatus.CONFLICT, "복호화 실패"),
+
+  // 인증
+  NOT_VALID_PASSWORD("1001", HttpStatus.NOT_FOUND, "일치하지 않는 암호"),
 
   // 기타
   BAD_REQUEST("0400", HttpStatus.BAD_REQUEST, "잘못된 입력 값"),

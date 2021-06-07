@@ -1,6 +1,7 @@
 package com.gssg.gssgbe.common.exception;
 
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
+import com.gssg.gssgbe.common.exception.custom.CustomAuthrizationException;
 import com.gssg.gssgbe.common.exception.custom.CustomSecurityException;
 import java.nio.file.AccessDeniedException;
 import java.util.UUID;
@@ -134,14 +135,29 @@ public class ExceptionAdvice {
     return ErrorResponse.of(ErrorCode.FORBIDDEN, createLogId(ex));
   }
 
+
+  /* custom exception */
+
+
   @ExceptionHandler(BusinessException.class)
   protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex) {
     return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
   }
 
   @ExceptionHandler(CustomSecurityException.class)
-  protected ResponseEntity<ErrorResponse> handleBusinessException(CustomSecurityException ex) {
+  protected ResponseEntity<ErrorResponse> handleCustomSecurityException(CustomSecurityException ex) {
     return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
+  }
+
+  /**
+   * 로그인 관련 에러는 세부 정보를 반환하지 않습니다.
+   *
+   * @param ex
+   * @return
+   */
+  @ExceptionHandler(CustomAuthrizationException.class)
+  protected ResponseEntity<ErrorResponse> handleCustomAuthrizationException(CustomAuthrizationException ex) {
+    return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
   }
 
   @ExceptionHandler(Exception.class)

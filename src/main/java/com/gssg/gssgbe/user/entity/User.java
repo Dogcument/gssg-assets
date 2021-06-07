@@ -51,6 +51,10 @@ public class User {
     this.deleted = false;
   }
 
+  public boolean validPassword(String password) {
+    return this.password.equals(password);
+  }
+
   public Long getId() {
     return id;
   }
