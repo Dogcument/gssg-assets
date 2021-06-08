@@ -50,6 +50,16 @@ jacocoTestReport {
         xml.enabled = true
         csv.enabled = true
     }
+
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    exclude: ['com/gssg/gssgbe/controller/**',
+                              'com/gssg/gssgbe/common/exception/**',
+                              'com/gssg/gssgbe/config/**'])
+        })
+    }
 }
 
 check.dependsOn jacocoTestReport
