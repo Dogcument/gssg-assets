@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.user.request;
+package com.gssg.gssgbe.user.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;

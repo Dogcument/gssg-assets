@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.user.response;
+package com.gssg.gssgbe.user.dto.response;
 
 import com.gssg.gssgbe.user.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;

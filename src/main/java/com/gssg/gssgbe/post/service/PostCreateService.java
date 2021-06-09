@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.post.service;
 
-import com.gssg.gssgbe.controller.post.request.PostCreateRequest;
+import com.gssg.gssgbe.post.dto.request.PostCreateRequest;
 import com.gssg.gssgbe.post.entity.Post;
 import com.gssg.gssgbe.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

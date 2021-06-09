@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.user.service;
 
-import com.gssg.gssgbe.controller.user.request.UserCreateRequest;
+import com.gssg.gssgbe.user.dto.request.UserCreateRequest;
 import com.gssg.gssgbe.user.entity.User;
 import com.gssg.gssgbe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

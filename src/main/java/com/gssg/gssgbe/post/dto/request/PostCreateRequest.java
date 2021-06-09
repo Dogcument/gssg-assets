@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.post.request;
+package com.gssg.gssgbe.post.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotEmpty;

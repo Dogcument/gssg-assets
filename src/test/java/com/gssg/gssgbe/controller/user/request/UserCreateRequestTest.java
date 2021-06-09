@@ -3,6 +3,7 @@ package com.gssg.gssgbe.controller.user.request;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.gssg.gssgbe.data.TestData;
+import com.gssg.gssgbe.user.dto.request.UserCreateRequest;
 import com.gssg.gssgbe.user.entity.User;
 import java.util.Set;
 import java.util.stream.Stream;

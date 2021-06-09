@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.user.service;
 
-import com.gssg.gssgbe.controller.user.request.UserCreateRequest;
+import com.gssg.gssgbe.user.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

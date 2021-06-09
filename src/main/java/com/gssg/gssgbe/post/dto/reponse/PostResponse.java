@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.post.response;
+package com.gssg.gssgbe.post.dto.reponse;
 
 import com.gssg.gssgbe.post.entity.Post;
 import io.swagger.v3.oas.annotations.media.Schema;

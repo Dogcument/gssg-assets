@@ -1,7 +1,7 @@
 package com.gssg.gssgbe.controller.user;
 
-import com.gssg.gssgbe.controller.user.request.UserCreateRequest;
-import com.gssg.gssgbe.controller.user.request.UserLoginRequest;
+import com.gssg.gssgbe.user.dto.request.UserCreateRequest;
+import com.gssg.gssgbe.user.dto.request.UserLoginRequest;
 import com.gssg.gssgbe.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import javax.validation.Valid;

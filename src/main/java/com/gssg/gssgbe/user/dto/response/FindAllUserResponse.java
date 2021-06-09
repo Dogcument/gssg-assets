@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.user.response;
+package com.gssg.gssgbe.user.dto.response;
 
 import java.util.Collections;
 import java.util.List;

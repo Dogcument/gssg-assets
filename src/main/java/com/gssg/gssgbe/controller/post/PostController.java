@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.controller.post;
 
-import com.gssg.gssgbe.controller.post.request.PostCreateRequest;
+import com.gssg.gssgbe.post.dto.request.PostCreateRequest;
 import com.gssg.gssgbe.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import javax.validation.Valid;
