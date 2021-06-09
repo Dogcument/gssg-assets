@@ -4,6 +4,7 @@ import com.gssg.gssgbe.post.dto.reponse.FindAllPostResponse;
 import com.gssg.gssgbe.post.dto.reponse.PostResponse;
 import com.gssg.gssgbe.post.service.PostFindService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "글")
 @RequiredArgsConstructor
 @RestController
 public class PostFindController {

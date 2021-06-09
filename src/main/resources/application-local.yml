@@ -17,6 +17,11 @@ spring:
     console:
       enabled: true
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  pathsToMatch: /api/**
+
 application:
   encryption:
     encryptionKey: ${ENCRYPTION_KEY:DEV____DUMMY_KEY}

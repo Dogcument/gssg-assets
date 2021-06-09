@@ -4,6 +4,7 @@ import com.gssg.gssgbe.user.dto.request.UserCreateRequest;
 import com.gssg.gssgbe.user.dto.request.UserLoginRequest;
 import com.gssg.gssgbe.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "회원")
 @RequiredArgsConstructor
 @RestController
 public class UserController {
