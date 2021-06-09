@@ -1,5 +1,6 @@
 package com.gssg.gssgbe.user.service;
 
+import com.gssg.gssgbe.controller.user.request.UserCreateRequest;
 import com.gssg.gssgbe.user.entity.User;
 import com.gssg.gssgbe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,8 @@ public class UserCreateService {
 
   private final UserRepository userRepository;
 
-  public long create(String loginId, String password) throws RuntimeException {
-    User user = new User(loginId, password);
+  public long create(UserCreateRequest request) {
+    User user = new User(request.getLoginId(), request.getPassword(), request.getNickName());
 
     return userRepository.save(user).getId();
   }

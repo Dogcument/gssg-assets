@@ -34,6 +34,9 @@ public class User {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "nick_name")
+  private String nickName;
+
   @CreatedDate
   @Column(name = "created_at")
   private LocalDateTime createdAt;
@@ -45,9 +48,10 @@ public class User {
   @Column(name = "deleted")
   private Boolean deleted;
 
-  public User(String loginId, String password) {
+  public User(String loginId, String password, String nickName) {
     this.loginId = loginId;
     this.password = password;
+    this.nickName = nickName;
     this.deleted = false;
   }
 
@@ -65,6 +69,10 @@ public class User {
 
   public String getPassword() {
     return password;
+  }
+
+  public String getNickName() {
+    return nickName;
   }
 
   public LocalDateTime getCreatedAt() {

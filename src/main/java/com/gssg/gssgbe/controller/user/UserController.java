@@ -22,7 +22,7 @@ public class UserController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/api/v1/users")
   public Long create(@RequestBody @Valid UserCreateRequest request) {
-    return userService.create(request.getLoginId(), request.getPassword());
+    return userService.create(request);
   }
 
   @Operation(summary = "로그인")

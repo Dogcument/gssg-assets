@@ -1,5 +1,6 @@
 package com.gssg.gssgbe.user.service;
 
+import com.gssg.gssgbe.controller.user.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +13,8 @@ public class UserService {
   private final UserCreateService userCreateService;
   private final UserLoginService userLoginService;
 
-  public long create(String loginId, String password) {
-    return userCreateService.create(loginId, password);
+  public long create(UserCreateRequest request) {
+    return userCreateService.create(request);
   }
 
   public void login(String loginId, String password) {
