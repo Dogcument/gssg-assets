@@ -7,17 +7,21 @@ import static org.mockito.BDDMockito.given;
 
 import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
+import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.user.entity.User;
 import com.gssg.gssgbe.user.repository.UserRepository;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @DisplayName("[service] 회원 로그인")
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class UserLoginServiceTest {
 
   @Autowired
@@ -26,11 +30,15 @@ class UserLoginServiceTest {
   @MockBean
   private UserRepository userRepository;
 
+  public static Stream<User> VALID_USER() {
+    return TestData.VALID_USER();
+  }
+
   @DisplayName("[성공]")
-  @Test
-  public void success_login() {
+  @ParameterizedTest
+  @MethodSource("VALID_USER")
+  public void success_login(User user) {
     // given
-    User user = new User("test@gmail.com", "1234");
     given(userRepository.findByLoginId(any()))
         .willReturn(Optional.of(user));
 
@@ -41,11 +49,15 @@ class UserLoginServiceTest {
 
   }
 
+  public static Stream<User> NOT_VALID_USER() {
+    return TestData.NOT_VALID_USER();
+  }
+
   @DisplayName("[실패] 존재하지 않는 회원")
-  @Test
-  public void fail_login_notExist() {
+  @ParameterizedTest
+  @MethodSource("NOT_VALID_USER")
+  public void fail_login_notExist(User user) {
     // given
-    User user = new User("test@gmail.com", "1234");
     given(userRepository.findByLoginId(any()))
         .willReturn(Optional.empty());
 

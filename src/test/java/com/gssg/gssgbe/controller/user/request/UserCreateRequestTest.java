@@ -25,15 +25,15 @@ class UserCreateRequestTest {
     validator = factory.getValidator();
   }
 
-  public static Stream<User> validUser() {
+  public static Stream<User> VALID_USER() {
     return TestData.VALID_USER();
   }
 
   @ParameterizedTest
-  @MethodSource("validUser")
+  @MethodSource("VALID_USER")
   public void success(User user) {
     // given
-    UserCreateRequest userCreateRequest = new UserCreateRequest(user.getLoginId(), user.getPassword());
+    UserCreateRequest userCreateRequest = new UserCreateRequest(user.getLoginId(), user.getPassword(), user.getNickName());
 
     // when
     Set<ConstraintViolation<UserCreateRequest>> violations = validator.validate(userCreateRequest);
@@ -42,15 +42,15 @@ class UserCreateRequestTest {
     assertThat(violations).isEmpty();
   }
 
-  public static Stream<User> notValidUser() {
+  public static Stream<User> NOT_VALID_USER() {
     return TestData.NOT_VALID_USER();
   }
 
   @ParameterizedTest
-  @MethodSource("notValidUser")
-  public void failed_(User user) {
+  @MethodSource("NOT_VALID_USER")
+  public void fail(User user) {
     // given
-    UserCreateRequest userCreateRequest = new UserCreateRequest(user.getLoginId(), user.getPassword());
+    UserCreateRequest userCreateRequest = new UserCreateRequest(user.getLoginId(), user.getPassword(), user.getNickName());
 
     // when
     Set<ConstraintViolation<UserCreateRequest>> violations = validator.validate(userCreateRequest);
