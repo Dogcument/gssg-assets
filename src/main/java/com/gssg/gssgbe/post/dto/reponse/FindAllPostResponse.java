@@ -1,17 +1,16 @@
 package com.gssg.gssgbe.post.dto.reponse;
 
-import java.util.Collections;
-import java.util.List;
+import org.springframework.data.domain.Slice;
 
 public class FindAllPostResponse {
 
-  private final List<PostResponse> postResponses;
+  private final Slice<PostResponse> postResponses;
 
-  public FindAllPostResponse(List<PostResponse> postResponses) {
+  public FindAllPostResponse(Slice<PostResponse> postResponses) {
     this.postResponses = postResponses;
   }
 
-  public List<PostResponse> getpostResponses() {
-    return Collections.unmodifiableList(postResponses);
+  public Slice<PostResponse> getpostResponses() {
+    return postResponses;
   }
 }
