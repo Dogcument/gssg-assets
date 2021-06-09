@@ -1,14 +1,13 @@
 spring:
   profiles:
     active:
-      on-profile: dev
+      on-profile: local
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: create
     properties:
-      hibernate:
-        format_sql: true
+      default_batch_fetch_size: 1000
+    open-in-view: false
   datasource:
     url: ${JDBC_URL:jdbc:h2:mem:testdb}
     driverClassName: org.h2.Driver
@@ -17,14 +16,6 @@ spring:
   h2:
     console:
       enabled: true
-
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
 
 application:
   encryption:

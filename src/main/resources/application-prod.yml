@@ -3,14 +3,12 @@ spring:
     active:
       on-profile: prod
   jpa:
-    show-sql: true
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: validate
     properties:
-      hibernate:
-        format_sql: true
         default_batch_fetch_size: 1000
+    open-in-view: false
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,14 +20,6 @@ spring:
       connection-test-query: SELECT 1
       data-source-properties:
         zeroDateTimeBehavior: convertToNull
-
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: info
 
 application:
   encryption:
