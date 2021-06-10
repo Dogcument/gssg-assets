@@ -1,7 +1,7 @@
 package com.gssg.gssgbe.user.entity;
 
 import com.gssg.gssgbe.common.convert.EncryptConverter;
-import java.time.LocalDateTime;
+import com.gssg.gssgbe.common.entity.BaseDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -12,15 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "user")
 @Entity
-public class User {
+public class User extends BaseDateTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,14 +34,6 @@ public class User {
 
   @Column(name = "nick_name")
   private String nickName;
-
-  @CreatedDate
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
-
-  @LastModifiedDate
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
 
   @Column(name = "deleted")
   private Boolean deleted;
@@ -73,13 +63,5 @@ public class User {
 
   public String getNickName() {
     return nickName;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
   }
 }
