@@ -3,26 +3,40 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'jacoco'
     id 'java'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.gssg'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-ext {
-    set("swaggerVerion", "3.0.0")
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
+ext {
+    set("p6spyVersion", "1.7.1")
+    set("openapiVersion", "1.5.9")
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation "io.springfox:springfox-boot-starter:${swaggerVerion}"
+
+    implementation "org.springdoc:springdoc-openapi-ui:${openapiVersion}"
+
+    implementation "commons-codec:commons-codec"
+    implementation 'org.apache.commons:commons-lang3'
+
+    implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:${p6spyVersion}"
+    implementation "com.querydsl:querydsl-jpa"
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
@@ -30,6 +44,26 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
 
 test {
     useJUnitPlatform()
@@ -45,6 +79,16 @@ jacocoTestReport {
         html.enabled = true
         xml.enabled = true
         csv.enabled = true
+    }
+
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    exclude: ['com/gssg/gssgbe/controller/**',
+                              'com/gssg/gssgbe/common/exception/**',
+                              'com/gssg/gssgbe/config/**'])
+        })
     }
 }
 

@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active:
+      on-profile: prod
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      default_batch_fetch_size: 1000
+    open-in-view: false
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: ${JDBC_URL:jdbc:mysql://localhost:3306/gssg}
+      username: ${JDBC_USERNAME:root}
+      password: ${JDBC_PASSWORD:root}
+      maximum-pool-size: 10
+      minimum-idle: 3
+      connection-test-query: SELECT 1
+      data-source-properties:
+        zeroDateTimeBehavior: convertToNull
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  pathsToMatch: /api/**
+
+application:
+  encryption:
+    encryptionKey: ${ENCRYPTION_KEY:PROD___DUMMY_KEY}

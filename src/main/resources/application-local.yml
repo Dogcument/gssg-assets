@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active:
+      on-profile: local
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      default_batch_fetch_size: 1000
+    open-in-view: false
+  datasource:
+    url: ${JDBC_URL:jdbc:h2:mem:testdb}
+    driverClassName: org.h2.Driver
+    username: ${JDBC_USERNAME:sa}
+    password: ${JDBC_PASSWORD:}
+  h2:
+    console:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  pathsToMatch: /api/**
+
+application:
+  encryption:
+    encryptionKey: ${ENCRYPTION_KEY:DEV____DUMMY_KEY}
