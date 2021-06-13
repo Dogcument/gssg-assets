@@ -1,27 +1,27 @@
 package com.gssg.gssgbe.data;
 
-import com.gssg.gssgbe.user.entity.User;
+import com.gssg.gssgbe.domain.member.entity.Member;
 import java.util.stream.Stream;
 
 public class TestData {
 
-  public static Stream<User> VALID_USER() {
+  public static Stream<Member> VALID_MEMBER() {
     return Stream.of(
-        new User("choi@gmail.com", "1q2w3e4r*", "dan")
+        new Member("choi@gmail.com", "1q2w3e4r*", "dan")
     );
   }
 
-  public static Stream<User> NOT_VALID_USER() {
+  public static Stream<Member> NOT_VALID_MEMBER() {
     String maxEmailId = "choichoichoichoichoichoichoichoichoichoichoichoichoichoichoichoi";
     String maxMailServerName = "gmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmail"
         + "gmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmail.com";
 
     return Stream.of(
-        new User("choigmail.com", "1q2w3e4r*", "dan"),
-        new User(maxEmailId + "@" + maxMailServerName, "1q2w3e4r*", "dan"),
-        new User("choi@gmail.com", "1111", "dan"),
-        new User("choi@gmail.com", "1q2w3e4r", "dan"),
-        new User("choi@gmail.com", "1q2w*", "dan")
+        new Member("choigmail.com", "1q2w3e4r*", "dan"),
+        new Member(maxEmailId + "@" + maxMailServerName, "1q2w3e4r*", "dan"),
+        new Member("choi@gmail.com", "1111", "dan"),
+        new Member("choi@gmail.com", "1q2w3e4r", "dan"),
+        new Member("choi@gmail.com", "1q2w*", "dan")
     );
   }
 }

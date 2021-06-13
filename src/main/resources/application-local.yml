@@ -24,4 +24,4 @@ springdoc:
 
 application:
   encryption:
-    encryptionKey: ${ENCRYPTION_KEY:DEV____DUMMY_KEY}
+    encryptionKey: ${ENCRYPTION_KEY:LOCAL__DUMMY_KEY}
