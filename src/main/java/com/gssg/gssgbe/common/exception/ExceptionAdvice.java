@@ -5,6 +5,7 @@ import com.gssg.gssgbe.common.exception.custom.CustomAuthrizationException;
 import com.gssg.gssgbe.common.exception.custom.CustomSecurityException;
 import java.nio.file.AccessDeniedException;
 import java.util.UUID;
+import javax.persistence.EntityNotFoundException;
 import javax.security.sasl.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -133,6 +134,12 @@ public class ExceptionAdvice {
   @ResponseStatus(HttpStatus.FORBIDDEN)
   protected ErrorResponse handleAccessDeniedException(AccessDeniedException ex) {
     return ErrorResponse.of(ErrorCode.FORBIDDEN, createLogId(ex));
+  }
+
+  @ExceptionHandler(EntityNotFoundException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  protected ErrorResponse handleEntityNotFoundException(EntityNotFoundException ex) {
+    return ErrorResponse.of(ErrorCode.NOT_FOUND, createLogId(ex));
   }
 
 

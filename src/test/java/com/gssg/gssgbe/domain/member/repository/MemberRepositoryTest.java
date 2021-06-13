@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @DisplayName("[repo] 회원")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -24,6 +25,9 @@ class MemberRepositoryTest {
   @Autowired
   private MemberRepository memberRepository;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   public static Stream<Member> VALID_MEMBER() {
     return TestData.VALID_MEMBER();
   }
@@ -31,18 +35,18 @@ class MemberRepositoryTest {
   @DisplayName("[성공] 생성")
   @ParameterizedTest
   @MethodSource("VALID_MEMBER")
-  public void success_create(Member newMember) {
+  public void success_create(Member member) {
     // given
 
     // when
-    memberRepository.save(newMember);
+    memberRepository.save(member);
 
     // then
     em.clear();
 
-    Member createdMember = memberRepository.findByEmail(newMember.getEmail()).get();
+    Member createdMember = memberRepository.findByEmail(member.getEmail()).get();
     assertThat(createdMember.getId()).isNotNull();
-    assertThat(createdMember.getPassword()).isEqualTo(newMember.getPassword());
+    assertThat(passwordEncoder.matches(member.getPassword(), createdMember.getPassword())).isTrue();
     assertThat(createdMember.getCreatedAt()).isNotNull();
   }
 }

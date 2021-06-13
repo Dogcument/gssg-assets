@@ -13,7 +13,7 @@ public enum ErrorCode {
   FAIL_DECRYPT("E0002", HttpStatus.CONFLICT, "복호화 실패"),
 
   // 인증
-  NOT_VALID_PASSWORD("E1001", HttpStatus.NOT_FOUND, "일치하지 않는 암호"),
+  NOT_VALID_PASSWORD("E1001", HttpStatus.UNAUTHORIZED, "일치하지 않는 암호"),
 
   // 기타
   BAD_REQUEST("E0400", HttpStatus.BAD_REQUEST, "잘못된 입력 값"),
