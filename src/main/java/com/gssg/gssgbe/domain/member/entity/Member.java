@@ -25,17 +25,17 @@ public class Member extends BaseDateTime {
   @Column(name = "member_user_id")
   private Long id;
 
-  @Column(name = "email")
+  @Column(name = "email", nullable = false, unique = true)
   private String email;
 
   @Convert(converter = EncryptConverter.class)
-  @Column(name = "password")
+  @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(name = "nick_name")
+  @Column(name = "nick_name", nullable = false, unique = true)
   private String nickName;
 
-  @Column(name = "deleted")
+  @Column(name = "deleted", nullable = false)
   private Boolean deleted;
 
   public Member(String email, String password, String nickName) {

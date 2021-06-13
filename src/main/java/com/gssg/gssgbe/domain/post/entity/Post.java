@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -22,36 +23,29 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 public class Post extends BaseDateTime {
 
+  @Getter
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "post_id")
   private Long id;
 
+  @Getter
   @ManyToOne(fetch = FetchType.LAZY)
+  // TODO 권한 관리 후 추가
+//  @JoinColumn(name = "member_user_id", nullable = false)
   @JoinColumn(name = "member_user_id")
   private Member writer;
 
-  @Column(name = "content")
+  @Getter
+  @Column(name = "content", nullable = false)
   private String content;
 
-  @Column(name = "deleted")
+  @Column(name = "deleted", nullable = false)
   private Boolean deleted;
 
   public Post(Member writer, String content) {
     this.writer = writer;
     this.content = content;
     this.deleted = false;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public Member getWriter() {
-    return writer;
-  }
-
-  public String getContent() {
-    return content;
   }
 }
