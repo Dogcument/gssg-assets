@@ -6,5 +6,5 @@ spring:
     open-in-view: false
 
 application:
-  encryption:
-    encryptionKey: ${ENCRYPTION_KEY:TEST___DUMMY_KEY}
+  jwt:
+    secreat: ${SECREAT_KEY:60639B161829DDBA56A52488D71BAC964C7842C9512B4343D5B1F146B8570E9C}
