@@ -1,5 +1,8 @@
 package com.gssg.gssgbe.common.token;
 
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_VALID_TOKEN;
+
+import com.gssg.gssgbe.common.exception.custom.CustomAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,6 +14,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,5 +69,11 @@ public class JwtAuthToken implements AuthToken<Claims> {
     }
 
     return null;
+  }
+
+  public String getEmail() {
+    return Optional.ofNullable(getClaims())
+        .orElseThrow(() -> new CustomAuthenticationException(NOT_VALID_TOKEN))
+        .get("email").toString();
   }
 }
