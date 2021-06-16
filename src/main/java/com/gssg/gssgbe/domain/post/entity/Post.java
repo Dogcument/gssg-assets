@@ -31,9 +31,7 @@ public class Post extends BaseDateTime {
 
   @Getter
   @ManyToOne(fetch = FetchType.LAZY)
-  // TODO 권한 관리 후 추가
-//  @JoinColumn(name = "member_user_id", nullable = false)
-  @JoinColumn(name = "member_user_id")
+  @JoinColumn(name = "member_user_id", nullable = false)
   private Member writer;
 
   @Getter

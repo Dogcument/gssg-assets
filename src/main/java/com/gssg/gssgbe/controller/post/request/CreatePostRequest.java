@@ -1,5 +1,7 @@
-package com.gssg.gssgbe.domain.post.dto.request;
+package com.gssg.gssgbe.controller.post.request;
 
+import com.gssg.gssgbe.domain.member.entity.Member;
+import com.gssg.gssgbe.domain.post.dto.request.CreatePostRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
@@ -17,4 +19,8 @@ public class CreatePostRequest {
   @Length(max = 255)
   @NotEmpty
   private String content;
+
+  public CreatePostRequestDto toDto(Member member){
+    return new CreatePostRequestDto(member, content);
+  }
 }

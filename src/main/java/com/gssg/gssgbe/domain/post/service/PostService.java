@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.domain.post.service;
 
-import com.gssg.gssgbe.domain.post.dto.request.CreatePostRequest;
+import com.gssg.gssgbe.domain.post.dto.request.CreatePostRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ public class PostService {
 
   private final CreatePostService createPostService;
 
-  public long create(CreatePostRequest request) {
+  public long create(CreatePostRequestDto request) {
     return createPostService.create(request);
   }
 }
