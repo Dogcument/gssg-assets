@@ -10,6 +10,7 @@ import com.gssg.gssgbe.domain.member.dto.request.LoginMemberRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,6 +32,11 @@ class LoginControllerTest {
   @Autowired
   private MemberRepository memberRepository;
 
+  @AfterEach
+  public void afterEach() {
+    memberRepository.deleteAll();
+  }
+
   public static Stream<Member> VALID_MEMBER() {
     return TestData.VALID_MEMBER();
   }
@@ -40,7 +46,10 @@ class LoginControllerTest {
   @MethodSource("VALID_MEMBER")
   public void success(Member member) throws Exception {
     // given
-    memberRepository.save(member);
+    memberRepository.save(new Member(
+        member.getEmail(),
+        member.getPassword(),
+        member.getNickName()));
 
     LoginMemberRequest request = new LoginMemberRequest(member.getEmail(), member.getPassword());
 
@@ -60,7 +69,10 @@ class LoginControllerTest {
   @MethodSource("VALID_MEMBER")
   public void success_wrongPassword(Member member) throws Exception {
     // given
-    memberRepository.save(member);
+    memberRepository.save(new Member(
+        member.getEmail(),
+        member.getPassword(),
+        member.getNickName()));
 
     LoginMemberRequest request = new LoginMemberRequest(member.getEmail(), member.getPassword() + "1");
 
