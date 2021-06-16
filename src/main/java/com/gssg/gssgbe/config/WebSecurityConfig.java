@@ -1,5 +1,9 @@
 package com.gssg.gssgbe.config;
 
+import com.gssg.gssgbe.common.token.JwtAuthTokenProvider;
+import com.gssg.gssgbe.config.security.JWTConfigurer;
+import com.gssg.gssgbe.config.security.JwtAccessDeniedHandler;
+import com.gssg.gssgbe.config.security.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +16,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private final JwtAuthTokenProvider jwtAuthTokenProvider;
+  private final JwtAuthenticationEntryPoint authenticationErrorHandler;
+  private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
@@ -19,6 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 인증 또는 인가에 실패한 경우 Exception 처리
         .exceptionHandling()
+        .authenticationEntryPoint(authenticationErrorHandler)
+        .accessDeniedHandler(jwtAccessDeniedHandler)
 
         .and()
         .headers()
@@ -30,17 +40,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-        // 인증 여부와 관계 없이 모두 접근 가능한 API
         .and()
         .authorizeRequests()
-        .antMatchers("/api/v1/members/**").permitAll()
-        .antMatchers("/api/v1/login").permitAll()
+        .anyRequest().permitAll()
 
-        // 권한자만 접근 가능한 API
-        .anyRequest().authenticated()
-
-        .and();
-//        .apply(securityConfigurerAdapter());
+        .and()
+        .apply(securityConfigurerAdapter());
   }
 
   @Override
@@ -48,5 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     web.ignoring()
         .antMatchers(HttpMethod.OPTIONS, "/**")
         .antMatchers("/", "/h2-console/**");
+  }
+
+  private JWTConfigurer securityConfigurerAdapter() {
+    return new JWTConfigurer(jwtAuthTokenProvider);
   }
 }

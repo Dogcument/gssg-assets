@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.common.security;
+package com.gssg.gssgbe.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
