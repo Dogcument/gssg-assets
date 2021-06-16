@@ -11,13 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
   private final CreateMemberService createMemberService;
-  private final LoginMemberService loginMemberService;
 
   public long create(CreateMemberRequest request) {
     return createMemberService.create(request);
-  }
-
-  public void login(String loginId, String password) {
-    loginMemberService.login(loginId, password);
   }
 }
