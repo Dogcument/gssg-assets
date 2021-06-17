@@ -3,7 +3,6 @@ package com.gssg.gssgbe.controller.member.request;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.gssg.gssgbe.data.TestData;
-import com.gssg.gssgbe.domain.member.dto.request.CreateMemberRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import java.util.Set;
 import java.util.stream.Stream;

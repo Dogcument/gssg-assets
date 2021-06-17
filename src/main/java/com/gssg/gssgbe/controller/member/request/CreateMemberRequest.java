@@ -1,5 +1,6 @@
-package com.gssg.gssgbe.domain.member.dto.request;
+package com.gssg.gssgbe.controller.member.request;
 
+import com.gssg.gssgbe.domain.member.dto.request.CreateMemberRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -15,11 +16,11 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateMemberRequest {
 
-  @Schema(description = "로그인 ID")
+  @Schema(description = "이메일 (로그인 ID)")
   @Length(max = 255)
   @Email
   @NotEmpty
-  private String loginId;
+  private String email;
 
   @Schema(description = "비밀번호")
   @Pattern(regexp = "^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,}$",
@@ -30,5 +31,9 @@ public class CreateMemberRequest {
   @Schema(description = "공개되는 이름")
   @NotEmpty
   private String nickName;
+
+  public CreateMemberRequestDto toDto() {
+    return new CreateMemberRequestDto(email, password, nickName);
+  }
 }
 
