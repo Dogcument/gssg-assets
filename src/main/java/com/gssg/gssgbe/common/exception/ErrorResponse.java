@@ -1,5 +1,6 @@
 package com.gssg.gssgbe.common.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @Getter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorResponse {
 

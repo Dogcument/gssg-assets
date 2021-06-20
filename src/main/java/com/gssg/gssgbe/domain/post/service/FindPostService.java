@@ -1,0 +1,22 @@
+package com.gssg.gssgbe.domain.post.service;
+
+import com.gssg.gssgbe.domain.post.dto.reponse.PostResponse;
+import com.gssg.gssgbe.domain.post.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class FindPostService {
+
+  private final PostRepository postRepository;
+
+  public Slice<PostResponse> findAll(Pageable pageable) {
+    return postRepository.findAllSlice(pageable)
+        .map(PostResponse::new);
+  }
+}

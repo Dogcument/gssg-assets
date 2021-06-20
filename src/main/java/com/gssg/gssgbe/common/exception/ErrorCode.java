@@ -13,7 +13,14 @@ public enum ErrorCode {
   FAIL_DECRYPT("E0002", HttpStatus.CONFLICT, "복호화 실패"),
 
   // 인증
-  NOT_VALID_PASSWORD("E1001", HttpStatus.NOT_FOUND, "일치하지 않는 암호"),
+  NOT_EXIST_MEMBER("E1001", HttpStatus.UNAUTHORIZED, "존재하지 않는 회원"),
+  NOT_VALID_PASSWORD("E1002", HttpStatus.UNAUTHORIZED, "일치하지 않는 암호"),
+  NOT_EXIST_AUTHORIZATION("E1003", HttpStatus.UNAUTHORIZED, "권한이 존재하지 않는 회원"),
+  FAILED_GENERATE_TOKEN("E1010", HttpStatus.UNAUTHORIZED, "토큰 생성 실패"),
+  NOT_VALID_TOKEN("E1011", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰"),
+
+  // 회원
+  EXISTS_EMAIL("E2001", HttpStatus.CONFLICT, "이미 존재하는 이메일"),
 
   // 기타
   BAD_REQUEST("E0400", HttpStatus.BAD_REQUEST, "잘못된 입력 값"),
