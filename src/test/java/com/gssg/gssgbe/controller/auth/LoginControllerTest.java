@@ -12,6 +12,7 @@ import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ class LoginControllerTest {
   @DisplayName("[실패]")
   @ParameterizedTest
   @MethodSource("VALID_MEMBER")
-  public void success_wrongPassword(Member member) throws Exception {
+  public void wrongPassword(Member member) throws Exception {
     // given
     memberRepository.save(new Member(
         member.getEmail(),
@@ -82,6 +83,20 @@ class LoginControllerTest {
         .content(new ObjectMapper().writeValueAsString(request)))
         .andDo(print())
         .andExpect(status().isUnauthorized());
+
+    // then
+
+  }
+
+  @DisplayName("[실패] request body 없이 요청")
+  @Test
+  public void missingRequestBody() throws Exception {
+    // given
+
+    // when
+    mockMvc.perform(post("/api/v1/login"))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
 
     // then
 

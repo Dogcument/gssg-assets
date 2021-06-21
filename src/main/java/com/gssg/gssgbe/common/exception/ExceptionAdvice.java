@@ -12,6 +12,7 @@ import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -104,6 +105,12 @@ public class ExceptionAdvice {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
     return ErrorResponse.of(ex, createLogId(ex));
+  }
+
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  protected ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    return ErrorResponse.of(ErrorCode.MISSING_REQUEST_BODY, createLogId(ex));
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

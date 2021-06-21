@@ -8,3 +8,9 @@ spring:
 application:
   jwt:
     secreat: ${SECREAT_KEY:60639B161829DDBA56A52488D71BAC964C7842C9512B4343D5B1F146B8570E9C}
+
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true

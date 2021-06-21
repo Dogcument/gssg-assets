@@ -24,6 +24,7 @@ public enum ErrorCode {
 
   // 기타
   BAD_REQUEST("E0400", HttpStatus.BAD_REQUEST, "잘못된 입력 값"),
+  MISSING_REQUEST_BODY("E0400", HttpStatus.BAD_REQUEST, "Request Body 없음"),
   UNAUTHORIZED("E0401", HttpStatus.UNAUTHORIZED, "인증 실패"),
   FORBIDDEN("E0403", HttpStatus.FORBIDDEN, "권한 없음"),
   NOT_FOUND("E0404", HttpStatus.NOT_FOUND, "찾을 수 없음"),
