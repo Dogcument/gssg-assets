@@ -42,7 +42,7 @@ public class JWTFilter extends GenericFilterBean {
     JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(authToken);
 
     if (jwtAuthToken.validate()) {
-      Authentication authentication = jwtAuthTokenProvider.getAuthentication(jwtAuthToken);
+      Authentication authentication = jwtAuthToken.getAuthentication();
       SecurityContextHolder.getContext().setAuthentication(authentication);
     }
   }

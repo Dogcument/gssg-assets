@@ -43,7 +43,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     return Optional.ofNullable(request.getHeader(AUTHORIZATION_HEADER))
         .map(authorization -> authorization.split("bearer")[1])
         .map(jwtAuthTokenProvider::convertAuthToken)
-        .map(JwtAuthToken::getEmail)
+        .map(JwtAuthToken::getSubject)
         .map(email -> memberRepository.findByEmail(email)
             .orElseThrow(() -> new CustomAuthrizationException(ErrorCode.NOT_EXIST_MEMBER)))
         .orElseThrow(() -> new CustomAuthrizationException(ErrorCode.FORBIDDEN));
