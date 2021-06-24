@@ -9,7 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gssg.gssgbe.common.token.JwtAuthToken;
+import com.gssg.gssgbe.common.token.JwtAuthTokenProvider;
+import com.gssg.gssgbe.common.token.RefreshToken;
+import com.gssg.gssgbe.common.token.RefreshTokenProvider;
+import com.gssg.gssgbe.controller.auth.request.RefreshRequest;
 import com.gssg.gssgbe.controller.auth.response.LoginResponse;
+import com.gssg.gssgbe.controller.auth.response.RefreshResponse;
 import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.dto.request.LoginMemberRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
@@ -38,6 +43,14 @@ class LoginControllerTest {
   @Autowired
   private MemberRepository memberRepository;
 
+  @Autowired
+  private JwtAuthTokenProvider jwtAuthTokenProvider;
+
+  @Autowired
+  private RefreshTokenProvider refreshTokenProvider;
+
+  private RefreshToken refreshToken;
+
   @DisplayName("로그인")
   @TestFactory
   Stream<DynamicNode> login() {
@@ -49,7 +62,7 @@ class LoginControllerTest {
                 member.getPassword(),
                 member.getNickName()))),
 
-        dynamicTest("[성공]", () -> {
+        dynamicTest("[성공] 로그인", () -> {
           // given
           LoginMemberRequest request = new LoginMemberRequest(member.getEmail(), member.getPassword());
 
@@ -63,7 +76,27 @@ class LoginControllerTest {
 
           // then
           LoginResponse response = TestUtil.mvcResultToObject(mvcResult, LoginResponse.class);
-          JwtAuthToken jwtAuthToken = TestUtil.jwtAuthTokenProvider.convertAuthToken(response.getToken());
+          JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
+          assertThat(jwtAuthToken.getSubject()).isNotBlank();
+          refreshToken = refreshTokenProvider.convertAuthToken(response.getRefreshToken());
+          assertThat(refreshToken.getSubject()).isNotBlank();
+        }),
+
+        dynamicTest("[성공] JWT 재발급", () -> {
+          // given
+          RefreshRequest request = new RefreshRequest(refreshToken.getToken());
+
+          // when
+          MvcResult mvcResult = mockMvc.perform(post("/api/v1/login/refresh")
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(new ObjectMapper().writeValueAsString(request)))
+              .andDo(print())
+              .andExpect(status().isOk())
+              .andReturn();
+
+          // then
+          RefreshResponse response = TestUtil.mvcResultToObject(mvcResult, RefreshResponse.class);
+          JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
           assertThat(jwtAuthToken.getSubject()).isNotBlank();
         }),
 

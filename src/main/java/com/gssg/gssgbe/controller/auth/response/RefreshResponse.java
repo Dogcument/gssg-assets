@@ -1,19 +1,16 @@
 package com.gssg.gssgbe.controller.auth.response;
 
 import com.gssg.gssgbe.common.token.JwtAuthToken;
-import com.gssg.gssgbe.common.token.RefreshToken;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LoginResponse {
+public class RefreshResponse {
 
   private String jwt;
-  private String refreshToken;
 
-  public LoginResponse(JwtAuthToken jwtAuthToken, RefreshToken refreshToken) {
+  public RefreshResponse(JwtAuthToken jwtAuthToken) {
     this.jwt = jwtAuthToken.getToken();
-    this.refreshToken = refreshToken.getToken();
   }
 }
