@@ -3,8 +3,10 @@ package com.gssg.gssgbe.domain.member.entity;
 import com.gssg.gssgbe.common.converter.PasswordEncryptConverter;
 import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.common.token.Role;
+import com.gssg.gssgbe.common.type.ProfileDogType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,13 +37,21 @@ public class Member extends BaseDateTime {
   @Column(name = "nickname", nullable = false, unique = true)
   private String nickName;
 
+  @Embedded
+  private MemberProfileDog profileDog;
+
   @Column(name = "role", nullable = false)
   private String role;
 
-  public Member(String email, String password, String nickName) {
+  public Member(String email, String password, String nickName, ProfileDogType profileDog) {
     this.email = email;
     this.password = password;
     this.nickName = nickName;
+    this.profileDog = new MemberProfileDog(profileDog);
     this.role = Role.MEMBER.getCode();
+  }
+
+  public ProfileDogType getProfileDog() {
+    return profileDog.getProfileDog();
   }
 }

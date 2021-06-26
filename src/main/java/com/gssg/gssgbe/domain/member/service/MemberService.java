@@ -12,7 +12,7 @@ public class MemberService {
 
   private final CreateMemberService createMemberService;
 
-  public long create(CreateMemberDto request) {
-    return createMemberService.create(request);
+  public long create(CreateMemberDto createDto) {
+    return createMemberService.create(createDto);
   }
 }

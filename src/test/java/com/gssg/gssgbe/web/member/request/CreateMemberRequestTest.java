@@ -2,6 +2,7 @@ package com.gssg.gssgbe.web.member.request;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import java.util.Set;
@@ -33,10 +34,11 @@ class CreateMemberRequestTest {
   @MethodSource("VALID_MEMBER")
   public void success(Member member) {
     // given
-    CreateMemberRequest createMemberRequest = new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName());
+    CreateMemberRequest reqeust =
+        new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName(), ProfileDogType.DALMATIAN);
 
     // when
-    Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(createMemberRequest);
+    Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(reqeust);
 
     // then
     assertThat(violations).isEmpty();
@@ -50,10 +52,11 @@ class CreateMemberRequestTest {
   @MethodSource("NOT_VALID_MEMBER")
   public void fail(Member member) {
     // given
-    CreateMemberRequest createMemberRequest = new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName());
+    CreateMemberRequest request =
+        new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName(), ProfileDogType.DALMATIAN);
 
     // when
-    Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(createMemberRequest);
+    Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(request);
 
     // then
     assertThat(violations).isNotEmpty();

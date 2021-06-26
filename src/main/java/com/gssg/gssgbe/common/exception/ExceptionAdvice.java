@@ -110,7 +110,7 @@ public class ExceptionAdvice {
   @ExceptionHandler(HttpMessageNotReadableException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-    return ErrorResponse.of(ErrorCode.MISSING_REQUEST_BODY, createLogId(ex));
+    return ErrorResponse.of(ErrorCode.NOT_VALID_REQUEST_BODY, createLogId(ex));
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

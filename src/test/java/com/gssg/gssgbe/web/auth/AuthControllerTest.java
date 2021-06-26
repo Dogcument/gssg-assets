@@ -12,14 +12,14 @@ import com.gssg.gssgbe.common.token.JwtAuthToken;
 import com.gssg.gssgbe.common.token.JwtAuthTokenProvider;
 import com.gssg.gssgbe.common.token.RefreshToken;
 import com.gssg.gssgbe.common.token.RefreshTokenProvider;
-import com.gssg.gssgbe.web.auth.request.RefreshRequest;
-import com.gssg.gssgbe.web.auth.response.LoginResponse;
-import com.gssg.gssgbe.web.auth.response.RefreshResponse;
 import com.gssg.gssgbe.data.TestData;
-import com.gssg.gssgbe.web.auth.request.LoginRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.util.TestUtil;
+import com.gssg.gssgbe.web.auth.request.LoginRequest;
+import com.gssg.gssgbe.web.auth.request.RefreshRequest;
+import com.gssg.gssgbe.web.auth.response.LoginResponse;
+import com.gssg.gssgbe.web.auth.response.RefreshResponse;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicNode;
@@ -60,7 +60,8 @@ class AuthControllerTest {
             memberRepository.save(new Member(
                 member.getEmail(),
                 member.getPassword(),
-                member.getNickName()))),
+                member.getNickName(),
+                member.getProfileDog()))),
 
         dynamicTest("[성공] 로그인", () -> {
           // given

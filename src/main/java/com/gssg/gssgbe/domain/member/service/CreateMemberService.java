@@ -15,10 +15,10 @@ public class CreateMemberService {
 
   private final MemberRepository memberRepository;
 
-  public long create(CreateMemberDto request) {
-    validation(request);
+  public long create(CreateMemberDto createDto) {
+    validation(createDto);
 
-    Member member = new Member(request.getEmail(), request.getPassword(), request.getNickName());
+    Member member = new Member(createDto.getEmail(), createDto.getPassword(), createDto.getNickName(), createDto.getProfileDogType());
 
     return memberRepository.save(member).getId();
   }

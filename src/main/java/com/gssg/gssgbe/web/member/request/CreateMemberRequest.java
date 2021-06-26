@@ -1,9 +1,11 @@
 package com.gssg.gssgbe.web.member.request;
 
+import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,8 +34,12 @@ public class CreateMemberRequest {
   @NotEmpty
   private String nickName;
 
+  @Schema(description = "프로필 강아지")
+  @NotNull
+  private ProfileDogType profileDogType;
+
   public CreateMemberDto toDto() {
-    return new CreateMemberDto(email, password, nickName);
+    return new CreateMemberDto(email, password, nickName, profileDogType);
   }
 }
 
