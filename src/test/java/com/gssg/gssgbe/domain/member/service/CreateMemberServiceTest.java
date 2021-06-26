@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
 import com.gssg.gssgbe.data.TestData;
-import com.gssg.gssgbe.domain.member.dto.request.CreateMemberRequestDto;
+import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import java.util.stream.Stream;
@@ -42,7 +42,7 @@ class CreateMemberServiceTest {
   @MethodSource("VALID_MEMBER")
   public void success(Member member) {
     // given
-    CreateMemberRequestDto requestDto = new CreateMemberRequestDto(member.getEmail(), member.getPassword(), member.getPassword());
+    CreateMemberDto requestDto = new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword());
 
     // when
     long memberId = createMemberService.create(requestDto);
@@ -56,7 +56,7 @@ class CreateMemberServiceTest {
   @MethodSource("VALID_MEMBER")
   public void failed_existsEmail(Member member) {
     // given
-    CreateMemberRequestDto requestDto = new CreateMemberRequestDto(member.getEmail(), member.getPassword(), member.getPassword());
+    CreateMemberDto requestDto = new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword());
     createMemberService.create(requestDto);
 
     // when

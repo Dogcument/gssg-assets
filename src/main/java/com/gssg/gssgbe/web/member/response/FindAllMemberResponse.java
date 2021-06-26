@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.domain.member.dto.response;
+package com.gssg.gssgbe.web.member.response;
 
 import java.util.Collections;
 import java.util.List;

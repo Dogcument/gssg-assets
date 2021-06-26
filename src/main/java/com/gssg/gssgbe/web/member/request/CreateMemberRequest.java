@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.web.member.request;
 
-import com.gssg.gssgbe.domain.member.dto.request.CreateMemberRequestDto;
+import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -32,8 +32,8 @@ public class CreateMemberRequest {
   @NotEmpty
   private String nickName;
 
-  public CreateMemberRequestDto toDto() {
-    return new CreateMemberRequestDto(email, password, nickName);
+  public CreateMemberDto toDto() {
+    return new CreateMemberDto(email, password, nickName);
   }
 }
 
