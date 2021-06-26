@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.member;
+package com.gssg.gssgbe.web.member;
 
 import com.gssg.gssgbe.common.annotation.LoginMember;
 import com.gssg.gssgbe.domain.member.dto.response.FindAllMemberResponse;

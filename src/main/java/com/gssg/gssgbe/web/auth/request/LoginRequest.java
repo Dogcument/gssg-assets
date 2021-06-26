@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.domain.member.dto.request;
+package com.gssg.gssgbe.web.auth.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class LoginMemberRequest {
+public class LoginRequest {
 
   @Schema(description = "로그인 ID")
   @Email

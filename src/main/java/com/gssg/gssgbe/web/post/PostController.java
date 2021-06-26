@@ -1,7 +1,7 @@
-package com.gssg.gssgbe.controller.post;
+package com.gssg.gssgbe.web.post;
 
 import com.gssg.gssgbe.common.annotation.LoginMember;
-import com.gssg.gssgbe.controller.post.request.CreatePostRequest;
+import com.gssg.gssgbe.web.post.request.CreatePostRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;

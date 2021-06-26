@@ -22,14 +22,21 @@ public class JwtAuthTokenProvider implements AuthTokenProvider<JwtAuthToken> {
     return new JwtAuthToken(email, role, expiredDate, secreatKey);
   }
 
-  public JwtAuthToken createAuthToken(RefreshToken refreshToken) {
+  @Override
+  public JwtAuthToken createAuthToken(String email, String role) {
     Date expiredDate = Date.from(
         LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault()).toInstant());
-    return new JwtAuthToken(refreshToken.getSubject(), refreshToken.getRole(), expiredDate, secreatKey);
+    return new JwtAuthToken(email, role, expiredDate, secreatKey);
   }
 
   @Override
   public JwtAuthToken convertAuthToken(String token) {
     return new JwtAuthToken(token, secreatKey);
+  }
+
+  public JwtAuthToken convertAuthToken(RefreshToken refreshToken) {
+    Date expiredDate = Date.from(
+        LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault()).toInstant());
+    return new JwtAuthToken(refreshToken.getSubject(), refreshToken.getRole(), expiredDate, secreatKey);
   }
 }

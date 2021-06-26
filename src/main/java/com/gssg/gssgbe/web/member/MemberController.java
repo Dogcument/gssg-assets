@@ -1,6 +1,6 @@
-package com.gssg.gssgbe.controller.member;
+package com.gssg.gssgbe.web.member;
 
-import com.gssg.gssgbe.controller.member.request.CreateMemberRequest;
+import com.gssg.gssgbe.web.member.request.CreateMemberRequest;
 import com.gssg.gssgbe.domain.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

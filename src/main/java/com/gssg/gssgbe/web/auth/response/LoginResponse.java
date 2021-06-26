@@ -1,7 +1,8 @@
-package com.gssg.gssgbe.controller.auth.response;
+package com.gssg.gssgbe.web.auth.response;
 
 import com.gssg.gssgbe.common.token.JwtAuthToken;
 import com.gssg.gssgbe.common.token.RefreshToken;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginResponse {
 
+  @Schema(description = "JWT")
   private String jwt;
+
+  @Schema(description = "Refresh Token")
   private String refreshToken;
 
   public LoginResponse(JwtAuthToken jwtAuthToken, RefreshToken refreshToken) {

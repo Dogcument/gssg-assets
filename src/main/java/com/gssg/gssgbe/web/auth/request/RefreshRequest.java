@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.auth.request;
+package com.gssg.gssgbe.web.auth.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RefreshRequest {
 
-  @Schema(description = "비밀번호")
+  @Schema(description = "Refresh Token")
   @NotEmpty
   private String refreshToken;
 }

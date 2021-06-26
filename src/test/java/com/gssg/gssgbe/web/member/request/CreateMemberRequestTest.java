@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.member.request;
+package com.gssg.gssgbe.web.member.request;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

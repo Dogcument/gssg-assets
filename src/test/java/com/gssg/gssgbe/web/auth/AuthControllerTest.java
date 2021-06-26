@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.auth;
+package com.gssg.gssgbe.web.auth;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
@@ -12,11 +12,11 @@ import com.gssg.gssgbe.common.token.JwtAuthToken;
 import com.gssg.gssgbe.common.token.JwtAuthTokenProvider;
 import com.gssg.gssgbe.common.token.RefreshToken;
 import com.gssg.gssgbe.common.token.RefreshTokenProvider;
-import com.gssg.gssgbe.controller.auth.request.RefreshRequest;
-import com.gssg.gssgbe.controller.auth.response.LoginResponse;
-import com.gssg.gssgbe.controller.auth.response.RefreshResponse;
+import com.gssg.gssgbe.web.auth.request.RefreshRequest;
+import com.gssg.gssgbe.web.auth.response.LoginResponse;
+import com.gssg.gssgbe.web.auth.response.RefreshResponse;
 import com.gssg.gssgbe.data.TestData;
-import com.gssg.gssgbe.domain.member.dto.request.LoginMemberRequest;
+import com.gssg.gssgbe.web.auth.request.LoginRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.util.TestUtil;
@@ -35,7 +35,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @DisplayName("[web] 로그인")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class LoginControllerTest {
+class AuthControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -64,10 +64,10 @@ class LoginControllerTest {
 
         dynamicTest("[성공] 로그인", () -> {
           // given
-          LoginMemberRequest request = new LoginMemberRequest(member.getEmail(), member.getPassword());
+          LoginRequest request = new LoginRequest(member.getEmail(), member.getPassword());
 
           // when
-          MvcResult mvcResult = mockMvc.perform(post("/api/v1/login")
+          MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/login")
               .contentType(MediaType.APPLICATION_JSON)
               .content(new ObjectMapper().writeValueAsString(request)))
               .andDo(print())
@@ -87,7 +87,7 @@ class LoginControllerTest {
           RefreshRequest request = new RefreshRequest(refreshToken.getToken());
 
           // when
-          MvcResult mvcResult = mockMvc.perform(post("/api/v1/login/refresh")
+          MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/refresh")
               .contentType(MediaType.APPLICATION_JSON)
               .content(new ObjectMapper().writeValueAsString(request)))
               .andDo(print())
@@ -104,7 +104,7 @@ class LoginControllerTest {
           // given
 
           // when
-          mockMvc.perform(post("/api/v1/login"))
+          mockMvc.perform(post("/api/v1/auth/login"))
               .andDo(print())
               .andExpect(status().isBadRequest());
         })

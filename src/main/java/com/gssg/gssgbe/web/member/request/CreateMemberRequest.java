@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.member.request;
+package com.gssg.gssgbe.web.member.request;
 
 import com.gssg.gssgbe.domain.member.dto.request.CreateMemberRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;

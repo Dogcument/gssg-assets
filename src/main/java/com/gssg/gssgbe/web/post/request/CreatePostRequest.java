@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.post.request;
+package com.gssg.gssgbe.web.post.request;
 
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.dto.request.CreatePostRequestDto;

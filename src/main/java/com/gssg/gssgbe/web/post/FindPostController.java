@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.controller.post;
+package com.gssg.gssgbe.web.post;
 
 import com.gssg.gssgbe.domain.post.dto.reponse.FindAllPostResponse;
 import com.gssg.gssgbe.domain.post.dto.reponse.PostResponse;
