@@ -28,7 +28,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 @Slf4j
-public class JwtAuthToken implements AuthToken<Claims> {
+public class RefreshToken implements AuthToken<Claims> {
 
   private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
   private static final String AUTHORITIES_KEY = "role";
@@ -37,12 +37,12 @@ public class JwtAuthToken implements AuthToken<Claims> {
   private final String token;
   private final Key secreatKey;
 
-  JwtAuthToken(String token, Key secreatKey) {
+  RefreshToken(String token, Key secreatKey) {
     this.token = token;
     this.secreatKey = secreatKey;
   }
 
-  JwtAuthToken(String email, String role, Date expiredDate, Key secreatKey) {
+  RefreshToken(String email, String role, Date expiredDate, Key secreatKey) {
     Map<String, Object> claims = new HashMap<>() {
       {
         put(AUTHORITIES_KEY, role);

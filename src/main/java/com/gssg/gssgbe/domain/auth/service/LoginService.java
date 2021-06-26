@@ -11,9 +11,6 @@ import com.gssg.gssgbe.common.token.JwtAuthTokenProvider;
 import com.gssg.gssgbe.common.token.Role;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +26,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-  private final static long LOGIN_RETENTION_MINUTES = 300;
-
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final JwtAuthTokenProvider jwtAuthTokenProvider;
   private final PasswordEncoder passwordEncoder;
@@ -45,19 +40,24 @@ public class LoginService {
       throw new CustomAuthenticationException(NOT_VALID_PASSWORD);
     }
 
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getEmail(), password);
-    Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    Authentication authentication = getAuthentication(member, password);
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
+    return createJwtAuthToken(member, authentication);
+  }
+
+  private JwtAuthToken createJwtAuthToken(Member member, Authentication authentication) {
     Role role = authentication.getAuthorities().stream()
         .map(GrantedAuthority::getAuthority)
         .findFirst()
         .map(Role::of)
         .orElseThrow(() -> new CustomAuthrizationException(NOT_EXIST_AUTHORIZATION));
 
-    Date expiredDate = Date.from(
-        LocalDateTime.now().plusMinutes(LOGIN_RETENTION_MINUTES).atZone(ZoneId.systemDefault()).toInstant());
+    return jwtAuthTokenProvider.createAuthToken(member.getEmail(), role.getCode());
+  }
 
-    return jwtAuthTokenProvider.createAuthToken(member.getEmail(), role.getCode(), expiredDate);
+  private Authentication getAuthentication(Member member, String password) {
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getEmail(), password);
+    return authenticationManagerBuilder.getObject().authenticate(authenticationToken);
   }
 }

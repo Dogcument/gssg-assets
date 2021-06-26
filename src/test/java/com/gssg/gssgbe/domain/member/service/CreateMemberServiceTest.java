@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
+import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.data.TestData;
-import com.gssg.gssgbe.domain.member.dto.request.CreateMemberRequestDto;
+import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import java.util.stream.Stream;
@@ -42,13 +43,15 @@ class CreateMemberServiceTest {
   @MethodSource("VALID_MEMBER")
   public void success(Member member) {
     // given
-    CreateMemberRequestDto requestDto = new CreateMemberRequestDto(member.getEmail(), member.getPassword(), member.getPassword());
+    CreateMemberDto createDto =
+        new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.DALMATIAN);
 
     // when
-    long memberId = createMemberService.create(requestDto);
+    long memberId = createMemberService.create(createDto);
 
     // then
-    assertThat(memberRepository.findById(memberId)).isPresent();
+    Member createdMember = memberRepository.findById(memberId).get();
+    assertThat(createdMember.getProfileDog()).isNotNull();
   }
 
   @DisplayName("[실패] 이미 가입된 이메일")
@@ -56,11 +59,12 @@ class CreateMemberServiceTest {
   @MethodSource("VALID_MEMBER")
   public void failed_existsEmail(Member member) {
     // given
-    CreateMemberRequestDto requestDto = new CreateMemberRequestDto(member.getEmail(), member.getPassword(), member.getPassword());
-    createMemberService.create(requestDto);
+    CreateMemberDto createDto =
+        new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.DALMATIAN);
+    createMemberService.create(createDto);
 
     // when
-    BusinessException exception = assertThrows(BusinessException.class, () -> createMemberService.create(requestDto));
+    BusinessException exception = assertThrows(BusinessException.class, () -> createMemberService.create(createDto));
 
     // then
     assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.EXISTS_EMAIL);

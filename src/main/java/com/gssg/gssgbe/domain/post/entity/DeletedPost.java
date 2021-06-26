@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.domain.post.entity;
 
-import com.gssg.gssgbe.common.entity.BaseDateTime;
+import com.gssg.gssgbe.common.entity.BaseDeletedDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,13 +20,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "post")
+@Table(name = "deleted_post")
 @Entity
-public class Post extends BaseDateTime {
+public class DeletedPost extends BaseDeletedDateTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "post_id")
+  @Column(name = "deleted_post_id")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -36,7 +36,7 @@ public class Post extends BaseDateTime {
   @Column(name = "content", nullable = false)
   private String content;
 
-  public Post(Member writer, String content) {
+  public DeletedPost(Member writer, String content) {
     this.writer = writer;
     this.content = content;
   }

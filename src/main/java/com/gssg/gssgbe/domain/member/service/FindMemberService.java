@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.domain.member.service;
 
-import com.gssg.gssgbe.domain.member.dto.response.MemberResponse;
+import com.gssg.gssgbe.domain.member.dto.response.MemberDto;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +15,9 @@ public class FindMemberService {
 
   private final MemberRepository memberRepository;
 
-  public List<MemberResponse> findAll() {
+  public List<MemberDto> findAll() {
     return memberRepository.findAll().stream()
-        .map(MemberResponse::new)
+        .map(MemberDto::new)
         .collect(Collectors.toList());
   }
 }

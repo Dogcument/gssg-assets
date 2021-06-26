@@ -1,13 +1,12 @@
 package com.gssg.gssgbe.common.token;
 
 import java.util.Date;
-import org.springframework.security.core.Authentication;
 
 public interface AuthTokenProvider<T> {
 
   T createAuthToken(String email, String role, Date expiredDate);
 
-  T convertAuthToken(String token);
+  T createAuthToken(String email, String role);
 
-  Authentication getAuthentication(T authToken);
+  T convertAuthToken(String token);
 }
