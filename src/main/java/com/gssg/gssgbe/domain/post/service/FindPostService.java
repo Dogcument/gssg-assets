@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.domain.post.service;
 
-import com.gssg.gssgbe.domain.post.dto.reponse.PostResponse;
+import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +15,8 @@ public class FindPostService {
 
   private final PostRepository postRepository;
 
-  public Slice<PostResponse> findAll(Pageable pageable) {
+  public Slice<PostDto> findAll(Pageable pageable) {
     return postRepository.findAllSlice(pageable)
-        .map(PostResponse::new);
+        .map(PostDto::new);
   }
 }

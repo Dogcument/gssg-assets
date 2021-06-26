@@ -1,8 +1,9 @@
 package com.gssg.gssgbe.web.post;
 
 import com.gssg.gssgbe.domain.post.dto.reponse.FindAllPostResponse;
-import com.gssg.gssgbe.domain.post.dto.reponse.PostResponse;
+import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.service.FindPostService;
+import com.gssg.gssgbe.web.post.response.PostResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.constraints.Positive;
@@ -27,8 +28,8 @@ public class FindPostController {
       @RequestParam(defaultValue = "0") @PositiveOrZero Integer page,
       @RequestParam(defaultValue = "10") @Positive Integer size) {
     PageRequest pageRequest = PageRequest.of(page, size);
-    Slice<PostResponse> postResponses = findPostService.findAll(pageRequest);
+    Slice<PostDto> postDtos = findPostService.findAll(pageRequest);
 
-    return new FindAllPostResponse(postResponses);
+    return new FindAllPostResponse(postDtos.map(PostResponse::new));
   }
 }

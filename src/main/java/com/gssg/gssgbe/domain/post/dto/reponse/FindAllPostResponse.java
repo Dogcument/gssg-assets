@@ -1,5 +1,6 @@
 package com.gssg.gssgbe.domain.post.dto.reponse;
 
+import com.gssg.gssgbe.web.post.response.PostResponse;
 import org.springframework.data.domain.Slice;
 
 public class FindAllPostResponse {
