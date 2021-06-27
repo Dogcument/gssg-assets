@@ -110,6 +110,21 @@ class AuthTest {
                   RefreshResponse response = TestUtil.mvcResultToObject(mvcResult, RefreshResponse.class);
                   JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
                   assertThat(jwtAuthToken.getSubject()).isNotBlank();
+                }),
+
+                dynamicTest("[실패] token 해석 불가", () -> {
+                  // given
+                  RefreshRequest request = new RefreshRequest(refreshToken.getToken() + 1);
+
+                  // when
+                  mockMvc.perform(post("/api/v1/auth/refresh")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(new ObjectMapper().writeValueAsString(request)))
+                      .andDo(print())
+                      .andExpect(status().isUnauthorized())
+                      .andReturn();
+
+                  // then
                 })
             )),
 

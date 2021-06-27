@@ -69,15 +69,15 @@ public class RefreshToken implements AuthToken<Claims> {
     try {
       return Jwts.parserBuilder().setSigningKey(secreatKey).build().parseClaimsJws(token).getBody();
     } catch (SecurityException e) {
-      log.info("### Invalid JWT signature.");
+      log.info("### Invalid RefreshToken signature.");
     } catch (MalformedJwtException e) {
-      log.info("### Invalid JWT token.");
+      log.info("### Invalid RefreshToken.");
     } catch (ExpiredJwtException e) {
-      log.info("### Expired JWT token.");
+      log.info("### Expired RefreshToken.");
     } catch (UnsupportedJwtException e) {
-      log.info("### Unsupported JWT token.");
+      log.info("### Unsupported RefreshToken.");
     } catch (IllegalArgumentException e) {
-      log.info("### JWT token compact of handler are invalid.");
+      log.info("### RefreshToken compact of handler are invalid.");
     }
 
     return null;
