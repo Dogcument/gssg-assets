@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
   // 암호화
-  FAIL_ENCRYPT("E0001", HttpStatus.CONFLICT, "암호화 실패"),
-  FAIL_DECRYPT("E0002", HttpStatus.CONFLICT, "복호화 실패"),
+  FAILED_ENCRYPT("E0001", HttpStatus.CONFLICT, "암호화 실패"),
+  FAILED_DECRYPT("E0002", HttpStatus.CONFLICT, "복호화 실패"),
 
   // 인증
   NOT_EXIST_MEMBER("E1001", HttpStatus.UNAUTHORIZED, "존재하지 않는 회원"),
