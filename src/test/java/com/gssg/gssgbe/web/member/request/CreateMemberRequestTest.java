@@ -35,7 +35,7 @@ class CreateMemberRequestTest {
   public void success(Member member) {
     // given
     CreateMemberRequest reqeust =
-        new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName(), ProfileDogType.DALMATIAN);
+        new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName(), ProfileDogType.BAEKGU);
 
     // when
     Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(reqeust);
@@ -53,7 +53,7 @@ class CreateMemberRequestTest {
   public void fail(Member member) {
     // given
     CreateMemberRequest request =
-        new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName(), ProfileDogType.DALMATIAN);
+        new CreateMemberRequest(member.getEmail(), member.getPassword(), member.getNickName(), ProfileDogType.BAEKGU);
 
     // when
     Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(request);

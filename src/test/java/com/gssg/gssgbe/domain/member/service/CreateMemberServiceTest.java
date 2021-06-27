@@ -44,7 +44,7 @@ class CreateMemberServiceTest {
   public void success(Member member) {
     // given
     CreateMemberDto createDto =
-        new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.DALMATIAN);
+        new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.BAEKGU);
 
     // when
     long memberId = createMemberService.create(createDto);
@@ -60,7 +60,7 @@ class CreateMemberServiceTest {
   public void failed_existsEmail(Member member) {
     // given
     CreateMemberDto createDto =
-        new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.DALMATIAN);
+        new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.BAEKGU);
     createMemberService.create(createDto);
 
     // when

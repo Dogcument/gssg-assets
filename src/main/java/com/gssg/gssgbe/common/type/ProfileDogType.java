@@ -1,7 +1,17 @@
 package com.gssg.gssgbe.common.type;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum ProfileDogType {
 
-  DALMATIAN,
+  BAEKGU,
+  JANGGUN,
+  WUYU,
+  YORK,
+  CORGI,
+  SILVER,
   ;
 }
