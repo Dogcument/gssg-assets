@@ -40,7 +40,8 @@ public class AuthController {
   public RefreshResponse refresh(@RequestBody @Valid RefreshRequest request) {
     RefreshToken refreshToken = refreshTokenProvider.convertAuthToken(request.getRefreshToken());
     JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(refreshToken);
+    RefreshToken newRefreshToken = refreshTokenProvider.convertAuthToken(jwtAuthToken);
 
-    return new RefreshResponse(jwtAuthToken);
+    return new RefreshResponse(jwtAuthToken, newRefreshToken);
   }
 }
