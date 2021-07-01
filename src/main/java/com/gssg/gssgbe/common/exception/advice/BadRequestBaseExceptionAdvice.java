@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
-public class BadRequestExceptionAdvice extends ExceptionAdvice {
+public class BadRequestBaseExceptionAdvice extends BaseExceptionAdvice {
 
   /**
    * ModelAttribute 에 binding error 발생시 BindException 발생한다.
@@ -25,7 +25,8 @@ public class BadRequestExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(BindException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleBindException(BindException ex) {
-    return ErrorResponse.of(ErrorCode.BAD_REQUEST, ex.getBindingResult(), createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.BAD_REQUEST, ex.getBindingResult());
   }
 
   /**
@@ -37,7 +38,8 @@ public class BadRequestExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(MissingServletRequestParameterException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
-    return ErrorResponse.of(ex, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ex);
   }
 
   /**
@@ -50,7 +52,8 @@ public class BadRequestExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-    return ErrorResponse.of(ex, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ex);
   }
 
   /**
@@ -63,19 +66,22 @@ public class BadRequestExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(ConstraintViolationException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
-    return ErrorResponse.of(ex, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ex);
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-    return ErrorResponse.of(ErrorCode.NOT_VALID_REQUEST_BODY, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.NOT_VALID_REQUEST_BODY);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleIllegalArgumentException(IllegalArgumentException ex) {
-    return ErrorResponse.of(ErrorCode.BAD_REQUEST, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.BAD_REQUEST);
   }
 
   /**
@@ -89,6 +95,7 @@ public class BadRequestExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-    return ErrorResponse.of(ErrorCode.BAD_REQUEST, ex.getBindingResult(), createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.BAD_REQUEST, ex.getBindingResult());
   }
 }

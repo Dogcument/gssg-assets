@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class EtcExceptionAdvice extends ExceptionAdvice {
+public class BasicBaseExceptionAdvice extends BaseExceptionAdvice {
 
   /**
    * 지원하지 않은 HTTP method 호출 할 경우 발생합니다.
@@ -24,19 +24,22 @@ public class EtcExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
   protected ErrorResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
-    return ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED);
   }
 
   @ExceptionHandler(EntityNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   protected ErrorResponse handleEntityNotFoundException(EntityNotFoundException ex) {
-    return ErrorResponse.of(ErrorCode.NOT_FOUND, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.NOT_FOUND);
   }
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   protected ErrorResponse handleException(Exception ex) {
-    return ErrorResponse.of(ErrorCode.UNKNOWN, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.UNKNOWN);
   }
 
 
@@ -45,11 +48,13 @@ public class EtcExceptionAdvice extends ExceptionAdvice {
 
   @ExceptionHandler(BusinessException.class)
   protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex) {
-    return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
+    preHandle(ex);
+    return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode()), ex.getErrorCode().getStatus());
   }
 
   @ExceptionHandler(CustomSecurityException.class)
   protected ResponseEntity<ErrorResponse> handleCustomSecurityException(CustomSecurityException ex) {
-    return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
+    preHandle(ex);
+    return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode()), ex.getErrorCode().getStatus());
   }
 }

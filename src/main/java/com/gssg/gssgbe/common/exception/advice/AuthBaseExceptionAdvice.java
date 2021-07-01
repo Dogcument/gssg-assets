@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * 인증 관련 에러는 세부 정보를 반환하지 않습니다.
  */
 @RestControllerAdvice
-public class AuthExceptionAdvice extends ExceptionAdvice {
+public class AuthBaseExceptionAdvice extends BaseExceptionAdvice {
 
   /**
    * Authentication 객체가 필요한 권한을 보유하지 않은 경우 발생합니다.
@@ -28,8 +28,8 @@ public class AuthExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(AuthenticationException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   protected ErrorResponse handleAuthenticationException(AuthenticationException ex) {
-    return ErrorResponse.of(ErrorCode.UNAUTHORIZED, createLogId(ex));
-
+    preHandle(ex);
+    return ErrorResponse.of(ErrorCode.UNAUTHORIZED);
   }
 
   /**
@@ -41,22 +41,26 @@ public class AuthExceptionAdvice extends ExceptionAdvice {
   @ExceptionHandler(AccessDeniedException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
   protected ErrorResponse handleAccessDeniedException(AccessDeniedException ex) {
-    return ErrorResponse.whtioutDetail(ErrorCode.FORBIDDEN, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.whtioutDetail(ErrorCode.FORBIDDEN);
   }
 
   @ExceptionHandler(InsufficientAuthenticationException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
   protected ErrorResponse handleInsufficientAuthenticationException(InsufficientAuthenticationException ex) {
-    return ErrorResponse.whtioutDetail(ErrorCode.FORBIDDEN, createLogId(ex));
+    preHandle(ex);
+    return ErrorResponse.whtioutDetail(ErrorCode.FORBIDDEN);
   }
 
   @ExceptionHandler(CustomAuthenticationException.class)
   protected ResponseEntity<ErrorResponse> handleCustomAuthenticationException(CustomAuthenticationException ex) {
-    return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
+    preHandle(ex);
+    return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode()), ex.getErrorCode().getStatus());
   }
 
   @ExceptionHandler(CustomAuthrizationException.class)
   protected ResponseEntity<ErrorResponse> handleCustomAuthrizationException(CustomAuthrizationException ex) {
-    return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode(), createLogId(ex)), ex.getErrorCode().getStatus());
+    preHandle(ex);
+    return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode()), ex.getErrorCode().getStatus());
   }
 }
