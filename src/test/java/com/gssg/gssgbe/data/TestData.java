@@ -8,7 +8,7 @@ public class TestData {
 
   public static Stream<Member> VALID_MEMBER() {
     return Stream.of(
-        new Member("choi@gmail.com", "1q2w3e4r*", "dan", ProfileDogType.DALMATIAN)
+        new Member("choi@gmail.com", "1q2w3e4r*", "dan", ProfileDogType.BAEKGU)
     );
   }
 
@@ -18,11 +18,11 @@ public class TestData {
         + "gmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmailgmail.com";
 
     return Stream.of(
-        new Member("choigmail.com", "1q2w3e4r*", "dan", ProfileDogType.DALMATIAN),
-        new Member(maxEmailId + "@" + maxMailServerName, "1q2w3e4r*", "dan", ProfileDogType.DALMATIAN),
-        new Member("choi@gmail.com", "1111", "dan", ProfileDogType.DALMATIAN),
-        new Member("choi@gmail.com", "1q2w3e4r", "dan", ProfileDogType.DALMATIAN),
-        new Member("choi@gmail.com", "1q2w*", "dan", ProfileDogType.DALMATIAN)
+        new Member("choigmail.com", "1q2w3e4r*", "dan", ProfileDogType.BAEKGU),
+        new Member(maxEmailId + "@" + maxMailServerName, "1q2w3e4r*", "dan", ProfileDogType.BAEKGU),
+        new Member("choi@gmail.com", "1111", "dan", ProfileDogType.BAEKGU),
+        new Member("choi@gmail.com", "1q2w3e4r", "dan", ProfileDogType.BAEKGU),
+        new Member("choi@gmail.com", "1q2w*", "dan", ProfileDogType.BAEKGU)
     );
   }
 }
