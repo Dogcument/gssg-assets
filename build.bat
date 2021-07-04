@@ -1,0 +1,2 @@
+@echo Build
+./gradlew bootjar
