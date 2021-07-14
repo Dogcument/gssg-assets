@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class FindMemberService {
 
-  private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-  public List<MemberDto> findAll() {
-    return memberRepository.findAll().stream()
-        .map(MemberDto::new)
-        .collect(Collectors.toList());
-  }
+    public List<MemberDto> findAll() {
+        return memberRepository.findAll().stream()
+            .map(MemberDto::new)
+            .collect(Collectors.toList());
+    }
+
+    public boolean existsEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
 }
