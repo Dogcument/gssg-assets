@@ -25,4 +25,13 @@ public class UpdateMemberService {
 
         return member.getId();
     }
+
+    public Long updatePassword(Long memberId, String passsword) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+
+        member.updatePassword(passsword);
+
+        return member.getId();
+    }
 }

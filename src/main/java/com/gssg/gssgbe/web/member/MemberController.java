@@ -5,6 +5,7 @@ import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.service.CreateMemberService;
 import com.gssg.gssgbe.domain.member.service.UpdateMemberService;
 import com.gssg.gssgbe.web.member.request.CreateMemberRequest;
+import com.gssg.gssgbe.web.member.request.UpdateMemberPasswordRequest;
 import com.gssg.gssgbe.web.member.request.UpdateMemberRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,5 +40,13 @@ public class MemberController {
         @LoginMember Member loginMember,
         @RequestBody UpdateMemberRequest request) {
         return updateMemberService.update(loginMember.getId(), request.toDto());
+    }
+
+    @Operation(summary = "회원 비밀번호 수정")
+    @PatchMapping("/api/v1/members/password")
+    public Long updatePassword(
+        @LoginMember Member loginMember,
+        @RequestBody UpdateMemberPasswordRequest request) {
+        return updateMemberService.updatePassword(loginMember.getId(), request.getPassword());
     }
 }

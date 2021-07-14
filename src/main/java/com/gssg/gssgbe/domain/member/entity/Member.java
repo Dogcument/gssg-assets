@@ -53,6 +53,10 @@ public class Member extends BaseDateTime {
         this.role = Role.MEMBER.getCode();
     }
 
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
     public void updateNickname(String nickName) {
         if (nickName != null) {
             this.nickName = nickName;
