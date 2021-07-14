@@ -17,19 +17,19 @@ import lombok.NoArgsConstructor;
 @Entity
 public class DeletedMember extends BaseDeletedDateTime {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "deleted_member_user_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "deleted_member_user_id")
+    private Long id;
 
-  @Column(name = "email", nullable = false, unique = true)
-  private String email;
+    @Column(name = "email")
+    private String email;
 
-  @Column(name = "reason")
-  private String reason;
+    @Column(name = "reason")
+    private String reason;
 
-  public DeletedMember(String email, String reason) {
-    this.email = email;
-    this.reason = reason;
-  }
+    public DeletedMember(String email, String reason) {
+        this.email = email;
+        this.reason = reason;
+    }
 }

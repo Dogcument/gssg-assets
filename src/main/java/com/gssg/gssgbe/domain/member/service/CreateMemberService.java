@@ -20,7 +20,7 @@ public class CreateMemberService {
   public long create(CreateMemberDto createDto) {
     validation(createDto);
 
-    Member member = new Member(createDto.getEmail(), createDto.getPassword(), createDto.getNickName(), createDto.getProfileDogType());
+    Member member = new Member(createDto.getEmail(), createDto.getPassword());
 
     return memberRepository.save(member).getId();
   }

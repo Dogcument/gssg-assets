@@ -2,7 +2,6 @@ package com.gssg.gssgbe.domain.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 import com.gssg.gssgbe.domain.member.entity.Member;
@@ -35,8 +34,7 @@ class FindMemberServiceTest {
     @MethodSource("VALID_MEMBER")
     public void existsEmail(Member member) {
         // given
-        CreateMemberDto createDto =
-            new CreateMemberDto(member.getEmail(), member.getPassword(), member.getPassword(), ProfileDogType.BAEKGU);
+        CreateMemberDto createDto = new CreateMemberDto(member.getEmail(), member.getPassword());
         createMemberService.create(createDto);
 
         // when

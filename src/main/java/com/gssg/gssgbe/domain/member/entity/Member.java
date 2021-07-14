@@ -6,8 +6,9 @@ import com.gssg.gssgbe.common.token.Role;
 import com.gssg.gssgbe.common.type.ProfileDogType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,36 +23,33 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member extends BaseDateTime {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "member_user_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_user_id")
+    private Long id;
 
-  @Column(name = "email", nullable = false, unique = true)
-  private String email;
+    @Column(name = "email")
+    private String email;
 
-  @Convert(converter = PasswordEncryptConverter.class)
-  @Column(name = "password", nullable = false)
-  private String password;
+    @Convert(converter = PasswordEncryptConverter.class)
+    @Column(name = "password")
+    private String password;
 
-  @Column(name = "nickname", nullable = false, unique = true)
-  private String nickName;
+    @Column(name = "nickname")
+    private String nickName;
 
-  @Embedded
-  private MemberProfileDog profileDog;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "profile_dog")
+    private ProfileDogType profileDog;
 
-  @Column(name = "role", nullable = false)
-  private String role;
+    @Column(name = "role")
+    private String role;
 
-  public Member(String email, String password, String nickName, ProfileDogType profileDog) {
-    this.email = email;
-    this.password = password;
-    this.nickName = nickName;
-    this.profileDog = new MemberProfileDog(profileDog);
-    this.role = Role.MEMBER.getCode();
-  }
-
-  public ProfileDogType getProfileDog() {
-    return profileDog.getProfileDog();
-  }
+    public Member(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.nickName = "";
+        this.profileDog = ProfileDogType.getDefault();
+        this.role = Role.MEMBER.getCode();
+    }
 }

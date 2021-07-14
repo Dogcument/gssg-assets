@@ -36,60 +36,55 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PostTest {
 
-  @Autowired
-  private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Autowired
-  private MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
-  @Autowired
-  private PostRepository postRepository;
+    @Autowired
+    private PostRepository postRepository;
 
-  @Autowired
-  private JwtAuthTokenProvider jwtAuthTokenProvider;
+    @Autowired
+    private JwtAuthTokenProvider jwtAuthTokenProvider;
 
-  private JwtAuthToken jwtAuthToken;
+    private JwtAuthToken jwtAuthToken;
 
-  @TestFactory
-  Stream<DynamicNode> postTest() {
-    return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
-        Stream.of(
-            dynamicTest("회원 가입 & 로그인", () -> {
-              memberRepository.save(new Member(
-                  member.getEmail(),
-                  member.getPassword(),
-                  member.getNickName(),
-                  member.getProfileDog()));
+    @TestFactory
+    Stream<DynamicNode> postTest() {
+        return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
+            Stream.of(
+                dynamicTest("회원 가입 & 로그인", () -> {
+                    memberRepository.save(new Member(member.getEmail(), member.getPassword()));
+                    jwtAuthToken = jwtAuthTokenProvider.createAuthToken(member.getEmail(), Role.MEMBER.name());
+                }),
 
-              jwtAuthToken = jwtAuthTokenProvider.createAuthToken(member.getEmail(), Role.MEMBER.name());
-            }),
+                dynamicContainer("글 작성", Stream.of(
+                    dynamicTest("[성공] 글 작성", () -> {
+                        // given
+                        CreatePostRequest request = new CreatePostRequest("TEST 글 작성 TEST");
 
-            dynamicContainer("글 작성", Stream.of(
-                dynamicTest("[성공] 글 작성", () -> {
-                  // given
-                  CreatePostRequest request = new CreatePostRequest("TEST 글 작성 TEST");
+                        // when
+                        MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
+                            .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(request)))
+                            .andDo(print())
+                            .andExpect(status().isCreated())
+                            .andReturn();
 
-                  // when
-                  MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
-                      .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(new ObjectMapper().writeValueAsString(request)))
-                      .andDo(print())
-                      .andExpect(status().isCreated())
-                      .andReturn();
+                        // then
+                        Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
+                        Post createdPost = postRepository.findById(createdPostId).get();
 
-                  // then
-                  Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
-                  Post createdPost = postRepository.findById(createdPostId).get();
+                        assertThat(createdPost.getWriter()).isNotNull();
+                    })
+                )),
 
-                  assertThat(createdPost.getWriter()).isNotNull();
+                dynamicTest("afterAll", () -> {
+                    postRepository.deleteAll();
+                    memberRepository.deleteAll();
                 })
-            )),
-
-            dynamicTest("afterAll", () -> {
-              postRepository.deleteAll();
-              memberRepository.deleteAll();
-            })
-        )));
-  }
+            )));
+    }
 }

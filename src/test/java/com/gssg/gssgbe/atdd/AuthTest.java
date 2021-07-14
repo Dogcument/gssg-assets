@@ -37,98 +37,95 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class AuthTest {
 
-  @Autowired
-  private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Autowired
-  private MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
-  @Autowired
-  private JwtAuthTokenProvider jwtAuthTokenProvider;
+    @Autowired
+    private JwtAuthTokenProvider jwtAuthTokenProvider;
 
-  @Autowired
-  private RefreshTokenProvider refreshTokenProvider;
+    @Autowired
+    private RefreshTokenProvider refreshTokenProvider;
 
-  private RefreshToken refreshToken;
+    private RefreshToken refreshToken;
 
-  @TestFactory
-  Stream<DynamicNode> authTest() {
-    return TestData.VALID_MEMBER().map(member -> dynamicContainer("인증",
-        Stream.of(
-            dynamicTest("회원 가입", () ->
-                memberRepository.save(new Member(
-                    member.getEmail(),
-                    member.getPassword(),
-                    member.getNickName(),
-                    member.getProfileDog()))),
+    @TestFactory
+    Stream<DynamicNode> authTest() {
+        return TestData.VALID_MEMBER().map(member -> dynamicContainer("인증",
+            Stream.of(
+                dynamicTest("회원 가입", () ->
+                    memberRepository.save(new Member(member.getEmail(), member.getPassword()))
+                ),
 
-            dynamicContainer("로그인", Stream.of(
-                dynamicTest("[성공] 로그인", () -> {
-                  // given
-                  LoginRequest request = new LoginRequest(member.getEmail(), member.getPassword());
+                dynamicContainer("로그인", Stream.of(
+                    dynamicTest("[성공] 로그인", () -> {
+                        // given
+                        LoginRequest request = new LoginRequest(member.getEmail(), member.getPassword());
 
-                  // when
-                  MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/login")
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(new ObjectMapper().writeValueAsString(request)))
-                      .andDo(print())
-                      .andExpect(status().isOk())
-                      .andReturn();
+                        // when
+                        MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/login")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(request)))
+                            .andDo(print())
+                            .andExpect(status().isOk())
+                            .andReturn();
 
-                  // then
-                  LoginResponse response = TestUtil.mvcResultToObject(mvcResult, LoginResponse.class);
-                  JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
-                  assertThat(jwtAuthToken.getSubject()).isNotBlank();
-                  refreshToken = refreshTokenProvider.convertAuthToken(response.getRefreshToken());
-                  assertThat(refreshToken.getSubject()).isNotBlank();
-                }),
+                        // then
+                        LoginResponse response = TestUtil.mvcResultToObject(mvcResult, LoginResponse.class);
+                        JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
+                        assertThat(jwtAuthToken.getSubject()).isNotBlank();
+                        refreshToken = refreshTokenProvider.convertAuthToken(response.getRefreshToken());
+                        assertThat(refreshToken.getSubject()).isNotBlank();
+                    }),
 
-                dynamicTest("[실패] request body 없음", () -> {
-                  // given
+                    dynamicTest("[실패] request body 없음", () -> {
+                        // given
 
-                  // when
-                  mockMvc.perform(post("/api/v1/auth/login"))
-                      .andDo(print())
-                      .andExpect(status().isBadRequest());
-                })
-            )),
+                        // when
+                        mockMvc.perform(post("/api/v1/auth/login"))
+                            .andDo(print())
+                            .andExpect(status().isBadRequest());
+                    })
+                )),
 
-            dynamicContainer("Refresh Token", Stream.of(
-                dynamicTest("[성공] JWT 재발급", () -> {
-                  // given
-                  RefreshRequest request = new RefreshRequest(refreshToken.getToken());
+                dynamicContainer("Refresh Token", Stream.of(
+                    dynamicTest("[성공] JWT 재발급", () -> {
+                        // given
+                        RefreshRequest request = new RefreshRequest(refreshToken.getToken());
 
-                  // when
-                  MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/refresh")
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(new ObjectMapper().writeValueAsString(request)))
-                      .andDo(print())
-                      .andExpect(status().isOk())
-                      .andReturn();
+                        // when
+                        MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/refresh")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(request)))
+                            .andDo(print())
+                            .andExpect(status().isOk())
+                            .andReturn();
 
-                  // then
-                  RefreshResponse response = TestUtil.mvcResultToObject(mvcResult, RefreshResponse.class);
-                  JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
-                  assertThat(jwtAuthToken.getSubject()).isNotBlank();
-                }),
+                        // then
+                        RefreshResponse response = TestUtil.mvcResultToObject(mvcResult, RefreshResponse.class);
+                        JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(response.getJwt());
+                        assertThat(jwtAuthToken.getSubject()).isNotBlank();
+                    }),
 
-                dynamicTest("[실패] token 해석 불가", () -> {
-                  // given
-                  RefreshRequest request = new RefreshRequest(refreshToken.getToken() + 1);
+                    dynamicTest("[실패] token 해석 불가", () -> {
+                        // given
+                        RefreshRequest request = new RefreshRequest(refreshToken.getToken() + 1);
 
-                  // when
-                  mockMvc.perform(post("/api/v1/auth/refresh")
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(new ObjectMapper().writeValueAsString(request)))
-                      .andDo(print())
-                      .andExpect(status().isUnauthorized())
-                      .andReturn();
+                        // when
+                        mockMvc.perform(post("/api/v1/auth/refresh")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(request)))
+                            .andDo(print())
+                            .andExpect(status().isUnauthorized())
+                            .andReturn();
 
-                  // then
-                })
-            )),
+                        // then
+                    })
+                )),
 
-            dynamicTest("afterAll", () -> memberRepository.deleteAll())
-        )));
-  }
+                dynamicTest("afterAll", () -> memberRepository.deleteAll())
+            )));
+    }
 }
