@@ -52,4 +52,16 @@ public class Member extends BaseDateTime {
         this.profileDog = ProfileDogType.getDefault();
         this.role = Role.MEMBER.getCode();
     }
+
+    public void updateNickname(String nickName) {
+        if (nickName != null) {
+            this.nickName = nickName;
+        }
+    }
+
+    public void updateProfileDog(ProfileDogType profileDog) {
+        if (profileDog != null) {
+            this.profileDog = profileDog;
+        }
+    }
 }
