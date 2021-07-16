@@ -3,6 +3,7 @@ package com.gssg.gssgbe.atdd;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +16,9 @@ import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
+import com.gssg.gssgbe.util.TestUtil;
 import com.gssg.gssgbe.web.member.request.UpdateMemberRequest;
+import com.gssg.gssgbe.web.member.response.MemberResponse;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicNode;
@@ -27,6 +30,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 @DisplayName("[atdd]")
 @AutoConfigureMockMvc
@@ -72,6 +76,23 @@ class MemberTest {
                         // then
                         savedMember = memberRepository.findById(savedMember.getId()).get();
                         assertThat(savedMember.getNickName()).isEqualTo(nickName);
+                    })
+                )),
+
+                dynamicContainer("내 정보 조회", Stream.of(
+                    dynamicTest("[성공] 내 정보 조회", () -> {
+                        // given
+
+                        // when
+                        MvcResult mvcResult = mockMvc.perform(get("/api/v1/my/info")
+                            .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
+                            .andDo(print())
+                            .andExpect(status().isOk())
+                            .andReturn();
+
+                        // then
+                        MemberResponse memberResponse = TestUtil.mvcResultToObject(mvcResult, MemberResponse.class);
+                        assertThat(memberResponse.getEmail()).isNotNull();
                     })
                 )),
 
