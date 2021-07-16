@@ -42,6 +42,9 @@ public class Member extends BaseDateTime {
     @Column(name = "profile_dog")
     private ProfileDogType profileDog;
 
+    @Column(name = "introduce")
+    private String introduce;
+
     @Column(name = "role")
     private String role;
 
@@ -50,6 +53,7 @@ public class Member extends BaseDateTime {
         this.password = password;
         this.nickName = "";
         this.profileDog = ProfileDogType.getDefault();
+        this.introduce = "";
         this.role = Role.MEMBER.getCode();
     }
 

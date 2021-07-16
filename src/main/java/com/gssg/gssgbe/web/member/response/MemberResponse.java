@@ -19,12 +19,20 @@ public class MemberResponse {
     @Schema(description = "로그인 ID")
     private String email;
 
+    @Schema(description = "필명")
+    private String nickName;
+
     @Schema(description = "프로필 강아지")
     private ProfileDogType profileDog;
+
+    @Schema(description = "한줄 소개")
+    private String introduce;
 
     public MemberResponse(MemberDto dto) {
         this.id = dto.getId();
         this.email = dto.getEmail();
+        this.nickName = dto.getNickName();
         this.profileDog = dto.getProfileDog();
+        this.introduce = dto.getIntroduce();
     }
 }
