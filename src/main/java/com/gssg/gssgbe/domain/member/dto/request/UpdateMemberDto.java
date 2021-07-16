@@ -10,4 +10,5 @@ public class UpdateMemberDto {
 
     private final String nickName;
     private final ProfileDogType profileDogType;
+    private final String introduce;
 }

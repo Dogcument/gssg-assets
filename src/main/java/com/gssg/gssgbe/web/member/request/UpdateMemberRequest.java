@@ -23,7 +23,11 @@ public class UpdateMemberRequest {
     @NotNull
     private ProfileDogType profileDogType;
 
+    @Schema(description = "한줄 소개")
+    @NotNull
+    private String introduce;
+
     public UpdateMemberDto toDto() {
-        return new UpdateMemberDto(nickName, profileDogType);
+        return new UpdateMemberDto(nickName, profileDogType, introduce);
     }
 }

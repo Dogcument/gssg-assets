@@ -35,7 +35,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @DisplayName("[atdd]")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class MemberTest {
+class MyTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,21 +51,22 @@ class MemberTest {
 
     @TestFactory
     Stream<DynamicNode> memberTest() {
-        return TestData.VALID_MEMBER().map(member -> dynamicContainer("회원",
+        return TestData.VALID_MEMBER().map(member -> dynamicContainer("내 회원 정보",
             Stream.of(
                 dynamicTest("회원 가입 & 로그인", () -> {
                     savedMember = memberRepository.save(new Member(member.getEmail(), member.getPassword()));
                     jwtAuthToken = jwtAuthTokenProvider.createAuthToken(member.getEmail(), Role.MEMBER.name());
                 }),
 
-                dynamicContainer("회원 정보 수정", Stream.of(
-                    dynamicTest("[성공] 회원 정보 수정", () -> {
+                dynamicContainer("내 회원 정보 수정", Stream.of(
+                    dynamicTest("[성공] 내 회원 정보 수정", () -> {
                         // given
                         String nickName = "단단이";
-                        UpdateMemberRequest request = new UpdateMemberRequest(nickName, ProfileDogType.CORGI);
+                        String introduce = "한줄 소개 입니다.";
+                        UpdateMemberRequest request = new UpdateMemberRequest(nickName, ProfileDogType.CORGI, introduce);
 
                         // when
-                        mockMvc.perform(patch("/api/v1/members/")
+                        mockMvc.perform(patch("/api/v1/my")
                             .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(new ObjectMapper().writeValueAsString(request)))
@@ -79,12 +80,12 @@ class MemberTest {
                     })
                 )),
 
-                dynamicContainer("내 정보 조회", Stream.of(
-                    dynamicTest("[성공] 내 정보 조회", () -> {
+                dynamicContainer("내 회원 정보 조회", Stream.of(
+                    dynamicTest("[성공] 내 회원 정보 조회", () -> {
                         // given
 
                         // when
-                        MvcResult mvcResult = mockMvc.perform(get("/api/v1/my/info")
+                        MvcResult mvcResult = mockMvc.perform(get("/api/v1/my/")
                             .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
                             .andDo(print())
                             .andExpect(status().isOk())
