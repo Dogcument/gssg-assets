@@ -11,6 +11,8 @@ import com.gssg.gssgbe.web.member.request.UpdateMemberPasswordRequest;
 import com.gssg.gssgbe.web.member.request.UpdateMemberRequest;
 import com.gssg.gssgbe.web.member.response.MemberResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,27 +28,28 @@ public class MyController {
     private final FindMemberService findMemberService;
     private final UpdateMemberService updateMemberService;
 
-    @Operation(summary = "내 회원 정보 조회")
+    @Operation(summary = "내 회원 정보 조회", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/api/v1/my")
-    public MemberResponse myInfo(@LoginMember Member loginMember) {
+    public MemberResponse myInfo(
+        @Parameter(hidden = true) @LoginMember Member loginMember) {
         MemberDto memberDto = findMemberService.findById(loginMember.getId())
             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         return new MemberResponse(memberDto);
     }
 
-    @Operation(summary = "내 회원 정보 수정")
+    @Operation(summary = "내 회원 정보 수정", security = @SecurityRequirement(name = "bearerAuth"))
     @PatchMapping("/api/v1/my")
     public Long update(
-        @LoginMember Member loginMember,
+        @Parameter(hidden = true) @LoginMember Member loginMember,
         @RequestBody UpdateMemberRequest request) {
         return updateMemberService.update(loginMember.getId(), request.toDto());
     }
 
-    @Operation(summary = "내 회원 비밀번호 수정")
+    @Operation(summary = "내 회원 비밀번호 수정", security = @SecurityRequirement(name = "bearerAuth"))
     @PatchMapping("/api/v1/my/password")
     public Long updatePassword(
-        @LoginMember Member loginMember,
+        @Parameter(hidden = true) @LoginMember Member loginMember,
         @RequestBody UpdateMemberPasswordRequest request) {
         return updateMemberService.updatePassword(loginMember.getId(), request.getPassword());
     }

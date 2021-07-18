@@ -5,6 +5,8 @@ import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.service.CreatePostService;
 import com.gssg.gssgbe.web.post.request.CreatePostRequest;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +23,11 @@ public class PostController {
 
     private final CreatePostService createPostService;
 
-    @Operation(summary = "글 작성")
+    @Operation(summary = "글 작성", security = @SecurityRequirement(name = "bearerAuth"))
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/v1/posts")
     public Long create(
-        @LoginMember Member loginMember,
+        @Parameter(hidden = true) @LoginMember Member loginMember,
         @RequestBody @Valid CreatePostRequest request) {
         return createPostService.create(request.toDto(loginMember));
     }
