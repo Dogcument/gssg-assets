@@ -8,7 +8,9 @@ import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class CreateMemberService {
@@ -18,7 +20,7 @@ public class CreateMemberService {
   public long create(CreateMemberDto createDto) {
     validation(createDto);
 
-    Member member = new Member(createDto.getEmail(), createDto.getPassword(), createDto.getNickName(), createDto.getProfileDogType());
+    Member member = new Member(createDto.getEmail(), createDto.getPassword());
 
     return memberRepository.save(member).getId();
   }

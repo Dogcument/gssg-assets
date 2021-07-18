@@ -30,16 +30,8 @@ public class CreateMemberRequest {
   @NotEmpty
   private String password;
 
-  @Schema(description = "공개되는 이름")
-  @NotEmpty
-  private String nickName;
-
-  @Schema(description = "프로필 강아지")
-  @NotNull
-  private ProfileDogType profileDogType;
-
   public CreateMemberDto toDto() {
-    return new CreateMemberDto(email, password, nickName, profileDogType);
+    return new CreateMemberDto(email, password);
   }
 }
 

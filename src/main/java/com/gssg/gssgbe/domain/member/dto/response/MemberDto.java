@@ -8,17 +8,21 @@ import lombok.Getter;
 @Getter
 public class MemberDto {
 
-  private final Long id;
-  private final String email;
-  private final ProfileDogType profileDog;
-  private final LocalDateTime createdAt;
-  private final LocalDateTime updatedAt;
+    private final Long id;
+    private final String email;
+    private final String nickName;
+    private final ProfileDogType profileDog;
+    private final String introduce;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
-  public MemberDto(Member member) {
-    this.id = member.getId();
-    this.email = member.getEmail();
-    this.profileDog = member.getProfileDog();
-    this.createdAt = member.getCreatedAt();
-    this.updatedAt = member.getUpdatedAt();
-  }
+    public MemberDto(Member member) {
+        this.id = member.getId();
+        this.email = member.getEmail();
+        this.nickName = member.getNickName();
+        this.profileDog = member.getProfileDog();
+        this.introduce = member.getIntroduce();
+        this.createdAt = member.getCreatedAt();
+        this.updatedAt = member.getUpdatedAt();
+    }
 }

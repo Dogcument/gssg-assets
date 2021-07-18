@@ -1,16 +1,17 @@
 # 글쑤시개 Back-End
 
-[![codecov](https://codecov.io/gh/Dogcument/gssg-be/branch/master/graph/badge.svg?token=R1MG8FC6BQ)](https://codecov.io/gh/Dogcument/gssg-be) ![total lines](https://img.shields.io/tokei/lines/github/Dogcument/gssg-be)
-
-[구현한 기술](https://github.com/Dogcument/gssg-be/wiki/%EA%B5%AC%ED%98%84%ED%95%9C-%EA%B8%B0%EC%88%A0-&-%EA%B8%B0%EB%8A%A5)
-
 ## 1. 환경
+
+[![codecov](https://codecov.io/gh/Dogcument/gssg-be/branch/master/graph/badge.svg?token=R1MG8FC6BQ)](https://codecov.io/gh/Dogcument/gssg-be) ![total lines](https://img.shields.io/tokei/lines/github/Dogcument/gssg-be)
 
 ![](https://img.shields.io/badge/spring%20boot-2.5.0-green) ![](https://img.shields.io/badge/java-11-green)
 
 ![](https://img.shields.io/badge/h2-1.4.200-blue) ![](https://img.shields.io/badge/mysql-8.0.25-blue) ![](https://img.shields.io/badge/jpa-%20-blue) ![](https://img.shields.io/badge/querydsl-%20-blue)
 
 ![](https://img.shields.io/badge/git%20action-%20-yellow)
+
+- [구현한 기술](https://github.com/Dogcument/gssg-be/wiki/%EA%B5%AC%ED%98%84%ED%95%9C-%EA%B8%B0%EC%88%A0-&-%EA%B8%B0%EB%8A%A5)
+- [ERD](https://github.com/Dogcument/gssg-be/wiki/ERD)
 
 ## 2. Local 실행 방법
 
