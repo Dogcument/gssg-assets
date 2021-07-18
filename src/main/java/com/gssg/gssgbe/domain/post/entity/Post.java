@@ -2,6 +2,7 @@ package com.gssg.gssgbe.domain.post.entity;
 
 import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
+import com.gssg.gssgbe.domain.subject.entity.Subject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -24,20 +25,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 public class Post extends BaseDateTime {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "post_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
+    private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_user_id", nullable = false)
-  private Member writer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_user_id")
+    private Member writer;
 
-  @Column(name = "content", nullable = false)
-  private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
-  public Post(Member writer, String content) {
-    this.writer = writer;
-    this.content = content;
-  }
+    @Column(name = "content")
+    private String content;
+
+    public Post(Member writer, Subject subject, String content) {
+        this.writer = writer;
+        this.subject = subject;
+        this.content = content;
+    }
 }
