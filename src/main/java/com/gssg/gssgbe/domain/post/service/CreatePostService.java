@@ -6,7 +6,7 @@ import com.gssg.gssgbe.domain.post.dto.request.CreatePostRequestDto;
 import com.gssg.gssgbe.domain.post.entity.Post;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
 import com.gssg.gssgbe.domain.subject.entity.Subject;
-import com.gssg.gssgbe.domain.subject.service.FindSubjectService;
+import com.gssg.gssgbe.domain.subject.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreatePostService {
 
-    private final FindSubjectService findSubjectService;
-
     private final PostRepository postRepository;
+    private final SubjectRepository subjectRepository;
 
     public long create(CreatePostRequestDto request) {
-        Subject subject = findSubjectService.findByName(request.getSubjectName())
+        Subject subject = subjectRepository.findByName(request.getSubjectName())
             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
         Post post = new Post(request.getWriter(), subject, request.getContent());
 

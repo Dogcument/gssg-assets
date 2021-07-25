@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.web.post;
 
-import com.gssg.gssgbe.domain.post.dto.reponse.FindAllPostResponse;
+import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
 import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.service.FindPostService;
 import com.gssg.gssgbe.web.post.response.PostResponse;
