@@ -56,6 +56,16 @@ public class Member extends BaseDateTime {
         this.deleted = false;
     }
 
+    public Member(String email, String password, String nickName, String introduce) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.profileDog = ProfileDogType.getDefault();
+        this.introduce = introduce;
+        this.role = Role.MEMBER.getCode();
+        this.deleted = false;
+    }
+
     public void updatePassword(String password) {
         this.password = password;
     }
