@@ -28,25 +28,23 @@ public class Member extends BaseDateTime {
     @Column(name = "member_user_id")
     private Long id;
 
-    @Column(name = "email")
     private String email;
 
     @Convert(converter = PasswordEncryptConverter.class)
     @Column(name = "password")
     private String password;
 
-    @Column(name = "nickname")
     private String nickName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "profile_dog")
     private ProfileDogType profileDog;
 
-    @Column(name = "introduce")
     private String introduce;
 
-    @Column(name = "role")
     private String role;
+
+    private Boolean deleted;
 
     public Member(String email, String password) {
         this.email = email;
@@ -55,6 +53,7 @@ public class Member extends BaseDateTime {
         this.profileDog = ProfileDogType.getDefault();
         this.introduce = "";
         this.role = Role.MEMBER.getCode();
+        this.deleted = false;
     }
 
     public void updatePassword(String password) {
