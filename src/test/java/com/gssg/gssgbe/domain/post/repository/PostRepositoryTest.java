@@ -6,6 +6,8 @@ import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.domain.post.entity.Post;
+import com.gssg.gssgbe.domain.subject.entity.Subject;
+import com.gssg.gssgbe.domain.subject.repository.SubjectRepository;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,36 +23,41 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PostRepositoryTest {
 
-  @Autowired
-  private MemberRepository memberRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
-  @Autowired
-  private PostRepository postRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
-  @AfterEach
-  public void afterEach() {
-    postRepository.deleteAll();
-    memberRepository.deleteAll();
-  }
+    @Autowired
+    private PostRepository postRepository;
 
-  public static Stream<Member> VALID_MEMBER() {
-    return TestData.VALID_MEMBER();
-  }
+    @AfterEach
+    public void afterEach() {
+        postRepository.deleteAll();
+        memberRepository.deleteAll();
+    }
 
-  @DisplayName("[성공] 생성")
-  @ParameterizedTest
-  @MethodSource("VALID_MEMBER")
-  public void success_create(Member member) {
-    // given
-    memberRepository.save(member);
-    Post post = new Post(member, "content1");
+    public static Stream<Member> VALID_MEMBER() {
+        return TestData.VALID_MEMBER();
+    }
 
-    // when
-    postRepository.save(post);
+    @DisplayName("[성공] 생성")
+    @ParameterizedTest
+    @MethodSource("VALID_MEMBER")
+    public void success_create(Member member) {
+        // given
+        memberRepository.save(member);
+        Subject subject = new Subject("강남역", "2호선");
+        subjectRepository.save(subject);
+        Post post = new Post(member, subject, "content1");
 
-    // then
-    assertThat(post.getId()).isNotNull();
-    assertThat(post.getWriter()).isEqualTo(member);
-    assertThat(post.getCreatedAt()).isNotNull();
-  }
+        // when
+        postRepository.save(post);
+
+        // then
+        assertThat(post.getId()).isNotNull();
+        assertThat(post.getWriter()).isEqualTo(member);
+        assertThat(post.getCreatedAt()).isNotNull();
+    }
 }

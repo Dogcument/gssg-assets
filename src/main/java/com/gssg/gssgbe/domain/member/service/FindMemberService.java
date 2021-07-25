@@ -30,4 +30,8 @@ public class FindMemberService {
     public boolean existsEmail(String email) {
         return memberRepository.existsByEmail(email);
     }
+
+    public boolean existsNickname(String nickname) {
+        return memberRepository.existsByNickName(nickname);
+    }
 }

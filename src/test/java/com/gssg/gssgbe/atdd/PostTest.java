@@ -16,6 +16,8 @@ import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.domain.post.entity.Post;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
+import com.gssg.gssgbe.domain.subject.entity.Subject;
+import com.gssg.gssgbe.domain.subject.repository.SubjectRepository;
 import com.gssg.gssgbe.util.TestUtil;
 import com.gssg.gssgbe.web.post.request.CreatePostRequest;
 import java.util.stream.Stream;
@@ -40,6 +42,9 @@ class PostTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
     private MemberRepository memberRepository;
 
     @Autowired
@@ -52,6 +57,9 @@ class PostTest {
 
     @TestFactory
     Stream<DynamicNode> postTest() {
+        Subject subject = new Subject("강남역", "2호선");
+        subjectRepository.save(subject);
+
         return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
             Stream.of(
                 dynamicTest("회원 가입 & 로그인", () -> {
@@ -62,7 +70,7 @@ class PostTest {
                 dynamicContainer("글 작성", Stream.of(
                     dynamicTest("[성공] 글 작성", () -> {
                         // given
-                        CreatePostRequest request = new CreatePostRequest("TEST 글 작성 TEST");
+                        CreatePostRequest request = new CreatePostRequest(subject.getName(), "TEST 글 작성 TEST");
 
                         // when
                         MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")

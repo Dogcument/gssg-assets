@@ -15,12 +15,17 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreatePostRequest {
 
-  @Schema(description = "글 내용")
-  @Length(max = 255)
-  @NotEmpty
-  private String content;
+    @Schema(description = "글감 이름")
+    @Length(max = 255)
+    @NotEmpty
+    private String subjectName;
 
-  public CreatePostRequestDto toDto(Member member){
-    return new CreatePostRequestDto(member, content);
-  }
+    @Schema(description = "글 내용")
+    @Length(max = 255)
+    @NotEmpty
+    private String content;
+
+    public CreatePostRequestDto toDto(Member member) {
+        return new CreatePostRequestDto(member, subjectName, content);
+    }
 }

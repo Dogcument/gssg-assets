@@ -20,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FindPostController {
 
-  private final FindPostService findPostService;
+    private final FindPostService findPostService;
 
-  @Operation(summary = "전체 조회")
-  @GetMapping("/api/v1/posts")
-  public FindAllPostResponse findAll(
-      @RequestParam(defaultValue = "0") @PositiveOrZero Integer page,
-      @RequestParam(defaultValue = "10") @Positive Integer size) {
-    PageRequest pageRequest = PageRequest.of(page, size);
-    Slice<PostDto> postDtos = findPostService.findAll(pageRequest);
+    @Operation(summary = "전체 조회")
+    @GetMapping("/api/v1/posts")
+    public FindAllPostResponse findAll(
+        @RequestParam(defaultValue = "0") @PositiveOrZero Integer page,
+        @RequestParam(defaultValue = "10") @Positive Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Slice<PostDto> postDtos = findPostService.findAll(pageRequest);
 
-    return new FindAllPostResponse(postDtos.map(PostResponse::new));
-  }
+        return new FindAllPostResponse(postDtos.map(PostResponse::new));
+    }
 }

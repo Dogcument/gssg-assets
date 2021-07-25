@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreatePostRequestDto {
 
-  private final Member writer;
-  private final String content;
+    private final Member writer;
+    private final String subjectName;
+    private final String content;
 }
