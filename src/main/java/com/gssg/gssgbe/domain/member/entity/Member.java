@@ -81,4 +81,10 @@ public class Member extends BaseDateTime {
             this.profileDog = profileDog;
         }
     }
+
+    public void updateIntroduce(String introduce) {
+        if (introduce != null) {
+            this.introduce = introduce;
+        }
+    }
 }

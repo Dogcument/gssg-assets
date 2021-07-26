@@ -21,6 +21,7 @@ public class UpdateMemberService {
             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         member.updateNickname(dto.getNickName());
+        member.updateIntroduce(dto.getIntroduce());
         member.updateProfileDog(dto.getProfileDogType());
 
         return member.getId();
