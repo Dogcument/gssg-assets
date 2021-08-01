@@ -16,9 +16,11 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 @Table(name = "member_user")
 @Entity
 public class Member extends BaseDateTime {
@@ -28,25 +30,23 @@ public class Member extends BaseDateTime {
     @Column(name = "member_user_id")
     private Long id;
 
-    @Column(name = "email")
     private String email;
 
     @Convert(converter = PasswordEncryptConverter.class)
     @Column(name = "password")
     private String password;
 
-    @Column(name = "nickname")
     private String nickName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "profile_dog")
     private ProfileDogType profileDog;
 
-    @Column(name = "introduce")
     private String introduce;
 
-    @Column(name = "role")
     private String role;
+
+    private Boolean deleted;
 
     public Member(String email, String password) {
         this.email = email;
@@ -55,6 +55,17 @@ public class Member extends BaseDateTime {
         this.profileDog = ProfileDogType.getDefault();
         this.introduce = "";
         this.role = Role.MEMBER.getCode();
+        this.deleted = false;
+    }
+
+    public Member(String email, String password, String nickName, String introduce) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.profileDog = ProfileDogType.getDefault();
+        this.introduce = introduce;
+        this.role = Role.MEMBER.getCode();
+        this.deleted = false;
     }
 
     public void updatePassword(String password) {
@@ -70,6 +81,12 @@ public class Member extends BaseDateTime {
     public void updateProfileDog(ProfileDogType profileDog) {
         if (profileDog != null) {
             this.profileDog = profileDog;
+        }
+    }
+
+    public void updateIntroduce(String introduce) {
+        if (introduce != null) {
+            this.introduce = introduce;
         }
     }
 }

@@ -38,12 +38,14 @@ public class Post extends BaseDateTime {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @Column(name = "content")
     private String content;
+
+    private Boolean deleted;
 
     public Post(Member writer, Subject subject, String content) {
         this.writer = writer;
         this.subject = subject;
         this.content = content;
+        this.deleted = false;
     }
 }
