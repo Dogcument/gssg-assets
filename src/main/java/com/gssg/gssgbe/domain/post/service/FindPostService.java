@@ -22,7 +22,7 @@ public class FindPostService {
     }
 
     public Slice<PostDto> findByMember(Member loginMember, Pageable pageable) {
-        return postRepository.findAllByWriter(loginMember, pageable)
+        return postRepository.findAllByMember(loginMember, pageable)
             .map(PostDto::new);
     }
 }

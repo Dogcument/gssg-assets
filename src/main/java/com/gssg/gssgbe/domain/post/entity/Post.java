@@ -32,7 +32,7 @@ public class Post extends BaseDateTime {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_user_id")
-    private Member writer;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
@@ -42,8 +42,8 @@ public class Post extends BaseDateTime {
 
     private Boolean deleted;
 
-    public Post(Member writer, Subject subject, String content) {
-        this.writer = writer;
+    public Post(Member member, Subject subject, String content) {
+        this.member = member;
         this.subject = subject;
         this.content = content;
         this.deleted = false;

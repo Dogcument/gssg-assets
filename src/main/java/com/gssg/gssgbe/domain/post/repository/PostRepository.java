@@ -12,5 +12,5 @@ public interface PostRepository extends JpaRepository<Post, Long>, PostRepositor
 
     Slice<Post> findAllSlice(Pageable pageable);
 
-    Slice<Post> findAllByWriter(Member writer, Pageable pageable);
+    Slice<Post> findAllByMember(Member member, Pageable pageable);
 }

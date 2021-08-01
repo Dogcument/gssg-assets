@@ -20,7 +20,7 @@ public class PostResponse {
     private final String content;
 
     @Schema(description = "작성자")
-    private final MemberResponse writer;
+    private final MemberResponse member;
 
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
@@ -29,7 +29,7 @@ public class PostResponse {
         this.id = dto.getId();
         this.subject = new SubjectResponse(dto.getSubjectDto());
         this.content = dto.getContent();
-        this.writer = new MemberResponse(dto.getMemberDto());
+        this.member = new MemberResponse(dto.getMemberDto());
         this.createdAt = dto.getCreatedAt();
         this.updatedAt = dto.getUpdatedAt();
     }
