@@ -25,12 +25,8 @@ public class InitLocalData {
     @PostConstruct
     public void postConstruct() {
         createMember();
-
-        Subject subject = new Subject("가을", "날씨 3");
-        subjectRepository.save(subject);
-
-        SubjectOfDate subjectOfDate = new SubjectOfDate(subject, LocalDate.now());
-        subjectOfDateRepository.save(subjectOfDate);
+        createSubject();
+        createSubjectOfDate();
     }
 
     private void createMember() {
@@ -40,5 +36,45 @@ public class InitLocalData {
             new Member("choi8608@gmail.com", "1q2w3e4r!", "hyune", "dandan"));
 
         memberRepository.saveAll(members);
+    }
+
+    private void createSubject() {
+        List<Subject> subjects = List.of(
+            new Subject("가을", "날씨 3"),
+            new Subject("글", "날씨 3"),
+            new Subject("봄", "날씨 3"),
+            new Subject("다이어트", "날씨 3"),
+            new Subject("하늘", "날씨 3"),
+            new Subject("월요일", "날씨 3"),
+            new Subject("아침", "날씨 3"),
+            new Subject("퇴근", "날씨 3"),
+            new Subject("돼지", "날씨 3"),
+            new Subject("거울", "날씨 3"),
+            new Subject("컴퓨터", "날씨 3"),
+            new Subject("서울", "날씨 3"),
+            new Subject("오징어", "날씨 3"),
+            new Subject("미세먼지", "날씨 3"),
+            new Subject("앵무새", "날씨 3"),
+            new Subject("삼겹살", "날씨 3"),
+            new Subject("집", "날씨 3"),
+            new Subject("비타민", "날씨 3"),
+            new Subject("국밥", "날씨 3"),
+            new Subject("온기", "날씨 3"),
+            new Subject("물", "날씨 3"),
+            new Subject("얼굴", "날씨 3"),
+            new Subject("핸드폰", "날씨 3"),
+            new Subject("치킨", "날씨 3"),
+            new Subject("주식", "날씨 3"));
+
+        subjects.forEach(subjectRepository::save);
+    }
+
+    private void createSubjectOfDate() {
+        LocalDate localDate = LocalDate.now().minusDays(10);
+
+        for (Subject subject : subjectRepository.findAll()) {
+            subjectOfDateRepository.save(new SubjectOfDate(subject, localDate));
+            localDate = localDate.plusDays(1);
+        }
     }
 }
