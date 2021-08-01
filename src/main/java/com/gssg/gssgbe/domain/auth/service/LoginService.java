@@ -1,7 +1,7 @@
 package com.gssg.gssgbe.domain.auth.service;
 
-import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_EXIST_AUTHORIZATION;
-import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_EXIST_MEMBER;
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_EXISTS_AUTHORIZATION;
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_EXISTS_MEMBER;
 import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_VALID_PASSWORD;
 
 import com.gssg.gssgbe.common.exception.custom.CustomAuthenticationException;
@@ -34,7 +34,7 @@ public class LoginService {
 
   public JwtAuthToken login(String loginId, String password) {
     Member member = memberRepository.findByEmail(loginId)
-        .orElseThrow(() -> new CustomAuthenticationException(NOT_EXIST_MEMBER));
+        .orElseThrow(() -> new CustomAuthenticationException(NOT_EXISTS_MEMBER));
 
     if (!passwordEncoder.matches(password, member.getPassword())) {
       throw new CustomAuthenticationException(NOT_VALID_PASSWORD);
@@ -51,7 +51,7 @@ public class LoginService {
         .map(GrantedAuthority::getAuthority)
         .findFirst()
         .map(Role::of)
-        .orElseThrow(() -> new CustomAuthrizationException(NOT_EXIST_AUTHORIZATION));
+        .orElseThrow(() -> new CustomAuthrizationException(NOT_EXISTS_AUTHORIZATION));
 
     return jwtAuthTokenProvider.createAuthToken(member.getEmail(), role.getCode());
   }

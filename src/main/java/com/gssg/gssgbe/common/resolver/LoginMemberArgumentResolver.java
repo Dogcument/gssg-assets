@@ -45,7 +45,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         .map(jwtAuthTokenProvider::convertAuthToken)
         .map(JwtAuthToken::getSubject)
         .map(email -> memberRepository.findByEmail(email)
-            .orElseThrow(() -> new CustomAuthrizationException(ErrorCode.NOT_EXIST_MEMBER)))
+            .orElseThrow(() -> new CustomAuthrizationException(ErrorCode.NOT_EXISTS_MEMBER)))
         .orElseThrow(() -> new CustomAuthrizationException(ErrorCode.FORBIDDEN));
   }
 }
