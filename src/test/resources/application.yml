@@ -17,6 +17,8 @@ logging:
 application:
   jwt:
     secreat: ${SECREAT_KEY:60639B161829DDBA56A52488D71BAC964C7842C9512B4343D5B1F146B8570E9C}
+  slack:
+    bot-token: ${BOT_TOKEN:}
 
 server:
   servlet:
