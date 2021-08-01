@@ -22,6 +22,9 @@ public enum ErrorCode {
   // 회원
   EXISTS_EMAIL("E2001", HttpStatus.CONFLICT, "이미 존재하는 이메일"),
 
+  // 글감
+  NOT_EXISTS_SUBJECT("E3001", HttpStatus.NOT_FOUND, "존재하지 않는 글감"),
+
   // 기타
   BAD_REQUEST("E0400", HttpStatus.BAD_REQUEST, "잘못된 입력 값"),
   NOT_VALID_REQUEST_BODY("E0400", HttpStatus.BAD_REQUEST, "존재하지 않거나 읽을 수 없는 Request Body"),
