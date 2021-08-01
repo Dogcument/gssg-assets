@@ -1,8 +1,8 @@
 package com.gssg.gssgbe.web.post;
 
-import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
 import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.service.FindPostService;
+import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
 import com.gssg.gssgbe.web.post.response.PostResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,11 +11,13 @@ import javax.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "글")
+@Validated
 @RequiredArgsConstructor
 @RestController
 public class FindPostController {

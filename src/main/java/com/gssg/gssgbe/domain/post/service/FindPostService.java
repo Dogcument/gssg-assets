@@ -25,5 +25,4 @@ public class FindPostService {
         return postRepository.findAllByWriter(loginMember, pageable)
             .map(PostDto::new);
     }
-
 }
