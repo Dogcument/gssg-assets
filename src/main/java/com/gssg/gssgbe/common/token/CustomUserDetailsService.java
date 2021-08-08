@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     return memberRepository.findByEmail(email)
         .map(this::createSpringSecurityUser)
-        .orElseThrow(() -> new CustomAuthenticationException(ErrorCode.NOT_EXIST_MEMBER));
+        .orElseThrow(() -> new CustomAuthenticationException(ErrorCode.NOT_EXISTS_MEMBER));
   }
 
   private User createSpringSecurityUser(Member member) {

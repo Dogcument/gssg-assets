@@ -85,7 +85,7 @@ class PostTest {
                         Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
                         Post createdPost = postRepository.findById(createdPostId).get();
 
-                        assertThat(createdPost.getWriter()).isNotNull();
+                        assertThat(createdPost.getMember()).isNotNull();
                     })
                 )),
 

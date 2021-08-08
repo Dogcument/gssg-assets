@@ -19,8 +19,8 @@ public class CreatePostService {
 
     public long create(CreatePostRequestDto request) {
         Subject subject = subjectRepository.findByName(request.getSubjectName())
-            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
-        Post post = new Post(request.getWriter(), subject, request.getContent());
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_EXISTS_SUBJECT));
+        Post post = new Post(request.getMember(), subject, request.getContent());
 
         return postRepository.save(post).getId();
     }

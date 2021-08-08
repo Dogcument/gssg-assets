@@ -1,16 +1,14 @@
 package com.gssg.gssgbe.web.post.response;
 
+import lombok.Getter;
 import org.springframework.data.domain.Slice;
 
+@Getter
 public class FindAllPostResponse {
 
-    private final Slice<PostResponse> postResponses;
+    private final Slice<PostResponse> posts;
 
-    public FindAllPostResponse(Slice<PostResponse> postResponses) {
-        this.postResponses = postResponses;
-    }
-
-    public Slice<PostResponse> getpostResponses() {
-        return postResponses;
+    public FindAllPostResponse(Slice<PostResponse> posts) {
+        this.posts = posts;
     }
 }

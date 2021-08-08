@@ -57,7 +57,7 @@ class PostRepositoryTest {
 
         // then
         assertThat(post.getId()).isNotNull();
-        assertThat(post.getWriter()).isEqualTo(member);
+        assertThat(post.getMember()).isEqualTo(member);
         assertThat(post.getCreatedAt()).isNotNull();
     }
 }
