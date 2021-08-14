@@ -20,7 +20,7 @@ public class UpdateMemberService {
         Member member = memberRepository.findById(memberId)
             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
-        member.updateNickname(dto.getNickName());
+        member.updateNickname(dto.getNickname());
         member.updateIntroduce(dto.getIntroduce());
         member.updateProfileDog(dto.getProfileDogType());
 

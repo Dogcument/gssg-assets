@@ -17,7 +17,7 @@ public class UpdateMemberRequest {
 
     @Schema(description = "공개되는 이름")
     @NotEmpty
-    private String nickName;
+    private String nickname;
 
     @Schema(description = "프로필 강아지")
     @NotNull
@@ -28,6 +28,6 @@ public class UpdateMemberRequest {
     private String introduce;
 
     public UpdateMemberDto toDto() {
-        return new UpdateMemberDto(nickName, profileDogType, introduce);
+        return new UpdateMemberDto(nickname, profileDogType, introduce);
     }
 }

@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UpdateMemberDto {
 
-    private final String nickName;
+    private final String nickname;
     private final ProfileDogType profileDogType;
     private final String introduce;
 }

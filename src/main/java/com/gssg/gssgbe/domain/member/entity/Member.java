@@ -33,13 +33,11 @@ public class Member extends BaseDateTime {
     private String email;
 
     @Convert(converter = PasswordEncryptConverter.class)
-    @Column(name = "password")
     private String password;
 
-    private String nickName;
+    private String nickname;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "profile_dog")
     private ProfileDogType profileDog;
 
     private String introduce;
@@ -48,43 +46,43 @@ public class Member extends BaseDateTime {
 
     private Boolean deleted;
 
-    public Member(String email, String password) {
+    public Member(final String email, final String password) {
         this.email = email;
         this.password = password;
-        this.nickName = "";
+        this.nickname = "";
         this.profileDog = ProfileDogType.getDefault();
         this.introduce = "";
         this.role = Role.MEMBER.getCode();
         this.deleted = false;
     }
 
-    public Member(String email, String password, String nickName, String introduce) {
+    public Member(final String email, final String password, final String nickname, final String introduce) {
         this.email = email;
         this.password = password;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.profileDog = ProfileDogType.getDefault();
         this.introduce = introduce;
         this.role = Role.MEMBER.getCode();
         this.deleted = false;
     }
 
-    public void updatePassword(String password) {
+    public void updatePassword(final String password) {
         this.password = password;
     }
 
-    public void updateNickname(String nickName) {
-        if (nickName != null) {
-            this.nickName = nickName;
+    public void updateNickname(final String nickname) {
+        if (nickname != null) {
+            this.nickname = nickname;
         }
     }
 
-    public void updateProfileDog(ProfileDogType profileDog) {
+    public void updateProfileDog(final ProfileDogType profileDog) {
         if (profileDog != null) {
             this.profileDog = profileDog;
         }
     }
 
-    public void updateIntroduce(String introduce) {
+    public void updateIntroduce(final String introduce) {
         if (introduce != null) {
             this.introduce = introduce;
         }

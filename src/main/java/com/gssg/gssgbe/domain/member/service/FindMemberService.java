@@ -32,6 +32,6 @@ public class FindMemberService {
     }
 
     public boolean existsNickname(String nickname) {
-        return memberRepository.existsByNickName(nickname);
+        return memberRepository.existsByNickname(nickname);
     }
 }

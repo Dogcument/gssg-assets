@@ -20,7 +20,7 @@ public class MemberResponse {
     private String email;
 
     @Schema(description = "필명")
-    private String nickName;
+    private String nickname;
 
     @Schema(description = "프로필 강아지")
     private ProfileDogType profileDog;
@@ -28,10 +28,10 @@ public class MemberResponse {
     @Schema(description = "한줄 소개")
     private String introduce;
 
-    public MemberResponse(MemberDto dto) {
+    public MemberResponse(final MemberDto dto) {
         this.id = dto.getId();
         this.email = dto.getEmail();
-        this.nickName = dto.getNickName();
+        this.nickname = dto.getNickname();
         this.profileDog = dto.getProfileDog();
         this.introduce = dto.getIntroduce();
     }
