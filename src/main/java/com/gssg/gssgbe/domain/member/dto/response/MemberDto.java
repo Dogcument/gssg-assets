@@ -10,16 +10,16 @@ public class MemberDto {
 
     private final Long id;
     private final String email;
-    private final String nickName;
+    private final String nickname;
     private final ProfileDogType profileDog;
     private final String introduce;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public MemberDto(Member member) {
+    public MemberDto(final Member member) {
         this.id = member.getId();
         this.email = member.getEmail();
-        this.nickName = member.getNickName();
+        this.nickname = member.getNickname();
         this.profileDog = member.getProfileDog();
         this.introduce = member.getIntroduce();
         this.createdAt = member.getCreatedAt();

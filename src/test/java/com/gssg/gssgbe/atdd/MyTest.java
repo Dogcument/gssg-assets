@@ -61,22 +61,22 @@ class MyTest {
                 dynamicContainer("내 회원 정보 수정", Stream.of(
                     dynamicTest("[성공] 내 회원 정보 수정", () -> {
                         // given
-                        String nickName = "단단이";
-                        String introduce = "한줄 소개 입니다.";
-                        UpdateMemberRequest request = new UpdateMemberRequest(nickName, ProfileDogType.CORGI, introduce);
+                        final String nickname = "단단이";
+                        final String introduce = "한줄 소개 입니다.";
+                        final UpdateMemberRequest request = new UpdateMemberRequest(nickname, ProfileDogType.CORGI, introduce);
 
                         // when
                         mockMvc.perform(patch("/api/v1/my")
-                            .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(new ObjectMapper().writeValueAsString(request)))
+                                .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
                             .andDo(print())
                             .andExpect(status().isOk())
                             .andReturn();
 
                         // then
                         savedMember = memberRepository.findById(savedMember.getId()).get();
-                        assertThat(savedMember.getNickName()).isEqualTo(nickName);
+                        assertThat(savedMember.getNickname()).isEqualTo(nickname);
                     })
                 )),
 
@@ -86,7 +86,7 @@ class MyTest {
 
                         // when
                         MvcResult mvcResult = mockMvc.perform(get("/api/v1/my/")
-                            .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
+                                .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
                             .andDo(print())
                             .andExpect(status().isOk())
                             .andReturn();

@@ -31,7 +31,7 @@ public class SubjectOfDate {
 
     private LocalDate date;
 
-    public SubjectOfDate(Subject subject, LocalDate date) {
+    public SubjectOfDate(final Subject subject, final LocalDate date) {
         this.subject = subject;
         this.date = date;
     }

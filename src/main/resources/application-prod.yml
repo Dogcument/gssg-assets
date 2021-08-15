@@ -40,3 +40,6 @@ application:
     secreat: ${SECREAT_KEY:207CEEDB92830C105C3F5B25008DBBE47FCF50712E61E1FC8536A324F1FC850D}
   slack:
     bot-token: ${BOT_TOKEN:}
+
+server:
+  port: 5000
