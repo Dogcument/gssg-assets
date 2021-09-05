@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SlackConfiguration {
 
-    @Value("${application.slack.bot-token}")
-    private String botToken;
+	@Value("${application.slack.bot-token}")
+	private String botToken;
 
-    @Bean
-    public String slackBotToken() {
-        return botToken;
-    }
+	@Bean
+	public String slackBotToken() {
+		return botToken;
+	}
 }

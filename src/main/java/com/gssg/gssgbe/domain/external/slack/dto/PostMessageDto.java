@@ -8,10 +8,10 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostMessageDto {
 
-    private final String channel;
-    private final String text;
+	private final String channel;
+	private final String text;
 
-    public static PostMessageDto of(String channel, String text) {
-        return new PostMessageDto(channel, text);
-    }
+	public static PostMessageDto of(final String channel, final String text) {
+		return new PostMessageDto(channel, text);
+	}
 }

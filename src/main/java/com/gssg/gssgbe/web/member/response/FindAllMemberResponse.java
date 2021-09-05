@@ -5,13 +5,13 @@ import java.util.List;
 
 public class FindAllMemberResponse {
 
-  private final List<MemberResponse> memberRespons;
+	private final List<MemberResponse> memberRespons;
 
-  public FindAllMemberResponse(List<MemberResponse> memberRespons) {
-    this.memberRespons = memberRespons;
-  }
+	public FindAllMemberResponse(final List<MemberResponse> memberRespons) {
+		this.memberRespons = memberRespons;
+	}
 
-  public List<MemberResponse> getMemberRespons() {
-    return Collections.unmodifiableList(memberRespons);
-  }
+	public List<MemberResponse> getMemberRespons() {
+		return Collections.unmodifiableList(memberRespons);
+	}
 }

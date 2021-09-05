@@ -27,7 +27,7 @@ public class CreateMemberService {
 		return memberRepository.save(member).getId();
 	}
 
-	private void validation(CreateMemberDto request) {
+	private void validation(final CreateMemberDto request) {
 		if (memberRepository.existsByEmail(request.getEmail())) {
 			throw new BusinessException(EXISTS_EMAIL);
 		}

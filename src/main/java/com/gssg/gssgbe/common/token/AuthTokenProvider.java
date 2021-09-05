@@ -4,9 +4,9 @@ import java.util.Date;
 
 public interface AuthTokenProvider<T> {
 
-  T createAuthToken(String email, String role, Date expiredDate);
+	T createAuthToken(String email, String role, Date expiredDate);
 
-  T createAuthToken(String email, String role);
+	T createAuthToken(String email, String role);
 
-  T convertAuthToken(String token);
+	T convertAuthToken(String token);
 }
