@@ -42,4 +42,4 @@ application:
     bot-token: ${BOT_TOKEN:}
 
 server:
-  port: 5000
+  port: ${PORT:5000}
