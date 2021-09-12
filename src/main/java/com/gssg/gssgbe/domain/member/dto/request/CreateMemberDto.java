@@ -1,5 +1,7 @@
 package com.gssg.gssgbe.domain.member.dto.request;
 
+import com.gssg.gssgbe.common.type.ProfileDogType;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,7 +9,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateMemberDto {
 
-  private final String email;
-  private final String password;
+	private final String email;
+	private final String password;
+	private final String nickname;
+	private final ProfileDogType profileDogType;
+	private final String introduce;
 }
 

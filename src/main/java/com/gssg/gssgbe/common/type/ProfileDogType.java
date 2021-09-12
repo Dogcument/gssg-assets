@@ -7,15 +7,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ProfileDogType {
 
-    BAEKGU,
-    JANGGUN,
-    WUYU,
-    YORK,
-    CORGI,
-    SILVER,
-    ;
+	BAEKGU,
+	JANGGUN,
+	WUYU,
+	YORK,
+	CORGI,
+	SILVER,
+	;
 
-    public static ProfileDogType getDefault() {
-        return ProfileDogType.BAEKGU;
-    }
+	public static ProfileDogType getDefault() {
+		return ProfileDogType.BAEKGU;
+	}
 }

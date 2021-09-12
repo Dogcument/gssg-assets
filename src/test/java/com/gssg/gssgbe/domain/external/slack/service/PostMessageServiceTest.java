@@ -1,14 +1,15 @@
 package com.gssg.gssgbe.domain.external.slack.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-import com.gssg.gssgbe.domain.external.slack.dto.PostMessageDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+
+import com.gssg.gssgbe.domain.external.slack.dto.PostMessageDto;
 
 /*
     botToken 을 public repository 에 올리지 못하는 이슈로 Disabled
@@ -19,23 +20,23 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PostMessageServiceTest {
 
-    @Autowired
-    private PostMessageService postMessageService;
+	@Autowired
+	private PostMessageService postMessageService;
 
-    @DisplayName("[성공] 전송")
-    @Test
-    public void send() {
-        // given
-        String webhookTestUrl = "C029TAGE4AE";
-        PostMessageDto postMessageDto = PostMessageDto.of(webhookTestUrl, "Test Message");
+	@DisplayName("[성공] 전송")
+	@Test
+	public void send() {
+		// given
+		String webhookTestUrl = "C029TAGE4AE";
+		PostMessageDto postMessageDto = PostMessageDto.of(webhookTestUrl, "Test Message");
 
-        // when
-        String block = postMessageService
-            .sendChatPostMessage(postMessageDto)
-            .block();
+		// when
+		String block = postMessageService
+			.sendChatPostMessage(postMessageDto)
+			.block();
 
-        // then
-        assertThat(block).startsWith("{\"ok\":true");
-    }
+		// then
+		assertThat(block).startsWith("{\"ok\":true");
+	}
 }
 

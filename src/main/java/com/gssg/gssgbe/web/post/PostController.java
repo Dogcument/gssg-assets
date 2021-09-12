@@ -13,6 +13,8 @@ import com.gssg.gssgbe.common.annotation.LoginMember;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.service.CreatePostLikeService;
 import com.gssg.gssgbe.domain.post.service.CreatePostService;
+import com.gssg.gssgbe.domain.post.service.DeletePostLikeService;
+import com.gssg.gssgbe.domain.post.service.FindPostLikeService;
 import com.gssg.gssgbe.web.post.request.CreatePostRequest;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +29,9 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
 
 	private final CreatePostService createPostService;
+	private final FindPostLikeService findPostLikeService;
 	private final CreatePostLikeService createPostLikeService;
+	private final DeletePostLikeService deletePostLikeService;
 
 	@Operation(summary = "글 작성", security = @SecurityRequirement(name = "bearerAuth"))
 	@ResponseStatus(HttpStatus.CREATED)
@@ -38,12 +42,17 @@ public class PostController {
 		return createPostService.create(request.toDto(loginMember));
 	}
 
-	@Operation(summary = "글 좋아요", security = @SecurityRequirement(name = "bearerAuth"))
+	@Operation(summary = "글 좋아요 토글", security = @SecurityRequirement(name = "bearerAuth"))
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/api/v1/posts/{postId}/like")
-	public Long like(
+	public void like(
 		@Parameter(hidden = true) @LoginMember final Member loginMember,
 		@PathVariable final Long postId) {
-		return createPostLikeService.create(postId, loginMember);
+		if (findPostLikeService.exist(postId, loginMember)) {
+			deletePostLikeService.delete(postId, loginMember);
+			return;
+		}
+
+		createPostLikeService.create(postId, loginMember);
 	}
 }

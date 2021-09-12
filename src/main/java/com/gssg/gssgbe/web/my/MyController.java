@@ -1,5 +1,17 @@
 package com.gssg.gssgbe.web.my;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.gssg.gssgbe.common.annotation.LoginMember;
 import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
@@ -14,21 +26,12 @@ import com.gssg.gssgbe.web.member.request.UpdateMemberRequest;
 import com.gssg.gssgbe.web.member.response.MemberResponse;
 import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
 import com.gssg.gssgbe.web.post.response.PostResponse;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "회원 - my")
 @Validated
@@ -36,45 +39,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyController {
 
-    private final FindMemberService findMemberService;
-    private final UpdateMemberService updateMemberService;
-    private final FindPostService findPostService;
+	private final FindMemberService findMemberService;
+	private final UpdateMemberService updateMemberService;
+	private final FindPostService findPostService;
 
-    @Operation(summary = "내 회원 정보 조회", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping("/api/v1/my")
-    public MemberResponse myInfo(
-        @Parameter(hidden = true) @LoginMember Member loginMember) {
-        MemberDto memberDto = findMemberService.findById(loginMember.getId())
-            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+	@Operation(summary = "내 회원 정보 조회", security = @SecurityRequirement(name = "bearerAuth"))
+	@GetMapping("/api/v1/my")
+	public MemberResponse myInfo(
+		@Parameter(hidden = true) @LoginMember final Member loginMember) {
+		final MemberDto memberDto = findMemberService.findById(loginMember.getId())
+			.orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
-        return new MemberResponse(memberDto);
-    }
+		return new MemberResponse(memberDto);
+	}
 
-    @Operation(summary = "내 회원 정보 수정", security = @SecurityRequirement(name = "bearerAuth"))
-    @PatchMapping("/api/v1/my")
-    public Long update(
-        @Parameter(hidden = true) @LoginMember Member loginMember,
-        @RequestBody UpdateMemberRequest request) {
-        return updateMemberService.update(loginMember.getId(), request.toDto());
-    }
+	@Operation(summary = "내 회원 정보 수정", security = @SecurityRequirement(name = "bearerAuth"))
+	@PatchMapping("/api/v1/my")
+	public Long update(
+		@Parameter(hidden = true) @LoginMember final Member loginMember,
+		@RequestBody final UpdateMemberRequest request) {
+		return updateMemberService.update(loginMember.getId(), request.toDto());
+	}
 
-    @Operation(summary = "내 회원 비밀번호 수정", security = @SecurityRequirement(name = "bearerAuth"))
-    @PatchMapping("/api/v1/my/password")
-    public Long updatePassword(
-        @Parameter(hidden = true) @LoginMember Member loginMember,
-        @RequestBody UpdateMemberPasswordRequest request) {
-        return updateMemberService.updatePassword(loginMember.getId(), request.getPassword());
-    }
+	@Operation(summary = "내 회원 비밀번호 수정", security = @SecurityRequirement(name = "bearerAuth"))
+	@PatchMapping("/api/v1/my/password")
+	public Long updatePassword(
+		@Parameter(hidden = true) @LoginMember final Member loginMember,
+		@RequestBody final UpdateMemberPasswordRequest request) {
+		return updateMemberService.updatePassword(loginMember.getId(), request.getPassword());
+	}
 
-    @Operation(summary = "내 글 조회", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping("/api/v1/my/posts")
-    public FindAllPostResponse findMyPosts(
-        @Parameter(hidden = true) @LoginMember Member loginMember,
-        @RequestParam(defaultValue = "0") @PositiveOrZero Integer page,
-        @RequestParam(defaultValue = "10") @Positive Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Slice<PostDto> postDtos = findPostService.findByMember(loginMember, pageRequest);
+	@Operation(summary = "내 글 조회", security = @SecurityRequirement(name = "bearerAuth"))
+	@GetMapping("/api/v1/my/posts")
+	public FindAllPostResponse findMyPosts(
+		@Parameter(hidden = true) @LoginMember final Member loginMember,
+		@RequestParam(defaultValue = "0") @PositiveOrZero final Integer page,
+		@RequestParam(defaultValue = "10") @Positive final Integer size) {
+		final PageRequest pageRequest = PageRequest.of(page, size);
+		final Slice<PostDto> postDtos = findPostService.findByMember(loginMember, pageRequest);
 
-        return new FindAllPostResponse(postDtos.map(PostResponse::new));
-    }
+		return new FindAllPostResponse(postDtos.map(PostResponse::new));
+	}
 }

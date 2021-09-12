@@ -4,9 +4,9 @@ import org.springframework.security.core.Authentication;
 
 public interface AuthToken<T> {
 
-  boolean validate();
+	boolean validate();
 
-  T getClaims();
+	T getClaims();
 
-  Authentication getAuthentication();
+	Authentication getAuthentication();
 }
