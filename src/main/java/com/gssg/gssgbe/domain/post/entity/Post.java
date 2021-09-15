@@ -47,7 +47,7 @@ public class Post extends BaseDateTime {
 	private Boolean deleted;
 
 	@OneToMany(mappedBy = "post")
-	private List<PostLike> postLike;
+	private List<PostLike> postLikes;
 
 	@OneToMany(mappedBy = "post")
 	private List<Reply> replies;
@@ -57,12 +57,12 @@ public class Post extends BaseDateTime {
 		this.subject = subject;
 		this.content = content;
 		this.deleted = false;
-		this.postLike = new ArrayList<>();
+		this.postLikes = new ArrayList<>();
 		this.replies = new ArrayList<>();
 	}
 
 	public void addPostLike(final PostLike postLike) {
-		this.postLike.add(postLike);
+		this.postLikes.add(postLike);
 
 		if (postLike.getPost() != this) {
 			postLike.setPost(this);

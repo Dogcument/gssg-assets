@@ -44,7 +44,7 @@ public class PostLike extends BaseDateTime {
 	public void setPost(final Post post) {
 		this.post = post;
 
-		if (!post.getPostLike().contains(this)) {
+		if (!post.getPostLikes().contains(this)) {
 			post.addPostLike(this);
 		}
 	}

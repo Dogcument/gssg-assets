@@ -46,18 +46,18 @@ public class Reply extends BaseDateTime {
 	private Boolean deleted;
 
 	@OneToMany(mappedBy = "reply")
-	private List<ReplyLike> replyLike;
+	private List<ReplyLike> replyLikes;
 
 	public Reply(final Member member, final Post post, final String content) {
 		this.member = member;
 		this.post = post;
 		this.content = content;
 		this.deleted = false;
-		this.replyLike = new ArrayList<>();
+		this.replyLikes = new ArrayList<>();
 	}
 
 	public void addReplyLike(final ReplyLike replyLike) {
-		this.replyLike.add(replyLike);
+		this.replyLikes.add(replyLike);
 
 		if (replyLike.getReply() != this) {
 			replyLike.setReply(this);

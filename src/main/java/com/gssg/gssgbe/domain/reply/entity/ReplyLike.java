@@ -44,7 +44,7 @@ public class ReplyLike extends BaseDateTime {
 	public void setReply(final Reply reply) {
 		this.reply = reply;
 
-		if (!reply.getReplyLike().contains(this)) {
+		if (!reply.getReplyLikes().contains(this)) {
 			reply.addReplyLike(this);
 		}
 	}

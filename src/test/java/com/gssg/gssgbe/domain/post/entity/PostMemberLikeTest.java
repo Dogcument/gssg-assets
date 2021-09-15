@@ -51,8 +51,8 @@ class PostMemberLikeTest {
 		postLikeRepository.save(postLike2);
 
 		// then
-		assertThat(post.getPostLike().stream().map(PostLike::getPost)).anyMatch(e -> e.equals(post));
-		assertThat(post.getPostLike().stream().map(PostLike::getMember)).anyMatch(e -> e.equals(member));
-		assertThat(post.getPostLike().stream().map(PostLike::getMember)).anyMatch(e -> e.equals(member2));
+		assertThat(post.getPostLikes().stream().map(PostLike::getPost)).anyMatch(e -> e.equals(post));
+		assertThat(post.getPostLikes().stream().map(PostLike::getMember)).anyMatch(e -> e.equals(member));
+		assertThat(post.getPostLikes().stream().map(PostLike::getMember)).anyMatch(e -> e.equals(member2));
 	}
 }
