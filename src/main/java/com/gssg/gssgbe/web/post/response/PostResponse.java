@@ -27,6 +27,9 @@ public class PostResponse {
 	@Schema(description = "좋아요 수")
 	private final Long likeCount;
 
+	@Schema(description = "댓글 수")
+	private final Long replyCount;
+
 	private final LocalDateTime createdAt;
 	private final LocalDateTime updatedAt;
 
@@ -36,6 +39,7 @@ public class PostResponse {
 		this.content = dto.getContent();
 		this.member = new MemberResponse(dto.getMemberDto());
 		this.likeCount = dto.getLikeCount();
+		this.replyCount = dto.getReplyCount();
 		this.createdAt = dto.getCreatedAt();
 		this.updatedAt = dto.getUpdatedAt();
 	}
