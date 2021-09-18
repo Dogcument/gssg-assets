@@ -48,4 +48,8 @@ public class PostLike extends BaseDateTime {
 			post.addPostLike(this);
 		}
 	}
+
+	public boolean isMine(final Member member) {
+		return this.member.equals(member);
+	}
 }

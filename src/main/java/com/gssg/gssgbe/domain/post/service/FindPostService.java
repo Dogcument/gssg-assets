@@ -23,6 +23,11 @@ public class FindPostService {
 			.map(PostDto::new);
 	}
 
+	public Slice<PostDto> findAll(final Member loginMember, final Pageable pageable) {
+		return postRepository.findAllSlice(pageable)
+			.map(post -> new PostDto(post, post.isLike(loginMember)));
+	}
+
 	public Slice<PostDto> findByMember(final Member loginMember, final Pageable pageable) {
 		return postRepository.findAllByMember(loginMember, pageable)
 			.map(PostDto::new);

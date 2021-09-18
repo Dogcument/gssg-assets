@@ -76,4 +76,9 @@ public class Post extends BaseDateTime {
 			reply.setPost(this);
 		}
 	}
+
+	public boolean isLike(final Member member) {
+		return postLikes.stream()
+			.anyMatch(like -> like.isMine(member));
+	}
 }
