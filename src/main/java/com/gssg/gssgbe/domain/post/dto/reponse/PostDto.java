@@ -18,6 +18,7 @@ public class PostDto {
 	private final LocalDateTime createdAt;
 	private final LocalDateTime updatedAt;
 	private final long likeCount;
+	private final long replyCount;
 
 	public PostDto(final Post post) {
 		this.id = post.getId();
@@ -26,6 +27,7 @@ public class PostDto {
 		this.memberDto = new MemberDto(post.getMember());
 		this.createdAt = post.getCreatedAt();
 		this.updatedAt = post.getUpdatedAt();
-		this.likeCount = post.getPostLike().size();
+		this.likeCount = post.getPostLikes().size();
+		this.replyCount = post.getReplies().size();
 	}
 }

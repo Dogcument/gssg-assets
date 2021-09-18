@@ -45,14 +45,15 @@ public class PostController {
 	@Operation(summary = "글 좋아요 토글", security = @SecurityRequirement(name = "bearerAuth"))
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/api/v1/posts/{postId}/like")
-	public void like(
+	public Boolean like(
 		@Parameter(hidden = true) @LoginMember final Member loginMember,
 		@PathVariable final Long postId) {
 		if (findPostLikeService.exist(postId, loginMember)) {
 			deletePostLikeService.delete(postId, loginMember);
-			return;
+			return false;
 		}
 
 		createPostLikeService.create(postId, loginMember);
+		return true;
 	}
 }

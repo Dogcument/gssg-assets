@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.domain.post.entity;
+package com.gssg.gssgbe.domain.reply.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,33 +19,33 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "post_like")
+@Table(name = "reply_like")
 @Entity
-public class PostLike extends BaseDateTime {
+public class ReplyLike extends BaseDateTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "post_like_id")
+	@Column(name = "reply_like_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
-	private Post post;
+	@JoinColumn(name = "reply_id")
+	private Reply reply;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_user_id")
 	private Member member;
 
-	public PostLike(final Post post, final Member member) {
-		setPost(post);
+	public ReplyLike(final Reply reply, final Member member) {
+		setReply(reply);
 		this.member = member;
 	}
 
-	public void setPost(final Post post) {
-		this.post = post;
+	public void setReply(final Reply reply) {
+		this.reply = reply;
 
-		if (!post.getPostLikes().contains(this)) {
-			post.addPostLike(this);
+		if (!reply.getReplyLikes().contains(this)) {
+			reply.addReplyLike(this);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.gssg.gssgbe.domain.post.entity;
+package com.gssg.gssgbe.domain.reply.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,7 @@ import javax.persistence.Table;
 
 import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
-import com.gssg.gssgbe.domain.reply.entity.Reply;
-import com.gssg.gssgbe.domain.subject.entity.Subject;
+import com.gssg.gssgbe.domain.post.entity.Post;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,13 +24,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "post")
+@Table(name = "reply")
 @Entity
-public class Post extends BaseDateTime {
+public class Reply extends BaseDateTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "post_id")
+	@Column(name = "reply_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -39,41 +38,37 @@ public class Post extends BaseDateTime {
 	private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "subject_id")
-	private Subject subject;
+	@JoinColumn(name = "post_id")
+	private Post post;
 
 	private String content;
 
 	private Boolean deleted;
 
-	@OneToMany(mappedBy = "post")
-	private List<PostLike> postLikes;
+	@OneToMany(mappedBy = "reply")
+	private List<ReplyLike> replyLikes;
 
-	@OneToMany(mappedBy = "post")
-	private List<Reply> replies;
-
-	public Post(final Member member, final Subject subject, final String content) {
+	public Reply(final Member member, final Post post, final String content) {
 		this.member = member;
-		this.subject = subject;
+		this.post = post;
 		this.content = content;
 		this.deleted = false;
-		this.postLikes = new ArrayList<>();
-		this.replies = new ArrayList<>();
+		this.replyLikes = new ArrayList<>();
 	}
 
-	public void addPostLike(final PostLike postLike) {
-		this.postLikes.add(postLike);
+	public void addReplyLike(final ReplyLike replyLike) {
+		this.replyLikes.add(replyLike);
 
-		if (postLike.getPost() != this) {
-			postLike.setPost(this);
+		if (replyLike.getReply() != this) {
+			replyLike.setReply(this);
 		}
 	}
 
-	public void addReply(final Reply reply) {
-		this.replies.add(reply);
+	public void setPost(final Post post) {
+		this.post = post;
 
-		if (reply.getPost() != this) {
-			reply.setPost(this);
+		if (!post.getReplies().contains(this)) {
+			post.addReply(this);
 		}
 	}
 }
