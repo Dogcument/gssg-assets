@@ -59,7 +59,7 @@ class PostTest {
 
 	@TestFactory
 	Stream<DynamicNode> postTest() {
-		Subject subject = new Subject("강남역", "2호선");
+		final Subject subject = new Subject("강남역", "2호선");
 		subjectRepository.save(subject);
 
 		return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
@@ -72,10 +72,10 @@ class PostTest {
 				dynamicContainer("글 작성", Stream.of(
 					dynamicTest("[성공] 글 작성", () -> {
 						// given
-						CreatePostRequest request = new CreatePostRequest(subject.getName(), "TEST 글 작성 TEST");
+						final CreatePostRequest request = new CreatePostRequest(subject.getName(), "TEST 글 작성 TEST");
 
 						// when
-						MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
+						final MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
 								.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
 								.contentType(MediaType.APPLICATION_JSON)
 								.content(new ObjectMapper().writeValueAsString(request)))
@@ -84,8 +84,8 @@ class PostTest {
 							.andReturn();
 
 						// then
-						Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
-						Post createdPost = postRepository.findById(createdPostId).get();
+						final Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
+						final Post createdPost = postRepository.findById(createdPostId).get();
 
 						assertThat(createdPost.getMember()).isNotNull();
 					})

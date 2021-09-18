@@ -87,14 +87,14 @@ class MyTest {
 						// given
 
 						// when
-						MvcResult mvcResult = mockMvc.perform(get("/api/v1/my/")
+						final MvcResult mvcResult = mockMvc.perform(get("/api/v1/my/")
 								.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
 							.andDo(print())
 							.andExpect(status().isOk())
 							.andReturn();
 
 						// then
-						MemberResponse memberResponse = TestUtil.mvcResultToObject(mvcResult, MemberResponse.class);
+						final MemberResponse memberResponse = TestUtil.mvcResultToObject(mvcResult, MemberResponse.class);
 						assertThat(memberResponse.getEmail()).isNotNull();
 					})
 				)),

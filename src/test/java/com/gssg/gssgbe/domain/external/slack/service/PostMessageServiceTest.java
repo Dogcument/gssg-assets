@@ -25,13 +25,13 @@ class PostMessageServiceTest {
 
 	@DisplayName("[성공] 전송")
 	@Test
-	public void send() {
+	void send() {
 		// given
-		String webhookTestUrl = "C029TAGE4AE";
-		PostMessageDto postMessageDto = PostMessageDto.of(webhookTestUrl, "Test Message");
+		final String webhookTestUrl = "C029TAGE4AE";
+		final PostMessageDto postMessageDto = PostMessageDto.of(webhookTestUrl, "Test Message");
 
 		// when
-		String block = postMessageService
+		final String block = postMessageService
 			.sendChatPostMessage(postMessageDto)
 			.block();
 

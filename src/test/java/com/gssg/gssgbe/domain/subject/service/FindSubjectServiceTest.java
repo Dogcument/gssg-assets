@@ -23,18 +23,18 @@ class FindSubjectServiceTest {
 	private SubjectRepository subjectRepository;
 
 	@Test
-	public void findAll() {
+	void findAll() {
 		// given
-		Subject subject1 = new Subject("sub1", "sub1 description");
-		Subject subject2 = new Subject("sub2", "sub2 description");
+		final Subject subject1 = new Subject("sub1", "sub1 description");
+		final Subject subject2 = new Subject("sub2", "sub2 description");
 
 		subjectRepository.save(subject1);
 		subjectRepository.save(subject2);
 
-		PageRequest pageRequest = PageRequest.of(0, 5);
+		final PageRequest pageRequest = PageRequest.of(0, 5);
 
 		// when
-		Page<SubjectDto> subjects = findSubjectService.PagefindAll(pageRequest);
+		final Page<SubjectDto> subjects = findSubjectService.PagefindAll(pageRequest);
 
 		// then
 		assertThat(subjects).hasSize(2);
