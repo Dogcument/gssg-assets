@@ -1,6 +1,5 @@
 package com.gssg.gssgbe.domain.member.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,7 +30,6 @@ public class Member extends BaseDateTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_user_id")
 	private Long id;
 
 	private String email;
