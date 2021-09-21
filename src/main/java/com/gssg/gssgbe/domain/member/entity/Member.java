@@ -1,5 +1,7 @@
 package com.gssg.gssgbe.domain.member.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -98,5 +100,20 @@ public class Member extends BaseDateTime {
 		if (introduce != null) {
 			this.introduce = introduce;
 		}
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Member))
+			return false;
+		final Member member = (Member)o;
+		return Objects.equals(getEmail(), member.getEmail());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getEmail());
 	}
 }
