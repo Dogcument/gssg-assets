@@ -29,6 +29,7 @@ import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.domain.post.entity.Post;
+import com.gssg.gssgbe.domain.post.repository.PostLikeRepository;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
 import com.gssg.gssgbe.domain.subject.entity.Subject;
 import com.gssg.gssgbe.domain.subject.repository.SubjectRepository;
@@ -40,20 +41,14 @@ import com.gssg.gssgbe.web.post.request.CreatePostRequest;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PostTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+	@Autowired private MockMvc mockMvc;
 
-	@Autowired
-	private SubjectRepository subjectRepository;
+	@Autowired private SubjectRepository subjectRepository;
+	@Autowired private MemberRepository memberRepository;
+	@Autowired private PostRepository postRepository;
+	@Autowired private PostLikeRepository postLikeRepository;
 
-	@Autowired
-	private MemberRepository memberRepository;
-
-	@Autowired
-	private PostRepository postRepository;
-
-	@Autowired
-	private JwtAuthTokenProvider jwtAuthTokenProvider;
+	@Autowired private JwtAuthTokenProvider jwtAuthTokenProvider;
 
 	private JwtAuthToken jwtAuthToken;
 
@@ -91,7 +86,25 @@ class PostTest {
 					})
 				)),
 
+				dynamicContainer("글 좋아요", Stream.of(
+					dynamicTest("[성공] 글 좋아요", () -> {
+						// given
+
+						// when
+						final MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts/1/like")
+								.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
+							.andDo(print())
+							.andExpect(status().isCreated())
+							.andReturn();
+
+						// then
+						final Boolean result = TestUtil.mvcResultToObject(mvcResult, Boolean.class);
+						assertThat(result).isTrue();
+					})
+				)),
+
 				dynamicTest("afterAll", () -> {
+					postLikeRepository.deleteAll();
 					postRepository.deleteAll();
 					memberRepository.deleteAll();
 				})
