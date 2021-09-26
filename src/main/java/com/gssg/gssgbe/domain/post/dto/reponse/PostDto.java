@@ -17,17 +17,23 @@ public class PostDto {
 	private final MemberDto memberDto;
 	private final LocalDateTime createdAt;
 	private final LocalDateTime updatedAt;
+	private final Boolean like;
 	private final long likeCount;
 	private final long replyCount;
 
-	public PostDto(final Post post) {
+	public PostDto(final Post post, final boolean like) {
 		this.id = post.getId();
 		this.subjectDto = new SubjectDto(post.getSubject());
 		this.content = post.getContent();
 		this.memberDto = new MemberDto(post.getMember());
 		this.createdAt = post.getCreatedAt();
 		this.updatedAt = post.getUpdatedAt();
+		this.like = like;
 		this.likeCount = post.getPostLikes().size();
 		this.replyCount = post.getReplies().size();
+	}
+
+	public PostDto(final Post post) {
+		this(post, false);
 	}
 }

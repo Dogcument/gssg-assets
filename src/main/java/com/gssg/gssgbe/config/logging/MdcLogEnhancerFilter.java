@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 public class MdcLogEnhancerFilter implements Filter {
 
 	@Override
-	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
+	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
+		final FilterChain filterChain)
 		throws IOException, ServletException {
 		MDC.put("transactionId", UUID.randomUUID().toString());
 		filterChain.doFilter(servletRequest, servletResponse);

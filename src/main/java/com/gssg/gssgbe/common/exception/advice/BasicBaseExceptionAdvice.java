@@ -25,7 +25,8 @@ public class BasicBaseExceptionAdvice extends BaseExceptionAdvice {
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-	protected ErrorResponse handleHttpRequestMethodNotSupportedException(final HttpRequestMethodNotSupportedException ex) {
+	protected ErrorResponse handleHttpRequestMethodNotSupportedException(
+		final HttpRequestMethodNotSupportedException ex) {
 		preHandle(ex);
 		return ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED);
 	}

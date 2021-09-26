@@ -29,6 +29,7 @@ import com.gssg.gssgbe.data.TestData;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.domain.post.entity.Post;
+import com.gssg.gssgbe.domain.post.repository.PostLikeRepository;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
 import com.gssg.gssgbe.domain.subject.entity.Subject;
 import com.gssg.gssgbe.domain.subject.repository.SubjectRepository;
@@ -40,26 +41,20 @@ import com.gssg.gssgbe.web.post.request.CreatePostRequest;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PostTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+	@Autowired private MockMvc mockMvc;
 
-	@Autowired
-	private SubjectRepository subjectRepository;
+	@Autowired private SubjectRepository subjectRepository;
+	@Autowired private MemberRepository memberRepository;
+	@Autowired private PostRepository postRepository;
+	@Autowired private PostLikeRepository postLikeRepository;
 
-	@Autowired
-	private MemberRepository memberRepository;
-
-	@Autowired
-	private PostRepository postRepository;
-
-	@Autowired
-	private JwtAuthTokenProvider jwtAuthTokenProvider;
+	@Autowired private JwtAuthTokenProvider jwtAuthTokenProvider;
 
 	private JwtAuthToken jwtAuthToken;
 
 	@TestFactory
 	Stream<DynamicNode> postTest() {
-		Subject subject = new Subject("강남역", "2호선");
+		final Subject subject = new Subject("강남역", "2호선");
 		subjectRepository.save(subject);
 
 		return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
@@ -72,10 +67,10 @@ class PostTest {
 				dynamicContainer("글 작성", Stream.of(
 					dynamicTest("[성공] 글 작성", () -> {
 						// given
-						CreatePostRequest request = new CreatePostRequest(subject.getName(), "TEST 글 작성 TEST");
+						final CreatePostRequest request = new CreatePostRequest(subject.getName(), "TEST 글 작성 TEST");
 
 						// when
-						MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
+						final MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
 								.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
 								.contentType(MediaType.APPLICATION_JSON)
 								.content(new ObjectMapper().writeValueAsString(request)))
@@ -84,14 +79,32 @@ class PostTest {
 							.andReturn();
 
 						// then
-						Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
-						Post createdPost = postRepository.findById(createdPostId).get();
+						final Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
+						final Post createdPost = postRepository.findById(createdPostId).get();
 
 						assertThat(createdPost.getMember()).isNotNull();
 					})
 				)),
 
+				dynamicContainer("글 좋아요", Stream.of(
+					dynamicTest("[성공] 글 좋아요", () -> {
+						// given
+
+						// when
+						final MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts/1/like")
+								.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
+							.andDo(print())
+							.andExpect(status().isCreated())
+							.andReturn();
+
+						// then
+						final Boolean result = TestUtil.mvcResultToObject(mvcResult, Boolean.class);
+						assertThat(result).isTrue();
+					})
+				)),
+
 				dynamicTest("afterAll", () -> {
+					postLikeRepository.deleteAll();
 					postRepository.deleteAll();
 					memberRepository.deleteAll();
 				})

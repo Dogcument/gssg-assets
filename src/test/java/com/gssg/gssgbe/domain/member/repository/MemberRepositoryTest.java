@@ -27,21 +27,21 @@ class MemberRepositoryTest {
 		memberRepository.deleteAll();
 	}
 
-	public static Stream<Member> VALID_MEMBER() {
+	static Stream<Member> VALID_MEMBER() {
 		return TestData.VALID_MEMBER();
 	}
 
 	@DisplayName("[성공] 생성")
 	@ParameterizedTest
 	@MethodSource("VALID_MEMBER")
-	public void success_create(Member member) {
+	void success_create(final Member member) {
 		// given
 
 		// when
 		memberRepository.save(member);
 
 		// then
-		Member createdMember = memberRepository.findByEmail(member.getEmail()).get();
+		final Member createdMember = memberRepository.findByEmail(member.getEmail()).get();
 		assertThat(createdMember.getId()).isNotNull();
 		System.out.println("### member.getPassword()=" + member.getPassword()
 			+ ", createdMember.getPassword()=" + createdMember.getPassword());
@@ -51,7 +51,7 @@ class MemberRepositoryTest {
 	@DisplayName("[성공] email 존재 여부")
 	@ParameterizedTest
 	@MethodSource("VALID_MEMBER")
-	public void success_exists(Member member) {
+	void success_exists(final Member member) {
 		// given
 		memberRepository.save(member);
 

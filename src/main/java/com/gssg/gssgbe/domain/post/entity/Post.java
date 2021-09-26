@@ -3,7 +3,6 @@ package com.gssg.gssgbe.domain.post.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,7 +30,6 @@ public class Post extends BaseDateTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "post_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -75,5 +73,10 @@ public class Post extends BaseDateTime {
 		if (reply.getPost() != this) {
 			reply.setPost(this);
 		}
+	}
+
+	public boolean isLike(final Member member) {
+		return postLikes.stream()
+			.anyMatch(like -> like.isMine(member));
 	}
 }

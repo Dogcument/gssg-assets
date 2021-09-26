@@ -27,7 +27,8 @@ public class JWTFilter extends GenericFilterBean {
 	}
 
 	@Override
-	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
+	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
+		final FilterChain filterChain)
 		throws ServletException, IOException {
 		Optional.ofNullable(((HttpServletRequest)servletRequest).getHeader(AUTHORIZATION_HEADER))
 			.map(authorization -> authorization.split("bearer")[1])

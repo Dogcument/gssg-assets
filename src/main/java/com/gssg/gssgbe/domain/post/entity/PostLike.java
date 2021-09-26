@@ -1,6 +1,5 @@
 package com.gssg.gssgbe.domain.post.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,6 @@ public class PostLike extends BaseDateTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "post_like_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,5 +45,9 @@ public class PostLike extends BaseDateTime {
 		if (!post.getPostLikes().contains(this)) {
 			post.addPostLike(this);
 		}
+	}
+
+	public boolean isMine(final Member member) {
+		return this.member.equals(member);
 	}
 }

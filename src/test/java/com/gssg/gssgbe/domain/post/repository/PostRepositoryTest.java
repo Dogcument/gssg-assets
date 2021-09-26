@@ -47,12 +47,12 @@ class PostRepositoryTest {
 	@DisplayName("[성공] 생성")
 	@ParameterizedTest
 	@MethodSource("VALID_MEMBER")
-	public void success_create(Member member) {
+	void success_create(final Member member) {
 		// given
 		memberRepository.save(member);
-		Subject subject = new Subject("강남역", "2호선");
+		final Subject subject = new Subject("강남역", "2호선");
 		subjectRepository.save(subject);
-		Post post = new Post(member, subject, "content1");
+		final Post post = new Post(member, subject, "content1");
 
 		// when
 		postRepository.save(post);

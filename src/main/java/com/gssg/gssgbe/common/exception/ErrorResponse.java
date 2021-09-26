@@ -70,12 +70,14 @@ public class ErrorResponse {
 
 	public static ErrorResponse of(final MethodArgumentTypeMismatchException ex) {
 		final String value = (ex.getValue() == null) ? "" : ex.getValue().toString();
-		final List<FieldError> errors = Collections.singletonList(FieldError.of(ex.getName(), value, ex.getErrorCode()));
+		final List<FieldError> errors = Collections.singletonList(
+			FieldError.of(ex.getName(), value, ex.getErrorCode()));
 		return ErrorResponse.of(ErrorCode.BAD_REQUEST, errors);
 	}
 
 	public static ErrorResponse of(final MissingServletRequestParameterException ex) {
-		final List<FieldError> errors = Collections.singletonList(FieldError.of(ex.getParameterName(), null, "Not exist"));
+		final List<FieldError> errors = Collections.singletonList(
+			FieldError.of(ex.getParameterName(), null, "Not exist"));
 		return ErrorResponse.of(ErrorCode.BAD_REQUEST, errors);
 	}
 

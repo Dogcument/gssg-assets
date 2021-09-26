@@ -39,7 +39,8 @@ public class BadRequestBaseExceptionAdvice extends BaseExceptionAdvice {
 	 */
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	protected ErrorResponse handleMissingServletRequestParameterException(final MissingServletRequestParameterException ex) {
+	protected ErrorResponse handleMissingServletRequestParameterException(
+		final MissingServletRequestParameterException ex) {
 		preHandle(ex);
 		return ErrorResponse.of(ex);
 	}

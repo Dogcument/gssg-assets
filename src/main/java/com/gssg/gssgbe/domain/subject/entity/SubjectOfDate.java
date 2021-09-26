@@ -2,7 +2,6 @@ package com.gssg.gssgbe.domain.subject.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,6 @@ public class SubjectOfDate {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "subject_of_date_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)

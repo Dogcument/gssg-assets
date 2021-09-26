@@ -17,8 +17,12 @@ public class ProfileDogResponse {
 	@Schema(description = "한글명")
 	private String koreanName;
 
+	@Schema(description = "강조")
+	private Boolean highlight;
+
 	public ProfileDogResponse(final ProfileDogType type) {
 		this.englishName = type.name();
 		this.koreanName = type.getName();
+		this.highlight = type.getHighlight();
 	}
 }

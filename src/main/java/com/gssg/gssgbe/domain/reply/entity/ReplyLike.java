@@ -1,6 +1,5 @@
 package com.gssg.gssgbe.domain.reply.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,6 @@ public class ReplyLike extends BaseDateTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reply_like_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)

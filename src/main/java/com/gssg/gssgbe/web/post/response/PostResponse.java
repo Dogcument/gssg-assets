@@ -24,6 +24,9 @@ public class PostResponse {
 	@Schema(description = "작성자")
 	private final MemberResponse member;
 
+	@Schema(description = "좋아요")
+	private final Boolean like;
+
 	@Schema(description = "좋아요 수")
 	private final Long likeCount;
 
@@ -38,6 +41,7 @@ public class PostResponse {
 		this.subject = new SubjectResponse(dto.getSubjectDto());
 		this.content = dto.getContent();
 		this.member = new MemberResponse(dto.getMemberDto());
+		this.like = dto.getLike();
 		this.likeCount = dto.getLikeCount();
 		this.replyCount = dto.getReplyCount();
 		this.createdAt = dto.getCreatedAt();
