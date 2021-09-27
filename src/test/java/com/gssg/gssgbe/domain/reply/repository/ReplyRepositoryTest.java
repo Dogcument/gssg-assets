@@ -1,9 +1,16 @@
 package com.gssg.gssgbe.domain.reply.repository;
 
+import static com.gssg.gssgbe.domain.reply.repository.ReplyRepositoryImpl.SortType.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.DynamicContainer.*;
 import static org.junit.jupiter.api.DynamicTest.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
+import static org.springframework.data.domain.Sort.Direction.*;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +19,16 @@ import org.junit.jupiter.api.TestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
+import com.gssg.gssgbe.domain.post.entity.Post;
+import com.gssg.gssgbe.domain.post.repository.PostRepository;
 import com.gssg.gssgbe.domain.reply.entity.Reply;
 import com.gssg.gssgbe.domain.reply.entity.ReplyLike;
 import com.gssg.gssgbe.util.TestMemberInit;
@@ -30,12 +43,14 @@ import com.gssg.gssgbe.util.TestSubjectInit;
 class ReplyRepositoryTest {
 
 	@Autowired private MemberRepository memberRepository;
+	@Autowired private PostRepository postRepository;
 	@Autowired private ReplyRepository replyRepository;
 	@Autowired private ReplyLikeRepository replyLikeRepository;
 
 	@TestFactory
-	Stream<DynamicNode> find() {
+	Stream<DynamicNode> findAll() {
 		// 댓글 좋아요 개수 순서를 섞어서 생성
+		final Post post = postRepository.findById(1L).get();
 		final List<Member> members = memberRepository.findAll();
 		createReplyLike(replyRepository.getById(1L), members.subList(0, 2));
 		createReplyLike(replyRepository.getById(2L), members);
@@ -43,17 +58,35 @@ class ReplyRepositoryTest {
 		createReplyLike(replyRepository.getById(4L), members.subList(0, 1));
 
 		return Stream.of(
-			dynamicTest("조회", () -> {
-				// given
+			dynamicContainer("조회", Stream.of(
+					dynamicTest("작성일시 순서", () -> {
+						// given
+						final PageRequest pageRequest = PageRequest.of(0, 5);
 
-				// when
-				System.out.println("### " + replyRepository.findById(1L).get().getReplyLikes().size());
-				System.out.println("### " + replyRepository.findById(2L).get().getReplyLikes().size());
-				System.out.println("### " + replyRepository.findById(3L).get().getReplyLikes().size());
-				System.out.println("### " + replyRepository.findById(4L).get().getReplyLikes().size());
+						// when
+						final Slice<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
 
-				// then
-			})
+						// then
+						final List<LocalDateTime> createdAts = replies.stream()
+							.map(BaseDateTime::getCreatedAt)
+							.collect(Collectors.toList());
+						assertThat(createdAts).isSortedAccordingTo(Comparator.reverseOrder());
+					}),
+					dynamicTest("좋아요 순서", () -> {
+						// given
+						final PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(DESC, LIKE_COUNT.name()));
+
+						// when
+						final Slice<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
+
+						// then
+						final List<Integer> likeCounts = replies.stream()
+							.map(reply -> reply.getReplyLikes().size())
+							.collect(Collectors.toList());
+						assertThat(likeCounts).isSortedAccordingTo(Comparator.reverseOrder());
+					})
+				)
+			)
 		);
 	}
 

@@ -23,6 +23,11 @@ public class FindReplyService {
 			.map(ReplyDto::new);
 	}
 
+	public Slice<ReplyDto> findAllByPostId(final long postId, final Pageable pageable) {
+		return replyRepository.findAllByPostId(postId, pageable)
+			.map(ReplyDto::new);
+	}
+
 	public Slice<ReplyDto> findByMember(final Member loginMember, final Pageable pageable) {
 		return replyRepository.findAllByMember(loginMember, pageable)
 			.map(ReplyDto::new);

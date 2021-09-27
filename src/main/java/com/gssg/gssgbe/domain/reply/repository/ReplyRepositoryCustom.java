@@ -8,4 +8,6 @@ import com.gssg.gssgbe.domain.reply.entity.Reply;
 public interface ReplyRepositoryCustom {
 
 	Slice<Reply> findAllSlice(Pageable pageable);
+
+	Slice<Reply> findAllByPostId(final long postId, Pageable pageable);
 }
