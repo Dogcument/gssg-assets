@@ -7,21 +7,20 @@ import org.springframework.context.annotation.Bean;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
 import com.gssg.gssgbe.domain.post.entity.Post;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
-import com.gssg.gssgbe.domain.subject.entity.Subject;
-import com.gssg.gssgbe.domain.subject.repository.SubjectRepository;
+import com.gssg.gssgbe.domain.reply.entity.Reply;
+import com.gssg.gssgbe.domain.reply.repository.ReplyRepository;
 
 @TestConfiguration
 public class TestReplyInit {
 
 	@Autowired private MemberRepository memberRepository;
-	@Autowired private SubjectRepository subjectRepository;
 	@Autowired private PostRepository postRepository;
+	@Autowired private ReplyRepository replyRepository;
 
 	@Bean
-	public void testPostDataInit() {
-		final Subject subject = subjectRepository.findById(1L).get();
-		memberRepository.findAll()
-			.forEach(member ->
-				postRepository.save(new Post(member, subject, member.getNickname() + " contents")));
+	public void testReplyInit() {
+		final Post post = postRepository.findById(1L).get();
+		memberRepository.findAll().forEach(member ->
+			replyRepository.save(new Reply(member, post, member.getNickname() + " reply")));
 	}
 }

@@ -18,7 +18,7 @@ public class TestPostInit {
 	@Autowired private PostRepository postRepository;
 
 	@Bean
-	public void testPostDataInit() {
+	public void testPostInit() {
 		final Subject subject = subjectRepository.findById(1L).get();
 		memberRepository.findAll()
 			.forEach(member ->
