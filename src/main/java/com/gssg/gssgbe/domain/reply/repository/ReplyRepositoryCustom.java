@@ -1,13 +1,11 @@
 package com.gssg.gssgbe.domain.reply.repository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import java.util.List;
 
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.domain.reply.entity.Reply;
 
 public interface ReplyRepositoryCustom {
 
-	Slice<Reply> findAllSlice(Pageable pageable);
-
-	Slice<Reply> findAllByPostId(final long postId, Pageable pageable);
+	List<Reply> findAllByPostId(final long postId, final NoOffsetPageRequest pageRequest);
 }

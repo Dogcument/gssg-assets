@@ -26,4 +26,8 @@ public class NoOffsetPageRequest {
 	public static NoOffsetPageRequest of(final Long current, final int size, final Sort sort) {
 		return new NoOffsetPageRequest(current, size, sort);
 	}
+
+	public boolean isSorted() {
+		return sort.isSorted();
+	}
 }

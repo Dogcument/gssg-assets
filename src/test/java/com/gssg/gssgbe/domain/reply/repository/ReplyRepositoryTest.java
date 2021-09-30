@@ -19,11 +19,10 @@ import org.junit.jupiter.api.TestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.member.repository.MemberRepository;
@@ -61,10 +60,10 @@ class ReplyRepositoryTest {
 			dynamicContainer("조회", Stream.of(
 					dynamicTest("작성일시 순서", () -> {
 						// given
-						final PageRequest pageRequest = PageRequest.of(0, 5);
+						final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(null, 5);
 
 						// when
-						final Slice<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
+						final List<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
 
 						// then
 						final List<LocalDateTime> createdAts = replies.stream()
@@ -74,10 +73,11 @@ class ReplyRepositoryTest {
 					}),
 					dynamicTest("좋아요 순서", () -> {
 						// given
-						final PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(DESC, LIKE_COUNT.name()));
+						final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(null, 5,
+							Sort.by(DESC, LIKE_COUNT.name()));
 
 						// when
-						final Slice<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
+						final List<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
 
 						// then
 						final List<Integer> likeCounts = replies.stream()
