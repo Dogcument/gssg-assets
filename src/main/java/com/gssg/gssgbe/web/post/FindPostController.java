@@ -1,16 +1,18 @@
 package com.gssg.gssgbe.web.post;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
+import javax.annotation.Nullable;
+import javax.validation.constraints.Positive;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gssg.gssgbe.common.annotation.LoginMember;
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.service.FindPostService;
@@ -35,11 +37,14 @@ public class FindPostController {
 	@GetMapping("/api/v1/posts")
 	public FindAllPostResponse findAll(
 		@Parameter(hidden = true) @LoginMember final Member loginMember,
-		@RequestParam(defaultValue = "0") @PositiveOrZero final Integer page,
+		@RequestParam @Nullable @Positive final Long currentPostId,
 		@RequestParam(defaultValue = "10") @Positive final Integer size) {
-		final PageRequest pageRequest = PageRequest.of(page, size);
-		final Slice<PostDto> postDtos = findPostService.findAll(loginMember, pageRequest);
+		final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentPostId, size);
+		final List<PostDto> postDtos = findPostService.findAll(loginMember, pageRequest);
 
-		return new FindAllPostResponse(postDtos.map(PostResponse::new));
+		return new FindAllPostResponse(
+			postDtos.stream()
+				.map(PostResponse::new)
+				.collect(Collectors.toList()));
 	}
 }

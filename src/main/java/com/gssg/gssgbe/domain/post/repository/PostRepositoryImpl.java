@@ -4,10 +4,8 @@ import static com.gssg.gssgbe.domain.post.entity.QPost.*;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-
-import com.gssg.gssgbe.common.util.QuerydslUtil;
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
+import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.entity.Post;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -20,14 +18,29 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 	private final JPAQueryFactory queryFactory;
 
 	@Override
-	public Slice<Post> findAllSlice(final Pageable pageable) {
+	public List<Post> findAll(final NoOffsetPageRequest pageRequest) {
 		final JPAQuery<Post> jpaQuery = queryFactory
 			.selectFrom(post)
-			.offset(pageable.getOffset())
-			.limit(pageable.getPageSize());
+			.where(
+				post.id.lt(pageRequest.getCurrent())
+			)
+			.orderBy(post.id.desc())
+			.limit(pageRequest.getSize());
 
-		final List<Post> content = jpaQuery.fetch();
+		return jpaQuery.fetch();
+	}
 
-		return QuerydslUtil.createSlice(content, pageable);
+	@Override
+	public List<Post> findAllByMember(final Member member, final NoOffsetPageRequest pageRequest) {
+		final JPAQuery<Post> jpaQuery = queryFactory
+			.selectFrom(post)
+			.where(
+				post.member.eq(member),
+				post.id.lt(pageRequest.getCurrent())
+			)
+			.orderBy(post.id.desc())
+			.limit(pageRequest.getSize());
+
+		return jpaQuery.fetch();
 	}
 }

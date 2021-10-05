@@ -1,11 +1,14 @@
 package com.gssg.gssgbe.domain.post.repository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import java.util.List;
 
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
+import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.entity.Post;
 
 public interface PostRepositoryCustom {
 
-	Slice<Post> findAllSlice(Pageable pageable);
+	List<Post> findAll(final NoOffsetPageRequest pageRequest);
+
+	List<Post> findAllByMember(final Member member, final NoOffsetPageRequest pageable);
 }

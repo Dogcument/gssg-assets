@@ -1,5 +1,7 @@
 package com.gssg.gssgbe.domain.member.entity;
 
+import static lombok.AccessLevel.*;
+
 import java.util.Objects;
 
 import javax.persistence.Convert;
@@ -19,12 +21,15 @@ import com.gssg.gssgbe.common.token.Role;
 import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 @Table(name = "member_user")
 @Entity

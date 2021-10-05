@@ -1,10 +1,12 @@
 package com.gssg.gssgbe.domain.post.service;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.repository.PostRepository;
@@ -18,18 +20,15 @@ public class FindPostService {
 
 	private final PostRepository postRepository;
 
-	public Slice<PostDto> findAll(final Pageable pageable) {
-		return postRepository.findAllSlice(pageable)
-			.map(PostDto::new);
+	public List<PostDto> findAll(final Member loginMember, final NoOffsetPageRequest pageRequest) {
+		return postRepository.findAll(pageRequest).stream()
+			.map(post -> new PostDto(post, post.isLike(loginMember)))
+			.collect(Collectors.toList());
 	}
 
-	public Slice<PostDto> findAll(final Member loginMember, final Pageable pageable) {
-		return postRepository.findAllSlice(pageable)
-			.map(post -> new PostDto(post, post.isLike(loginMember)));
-	}
-
-	public Slice<PostDto> findByMember(final Member loginMember, final Pageable pageable) {
-		return postRepository.findAllByMember(loginMember, pageable)
-			.map(PostDto::new);
+	public List<PostDto> findByMember(final Member loginMember, final NoOffsetPageRequest pageRequest) {
+		return postRepository.findAllByMember(loginMember, pageRequest).stream()
+			.map(PostDto::new)
+			.collect(Collectors.toList());
 	}
 }

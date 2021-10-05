@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +58,8 @@ class PostTest {
 		final Subject subject = new Subject("강남역", "2호선");
 		subjectRepository.save(subject);
 
+		final AtomicLong createdPostId = new AtomicLong();
+
 		return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
 			Stream.of(
 				dynamicTest("회원 가입 & 로그인", () -> {
@@ -79,8 +82,8 @@ class PostTest {
 							.andReturn();
 
 						// then
-						final Long createdPostId = TestUtil.mvcResultToObject(mvcResult, Long.class);
-						final Post createdPost = postRepository.findById(createdPostId).get();
+						createdPostId.set(TestUtil.mvcResultToObject(mvcResult, Long.class));
+						final Post createdPost = postRepository.findById(createdPostId.get()).get();
 
 						assertThat(createdPost.getMember()).isNotNull();
 					})
@@ -91,8 +94,9 @@ class PostTest {
 						// given
 
 						// when
-						final MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts/1/like")
-								.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
+						final MvcResult mvcResult = mockMvc.perform(
+								post("/api/v1/posts/" + createdPostId.get() + "/like")
+									.header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken()))
 							.andDo(print())
 							.andExpect(status().isCreated())
 							.andReturn();

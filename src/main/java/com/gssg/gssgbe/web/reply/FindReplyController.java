@@ -1,15 +1,21 @@
 package com.gssg.gssgbe.web.reply;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import static com.gssg.gssgbe.domain.reply.repository.ReplyRepositoryImpl.*;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
+import javax.validation.constraints.Positive;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.domain.reply.dto.response.ReplyDto;
 import com.gssg.gssgbe.domain.reply.service.FindReplyService;
 import com.gssg.gssgbe.web.reply.response.FindAllReplyResponse;
@@ -27,14 +33,19 @@ public class FindReplyController {
 
 	private final FindReplyService findReplyService;
 
-	@Operation(summary = "전체 조회")
-	@GetMapping("/api/v1/replies")
+	@Operation(summary = "글의 댓글 조회", description = "좋아요 순서는 paging 불가")
+	@GetMapping("/api/v1/posts/{postId}/replies")
 	public FindAllReplyResponse findAll(
-		@RequestParam(defaultValue = "0") @PositiveOrZero final Integer page,
-		@RequestParam(defaultValue = "10") @Positive final Integer size) {
-		final PageRequest pageRequest = PageRequest.of(page, size);
-		final Slice<ReplyDto> replyDtos = findReplyService.findAll(pageRequest);
+		@PathVariable final Long postId,
+		@RequestParam @Nullable @Positive final Long currentReplyId,
+		@RequestParam(defaultValue = "10") @Positive final Integer size,
+		@RequestParam(defaultValue = "ID") final SortType sortType) {
+		final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentReplyId, size, Sort.by(sortType.name()));
+		final List<ReplyDto> replyDtos = findReplyService.findAllByPostId(postId, pageRequest);
 
-		return new FindAllReplyResponse(replyDtos.map(ReplyResponse::new));
+		return new FindAllReplyResponse(
+			replyDtos.stream()
+				.map(ReplyResponse::new)
+				.collect(Collectors.toList()));
 	}
 }

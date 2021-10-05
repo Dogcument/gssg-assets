@@ -1,5 +1,7 @@
 package com.gssg.gssgbe.web.member.request;
 
+import java.util.Optional;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,12 +14,10 @@ import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateMemberRequest {
 
@@ -44,6 +44,15 @@ public class CreateMemberRequest {
 	@Schema(description = "한줄 소개")
 	@NotNull
 	private String introduce;
+
+	public CreateMemberRequest(final String email, final String password, final String nickname,
+		final ProfileDogType profileDogType, final String introduce) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.profileDogType = Optional.ofNullable(profileDogType).orElseGet(ProfileDogType::getDefault);
+		this.introduce = introduce;
+	}
 
 	public CreateMemberDto toDto() {
 		return new CreateMemberDto(email, password, nickname, profileDogType, introduce);
