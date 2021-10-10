@@ -1,6 +1,6 @@
 package com.gssg.gssgbe.web.common.response;
 
-import com.gssg.gssgbe.common.type.ProfileDogType;
+import com.gssg.gssgbe.domain.common.dto.ProfileDogDto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
@@ -20,9 +20,9 @@ public class ProfileDogResponse {
 	@Schema(description = "강조")
 	private Boolean highlight;
 
-	public ProfileDogResponse(final ProfileDogType type) {
-		this.englishName = type.name();
-		this.koreanName = type.getName();
-		this.highlight = type.getHighlight();
+	public ProfileDogResponse(final ProfileDogDto dto) {
+		this.englishName = dto.getEnglishName();
+		this.koreanName = dto.getKoreanName();
+		this.highlight = dto.getHighlight();
 	}
 }

@@ -46,6 +46,7 @@ public class Member extends BaseDateTime {
 
 	private String nickname;
 
+	// todo enum -> entity 로 수정 개발한다.
 	@Enumerated(EnumType.STRING)
 	private ProfileDogType profileDog;
 
