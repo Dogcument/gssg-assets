@@ -1,5 +1,6 @@
 package com.gssg.gssgbe.web.common;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,5 +52,11 @@ public class CommonController {
 		return Arrays.stream(ErrorCode.values())
 			.map(ErrorCodeResponse::new)
 			.collect(Collectors.toList());
+	}
+
+	@Operation(summary = "헬스 체크 - 서버 기동 시간")
+	@GetMapping("/api/v1/common/healthCheck")
+	public LocalDateTime healthCheck() {
+		return LocalDateTime.now();
 	}
 }
