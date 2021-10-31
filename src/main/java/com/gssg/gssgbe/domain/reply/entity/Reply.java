@@ -69,4 +69,9 @@ public class Reply extends BaseDateTime {
 			post.addReply(this);
 		}
 	}
+
+	public boolean isLike(final Member member) {
+		return replyLikes.stream()
+			.anyMatch(like -> like.isMine(member));
+	}
 }

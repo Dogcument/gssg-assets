@@ -46,4 +46,8 @@ public class ReplyLike extends BaseDateTime {
 			reply.addReplyLike(this);
 		}
 	}
+
+	public boolean isMine(final Member member) {
+		return this.member.equals(member);
+	}
 }
