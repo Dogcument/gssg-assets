@@ -3,26 +3,26 @@ package com.gssg.gssgbe.domain.subject.dto;
 import com.gssg.gssgbe.domain.subject.entity.Subject;
 import com.gssg.gssgbe.domain.subject.entity.SubjectOfDate;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class SubjectDto {
 
 	private final Long id;
 	private final String name;
 	private final String description;
 
-	public SubjectDto(final Subject entity) {
-		this.id = entity.getId();
-		this.name = entity.getName();
-		this.description = entity.getDescription();
+	public static SubjectDto of(final Subject entity) {
+		return SubjectDto.builder()
+			.id(entity.getId())
+			.name(entity.getName())
+			.description(entity.getDescription())
+			.build();
 	}
 
-	public SubjectDto(final SubjectOfDate entity) {
-		final Subject subject = entity.getSubject();
-
-		this.id = subject.getId();
-		this.name = subject.getName();
-		this.description = subject.getDescription();
+	public static SubjectDto of(final SubjectOfDate entity) {
+		return of(entity.getSubject());
 	}
 }

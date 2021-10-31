@@ -23,7 +23,7 @@ public class PostDto {
 
 	public PostDto(final Post post, final boolean like) {
 		this.id = post.getId();
-		this.subjectDto = new SubjectDto(post.getSubject());
+		this.subjectDto = SubjectDto.of(post.getSubject());
 		this.content = post.getContent();
 		this.memberDto = new MemberDto(post.getMember());
 		this.createdAt = post.getCreatedAt();
