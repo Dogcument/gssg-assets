@@ -29,7 +29,7 @@ public class ProfileDog extends BaseDateTime {
 	private String koreanName;
 	private Boolean highlight;
 
-	public ProfileDog(final String englishName, final String koreanName) {
+	private ProfileDog(final String englishName, final String koreanName) {
 		new ProfileDog(null, englishName, koreanName, false);
 	}
 

@@ -41,7 +41,7 @@ class PostMemberLikeTest {
 		final Subject subject = new Subject("subject name", "description");
 		subjectRepository.save(subject);
 
-		final Post post = new Post(member, subject, "content");
+		final Post post = Post.of(member, subject, "content");
 		postRepository.save(post);
 
 		// when

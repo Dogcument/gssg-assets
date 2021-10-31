@@ -22,13 +22,13 @@ public class FindPostService {
 
 	public List<PostDto> findAll(final Member loginMember, final NoOffsetPageRequest pageRequest) {
 		return postRepository.findAll(pageRequest).stream()
-			.map(post -> new PostDto(post, post.isLike(loginMember)))
+			.map(post -> PostDto.of(post, post.isLike(loginMember)))
 			.collect(Collectors.toList());
 	}
 
 	public List<PostDto> findByMember(final Member loginMember, final NoOffsetPageRequest pageRequest) {
 		return postRepository.findAllByMember(loginMember, pageRequest).stream()
-			.map(PostDto::new)
+			.map(PostDto::of)
 			.collect(Collectors.toList());
 	}
 }

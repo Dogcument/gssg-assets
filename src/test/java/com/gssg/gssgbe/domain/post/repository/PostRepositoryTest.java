@@ -38,7 +38,7 @@ class PostRepositoryTest {
 		return memberRepository.findAll().stream()
 			.map(member -> DynamicTest.dynamicTest(member.getEmail() + " 가 생성", () -> {
 						// given
-						final Post post = new Post(member, subject, "content1");
+						final Post post = Post.of(member, subject, "content1");
 
 						// when
 						postRepository.save(post);

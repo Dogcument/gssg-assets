@@ -21,13 +21,13 @@ public class FindMemberService {
 
 	public List<MemberDto> findAll() {
 		return memberRepository.findAll().stream()
-			.map(MemberDto::new)
+			.map(MemberDto::of)
 			.collect(Collectors.toList());
 	}
 
 	public Optional<MemberDto> findById(final Long memberId) {
 		return memberRepository.findById(memberId)
-			.map(MemberDto::new);
+			.map(MemberDto::of);
 	}
 
 	public boolean existsEmail(final String email) {

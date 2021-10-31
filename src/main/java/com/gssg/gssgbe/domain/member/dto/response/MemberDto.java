@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.domain.member.entity.Member;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class MemberDto {
 
 	private final Long id;
@@ -18,13 +20,15 @@ public class MemberDto {
 	private final LocalDateTime createdAt;
 	private final LocalDateTime updatedAt;
 
-	public MemberDto(final Member member) {
-		this.id = member.getId();
-		this.email = member.getEmail();
-		this.nickname = member.getNickname();
-		this.profileDog = member.getProfileDog();
-		this.introduce = member.getIntroduce();
-		this.createdAt = member.getCreatedAt();
-		this.updatedAt = member.getUpdatedAt();
+	public static MemberDto of(final Member member) {
+		return MemberDto.builder()
+			.id(member.getId())
+			.email(member.getEmail())
+			.nickname(member.getNickname())
+			.profileDog(ProfileDogType.getDefault())
+			.introduce(member.getIntroduce())
+			.createdAt(member.getCreatedAt())
+			.updatedAt(member.getUpdatedAt())
+			.build();
 	}
 }

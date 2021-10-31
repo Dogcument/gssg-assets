@@ -6,9 +6,11 @@ import com.gssg.gssgbe.domain.member.dto.response.MemberDto;
 import com.gssg.gssgbe.domain.post.entity.Post;
 import com.gssg.gssgbe.domain.subject.dto.SubjectDto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class PostDto {
 
 	private final long id;
@@ -21,19 +23,21 @@ public class PostDto {
 	private final long likeCount;
 	private final long replyCount;
 
-	public PostDto(final Post post, final boolean like) {
-		this.id = post.getId();
-		this.subjectDto = SubjectDto.of(post.getSubject());
-		this.content = post.getContent();
-		this.memberDto = new MemberDto(post.getMember());
-		this.createdAt = post.getCreatedAt();
-		this.updatedAt = post.getUpdatedAt();
-		this.like = like;
-		this.likeCount = post.getPostLikes().size();
-		this.replyCount = post.getReplies().size();
+	public static PostDto of(final Post post, final boolean like) {
+		return PostDto.builder()
+			.id(post.getId())
+			.subjectDto(SubjectDto.of(post.getSubject()))
+			.content(post.getContent())
+			.memberDto(MemberDto.of(post.getMember()))
+			.createdAt(post.getCreatedAt())
+			.updatedAt(post.getUpdatedAt())
+			.like(like)
+			.likeCount(post.getPostLikes().size())
+			.replyCount(post.getReplies().size())
+			.build();
 	}
 
-	public PostDto(final Post post) {
-		this(post, false);
+	public static PostDto of(final Post post) {
+		return of(post, false);
 	}
 }

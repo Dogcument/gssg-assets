@@ -24,7 +24,7 @@ public class ReplyDto {
 		return ReplyDto.builder()
 			.id(reply.getId())
 			.content(reply.getContent())
-			.memberDto(new MemberDto(reply.getMember()))
+			.memberDto(MemberDto.of(reply.getMember()))
 			.like(like)
 			.likeCount(reply.getReplyLikes().size())
 			.createdAt(reply.getCreatedAt())

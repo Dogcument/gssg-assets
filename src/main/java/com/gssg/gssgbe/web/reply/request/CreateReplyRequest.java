@@ -29,6 +29,6 @@ public class CreateReplyRequest {
 	private String content;
 
 	public CreateReplyRequestDto toDto(final Member member) {
-		return new CreateReplyRequestDto(member, postId, content);
+		return CreateReplyRequestDto.of(member, postId, content);
 	}
 }
