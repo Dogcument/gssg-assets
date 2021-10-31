@@ -24,7 +24,7 @@ public class FindSubjectService {
 			.map(SubjectDto::new);
 	}
 
-	public Page<SubjectDto> PagefindAll(final Pageable pageable) {
+	public Page<SubjectDto> findAll(final Pageable pageable) {
 		return subjectRepository.findAll(pageable)
 			.map(SubjectDto::new);
 	}
