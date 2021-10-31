@@ -38,7 +38,7 @@ public class PostResponse {
 
 	public PostResponse(final PostDto dto) {
 		this.id = dto.getId();
-		this.subject = new SubjectResponse(dto.getSubjectDto());
+		this.subject = SubjectResponse.of(dto.getSubjectDto());
 		this.content = dto.getContent();
 		this.member = new MemberResponse(dto.getMemberDto());
 		this.like = dto.getLike();
