@@ -50,13 +50,17 @@ public class Post extends BaseDateTime {
 	@OneToMany(mappedBy = "post")
 	private List<Reply> replies;
 
-	public Post(final Member member, final Subject subject, final String content) {
+	private Post(final Member member, final Subject subject, final String content) {
 		this.member = member;
 		this.subject = subject;
 		this.content = content;
 		this.deleted = false;
 		this.postLikes = new ArrayList<>();
 		this.replies = new ArrayList<>();
+	}
+
+	public static Post of(final Member member, final Subject subject, final String content) {
+		return new Post(member, subject, content);
 	}
 
 	public void addPostLike(final PostLike postLike) {

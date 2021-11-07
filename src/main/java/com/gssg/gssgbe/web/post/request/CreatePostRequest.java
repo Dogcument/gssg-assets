@@ -29,6 +29,6 @@ public class CreatePostRequest {
 	private String content;
 
 	public CreatePostRequestDto toDto(final Member member) {
-		return new CreatePostRequestDto(member, subjectName, content);
+		return CreatePostRequestDto.of(member, subjectName, content);
 	}
 }

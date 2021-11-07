@@ -15,5 +15,7 @@ public class TestSubjectInit {
 	@Bean
 	public void testSubjectInit() {
 		subjectRepository.save(new Subject("강남역", "2호선"));
+		subjectRepository.save(new Subject("야탑역", "분당선"));
+		subjectRepository.save(new Subject("신논현역", "9호선"));
 	}
 }

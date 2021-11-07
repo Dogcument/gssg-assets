@@ -6,9 +6,11 @@ import com.gssg.gssgbe.domain.reply.dto.response.ReplyDto;
 import com.gssg.gssgbe.web.member.response.MemberResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class ReplyResponse {
 
 	@Schema(description = "댓글 id")
@@ -26,12 +28,14 @@ public class ReplyResponse {
 	private final LocalDateTime createdAt;
 	private final LocalDateTime updatedAt;
 
-	public ReplyResponse(final ReplyDto dto) {
-		this.id = dto.getId();
-		this.member = new MemberResponse(dto.getMemberDto());
-		this.content = dto.getContent();
-		this.likeCount = dto.getLikeCount();
-		this.createdAt = dto.getCreatedAt();
-		this.updatedAt = dto.getUpdatedAt();
+	public static ReplyResponse of(final ReplyDto dto) {
+		return ReplyResponse.builder()
+			.id(dto.getId())
+			.member(new MemberResponse(dto.getMemberDto()))
+			.content(dto.getContent())
+			.likeCount(dto.getLikeCount())
+			.createdAt(dto.getCreatedAt())
+			.updatedAt(dto.getUpdatedAt())
+			.build();
 	}
 }

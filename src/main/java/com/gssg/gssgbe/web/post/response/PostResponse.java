@@ -7,9 +7,11 @@ import com.gssg.gssgbe.web.member.response.MemberResponse;
 import com.gssg.gssgbe.web.subject.response.SubjectResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class PostResponse {
 
 	@Schema(description = "글 PK")
@@ -36,15 +38,17 @@ public class PostResponse {
 	private final LocalDateTime createdAt;
 	private final LocalDateTime updatedAt;
 
-	public PostResponse(final PostDto dto) {
-		this.id = dto.getId();
-		this.subject = new SubjectResponse(dto.getSubjectDto());
-		this.content = dto.getContent();
-		this.member = new MemberResponse(dto.getMemberDto());
-		this.like = dto.getLike();
-		this.likeCount = dto.getLikeCount();
-		this.replyCount = dto.getReplyCount();
-		this.createdAt = dto.getCreatedAt();
-		this.updatedAt = dto.getUpdatedAt();
+	public static PostResponse of(final PostDto dto) {
+		return PostResponse.builder()
+			.id(dto.getId())
+			.subject(SubjectResponse.of(dto.getSubjectDto()))
+			.content(dto.getContent())
+			.member(new MemberResponse(dto.getMemberDto()))
+			.like(dto.getLike())
+			.likeCount(dto.getLikeCount())
+			.replyCount(dto.getReplyCount())
+			.createdAt(dto.getCreatedAt())
+			.updatedAt(dto.getUpdatedAt())
+			.build();
 	}
 }

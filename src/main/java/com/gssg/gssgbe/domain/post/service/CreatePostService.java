@@ -22,7 +22,7 @@ public class CreatePostService {
 	public long create(final CreatePostRequestDto request) {
 		final Subject subject = subjectRepository.findByName(request.getSubjectName())
 			.orElseThrow(() -> new BusinessException(ErrorCode.NOT_EXISTS_SUBJECT));
-		final Post post = new Post(request.getMember(), subject, request.getContent());
+		final Post post = Post.of(request.getMember(), subject, request.getContent());
 
 		return postRepository.save(post).getId();
 	}

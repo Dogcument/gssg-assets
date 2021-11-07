@@ -21,11 +21,11 @@ public class FindSubjectService {
 
 	public Optional<SubjectDto> findByName(final String name) {
 		return subjectRepository.findByName(name)
-			.map(SubjectDto::new);
+			.map(SubjectDto::of);
 	}
 
-	public Page<SubjectDto> PagefindAll(final Pageable pageable) {
+	public Page<SubjectDto> findAll(final Pageable pageable) {
 		return subjectRepository.findAll(pageable)
-			.map(SubjectDto::new);
+			.map(SubjectDto::of);
 	}
 }

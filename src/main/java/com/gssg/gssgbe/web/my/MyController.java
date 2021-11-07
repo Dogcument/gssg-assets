@@ -1,7 +1,6 @@
 package com.gssg.gssgbe.web.my;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 import javax.validation.constraints.Positive;
@@ -27,7 +26,6 @@ import com.gssg.gssgbe.web.member.request.UpdateMemberPasswordRequest;
 import com.gssg.gssgbe.web.member.request.UpdateMemberRequest;
 import com.gssg.gssgbe.web.member.response.MemberResponse;
 import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
-import com.gssg.gssgbe.web.post.response.PostResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -80,9 +78,6 @@ public class MyController {
 		final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentPostId, size);
 		final List<PostDto> postDtos = findPostService.findByMember(loginMember, pageRequest);
 
-		return new FindAllPostResponse(
-			postDtos.stream()
-				.map(PostResponse::new)
-				.collect(Collectors.toList()));
+		return FindAllPostResponse.of(postDtos);
 	}
 }
