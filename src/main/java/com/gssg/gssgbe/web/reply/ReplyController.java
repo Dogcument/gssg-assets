@@ -44,16 +44,16 @@ public class ReplyController {
 
 	@Operation(summary = "댓글 좋아요 토글", security = @SecurityRequirement(name = "bearerAuth"))
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/api/v1/replies/{postId}/like")
+	@PostMapping("/api/v1/replies/{replyId}/like")
 	public Boolean like(
 		@Parameter(hidden = true) @LoginMember final Member loginMember,
-		@PathVariable final Long postId) {
-		if (findReplyLikeService.exist(postId, loginMember)) {
-			deleteReplyLikeService.delete(postId, loginMember);
+		@PathVariable final Long replyId) {
+		if (findReplyLikeService.exist(replyId, loginMember)) {
+			deleteReplyLikeService.delete(replyId, loginMember);
 			return false;
 		}
 
-		createReplyLikeService.create(postId, loginMember);
+		createReplyLikeService.create(replyId, loginMember);
 		return true;
 	}
 }

@@ -22,6 +22,9 @@ public class ReplyResponse {
 	@Schema(description = "내용")
 	private final String content;
 
+	@Schema(description = "좋아요")
+	private final Boolean like;
+
 	@Schema(description = "좋아요 수")
 	private final Long likeCount;
 
@@ -33,6 +36,7 @@ public class ReplyResponse {
 			.id(dto.getId())
 			.member(new MemberResponse(dto.getMemberDto()))
 			.content(dto.getContent())
+			.like(dto.getLike())
 			.likeCount(dto.getLikeCount())
 			.createdAt(dto.getCreatedAt())
 			.updatedAt(dto.getUpdatedAt())
