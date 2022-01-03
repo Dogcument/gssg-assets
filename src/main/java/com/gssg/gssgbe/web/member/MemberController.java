@@ -1,7 +1,14 @@
 package com.gssg.gssgbe.web.member;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Positive;
 
+import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
+import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
+import com.gssg.gssgbe.domain.post.service.FindPostService;
+import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +26,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Tag(name = "회원")
 @Validated
 @RequiredArgsConstructor
@@ -27,6 +36,7 @@ public class MemberController {
 
 	private final CreateMemberService createMemberService;
 	private final FindMemberService findMemberService;
+	private final FindPostService findPostService;
 
 	@Operation(summary = "회원 이메일 존재 여부")
 	@GetMapping("/api/v1/members/email/exists")
@@ -45,5 +55,16 @@ public class MemberController {
 	@PostMapping("/api/v1/members")
 	public Long create(@RequestBody final CreateMemberRequest request) {
 		return createMemberService.create(request.toDto());
+	}
+
+	@Operation(summary = "다른 사람 글 조회")
+	@GetMapping("/api/v1/member/post/")
+	public FindAllPostResponse findUserPosts(
+			@Parameter final String nickname,
+			@RequestParam @Nullable @Positive final Long currentPostId,
+			@RequestParam(defaultValue = "10") @Positive final Integer size) {
+		final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentPostId, size);
+		final List<PostDto> postDtos = findPostService.findByNickname(nickname, pageRequest);
+		return FindAllPostResponse.of(postDtos);
 	}
 }
