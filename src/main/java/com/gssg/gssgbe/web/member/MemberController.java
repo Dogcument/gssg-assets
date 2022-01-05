@@ -5,6 +5,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Positive;
 
 import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
+import com.gssg.gssgbe.common.exception.ErrorCode;
+import com.gssg.gssgbe.common.exception.custom.CustomAuthenticationException;
+import com.gssg.gssgbe.domain.member.dto.response.MemberDto;
+import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.domain.post.service.FindPostService;
 import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
@@ -55,6 +59,12 @@ public class MemberController {
 	@PostMapping("/api/v1/members")
 	public Long create(@RequestBody final CreateMemberRequest request) {
 		return createMemberService.create(request.toDto());
+	}
+
+	@Operation(summary = "다른 사람 정보 조회")
+	@GetMapping("/api/v1/member/info")
+	public MemberDto getMemberInfo(@RequestParam final String nickname) {
+		return findMemberService.findByNickname(nickname).orElseThrow(() -> new CustomAuthenticationException(ErrorCode.NOT_EXISTS_MEMBER));
 	}
 
 	@Operation(summary = "다른 사람 글 조회")

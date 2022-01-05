@@ -30,6 +30,11 @@ public class FindMemberService {
 			.map(MemberDto::of);
 	}
 
+	public Optional<MemberDto> findByNickname(final String Nickname) {
+		return memberRepository.findByNickname(Nickname)
+				.map(MemberDto::of);
+	}
+
 	public boolean existsEmail(final String email) {
 		return memberRepository.existsByEmail(email);
 	}
