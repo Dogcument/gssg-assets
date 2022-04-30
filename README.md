@@ -2,7 +2,7 @@
 
 ## 1. 환경
 
-[![codecov](https://codecov.io/gh/Dogcument/gssg-assets/branch/master/graph/badge.svg?token=R1MG8FC6BQ)](https://codecov.io/gh/Dogcument/gssg-assets) ![total lines](https://img.shields.io/tokei/lines/github/Dogcument/gssg-assets)
+[![codecov](https://codecov.io/gh/Dogcument/gssg-assets/branch/master/graph/badge.svg?token=Y3ZHZKHU2Z)](https://codecov.io/gh/Dogcument/gssg-assets)
 
 ![](https://img.shields.io/badge/spring%20boot-2.5.0-green) ![](https://img.shields.io/badge/java-11-green)
 
