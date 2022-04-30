@@ -1,4 +1,4 @@
-package com.gssg.assets.configuration.utils
+package com.gssg.assets.config.utils
 
 /**
  * @Author Heli
