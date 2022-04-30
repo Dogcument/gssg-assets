@@ -2,10 +2,15 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     base
-    id("org.springframework.boot") version "2.5.0"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 
     id("java")
+
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.jpa") apply false
+    kotlin("kapt")
 
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10" apply false
 
@@ -32,6 +37,10 @@ subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "java")
 
+    apply(plugin = "kotlin")
+    apply(plugin = "kotlin-kapt")
+    apply(plugin = "kotlin-spring")
+
     apply(plugin = "jacoco")
 
     java.sourceCompatibility = JavaVersion.VERSION_11
@@ -53,15 +62,16 @@ subprojects {
         val openapiVersion: String by project
         val p6spyVersion: String by project
 
+        implementation(kotlin("stdlib-jdk8"))
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
         implementation("org.springframework.boot:spring-boot-starter-actuator")
         implementation("org.springframework.boot:spring-boot-starter-security")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.springframework.boot:spring-boot-starter-validation")
         implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-        implementation("org.jetbrains.kotlin:kotlin-reflect")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
         implementation("io.jsonwebtoken:jjwt-api:0.11.2")
         runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
