@@ -9,8 +9,6 @@ plugins {
 
     kotlin("jvm")
     kotlin("plugin.spring")
-    kotlin("plugin.jpa") apply false
-    kotlin("kapt")
 
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10" apply false
 
@@ -38,7 +36,6 @@ subprojects {
     apply(plugin = "java")
 
     apply(plugin = "kotlin")
-    apply(plugin = "kotlin-kapt")
     apply(plugin = "kotlin-spring")
 
     apply(plugin = "jacoco")
