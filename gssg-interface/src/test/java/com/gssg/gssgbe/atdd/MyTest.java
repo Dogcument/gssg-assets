@@ -51,13 +51,16 @@ class MyTest {
 
     @TestFactory
     Stream<DynamicNode> memberTest() {
-        return TestData.VALID_MEMBER().map(member -> dynamicContainer("내 회원 정보",
+        return TestData.VALID_MEMBER().map(member -> dynamicContainer(
+            "내 회원 정보",
             Stream.of(
                 dynamicTest("회원 가입 & 로그인", () -> {
                     savedMember = memberRepository.save(
                         new Member(member.getEmail(), member.getPassword()));
-                    jwtAuthToken = jwtAuthTokenProvider.createAuthToken(member.getEmail(),
-                        Role.MEMBER.name());
+                    jwtAuthToken = jwtAuthTokenProvider.createAuthToken(
+                        member.getEmail(),
+                        Role.MEMBER.name()
+                    );
                 }),
 
                 dynamicContainer("내 회원 정보 수정", Stream.of(
@@ -65,9 +68,11 @@ class MyTest {
                         // given
                         final String nickname = "단단이";
                         final String introduce = "한줄 소개 입니다.";
-                        final UpdateMemberRequest request = new UpdateMemberRequest(nickname,
+                        final UpdateMemberRequest request = new UpdateMemberRequest(
+                            nickname,
                             ProfileDogType.CORGI,
-                            introduce);
+                            introduce
+                        );
 
                         // when
                         mockMvc.perform(patch("/api/v1/my")
@@ -96,13 +101,16 @@ class MyTest {
                             .andReturn();
 
                         // then
-                        final MemberResponse memberResponse = TestUtil.mvcResultToObject(mvcResult,
-                            MemberResponse.class);
+                        final MemberResponse memberResponse = TestUtil.mvcResultToObject(
+                            mvcResult,
+                            MemberResponse.class
+                        );
                         assertThat(memberResponse.getEmail()).isNotNull();
                     })
                 )),
 
                 dynamicTest("afterAll", () -> memberRepository.deleteAll())
-            )));
+            )
+        ));
     }
 }

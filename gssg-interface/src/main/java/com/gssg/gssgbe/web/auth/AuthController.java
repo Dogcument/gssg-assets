@@ -29,8 +29,10 @@ public class AuthController {
     @Operation(summary = "로그인")
     @PostMapping("/api/v1/auth/login")
     public LoginResponse login(@RequestBody @Valid final LoginRequest request) {
-        final JwtAuthToken jwtAuthToken = loginService.login(request.getLoginId(),
-            request.getPassword());
+        final JwtAuthToken jwtAuthToken = loginService.login(
+                request.getLoginId(),
+                request.getPassword()
+        );
         final RefreshToken refreshToken = refreshTokenProvider.convertAuthToken(jwtAuthToken);
 
         return new LoginResponse(jwtAuthToken, refreshToken);

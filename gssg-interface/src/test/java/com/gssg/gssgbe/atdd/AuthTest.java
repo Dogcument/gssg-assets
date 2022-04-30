@@ -53,7 +53,8 @@ class AuthTest {
 
     @TestFactory
     Stream<DynamicNode> authTest() {
-        return TestData.VALID_MEMBER().map(member -> dynamicContainer("인증",
+        return TestData.VALID_MEMBER().map(member -> dynamicContainer(
+            "인증",
             Stream.of(
                 dynamicTest("회원 가입", () ->
                     memberRepository.save(new Member(member.getEmail(), member.getPassword()))
@@ -62,8 +63,10 @@ class AuthTest {
                 dynamicContainer("로그인", Stream.of(
                     dynamicTest("[성공] 로그인", () -> {
                         // given
-                        final LoginRequest request = new LoginRequest(member.getEmail(),
-                            member.getPassword());
+                        final LoginRequest request = new LoginRequest(
+                            member.getEmail(),
+                            member.getPassword()
+                        );
 
                         // when
                         final MvcResult mvcResult = mockMvc.perform(post("/api/v1/auth/login")
@@ -74,10 +77,14 @@ class AuthTest {
                             .andReturn();
 
                         // then
-                        final LoginResponse response = TestUtil.mvcResultToObject(mvcResult,
-                            LoginResponse.class);
+                        final LoginResponse response = TestUtil.mvcResultToObject(
+                            mvcResult,
+                            LoginResponse.class
+                        );
                         final JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(
-                            response.getJwt());
+                            response.getJwt()
+
+                        );
                         assertThat(jwtAuthToken.getSubject()).isNotBlank();
                         refreshToken = refreshTokenProvider.convertAuthToken(
                             response.getRefreshToken());
@@ -108,8 +115,10 @@ class AuthTest {
                             .andReturn();
 
                         // then
-                        final RefreshResponse response = TestUtil.mvcResultToObject(mvcResult,
-                            RefreshResponse.class);
+                        final RefreshResponse response = TestUtil.mvcResultToObject(
+                            mvcResult,
+                            RefreshResponse.class
+                        );
                         final JwtAuthToken jwtAuthToken = jwtAuthTokenProvider.convertAuthToken(
                             response.getJwt());
                         assertThat(jwtAuthToken.getSubject()).isNotBlank();
@@ -133,6 +142,7 @@ class AuthTest {
                 )),
 
                 dynamicTest("afterAll", () -> memberRepository.deleteAll())
-            )));
+            )
+        ));
     }
 }

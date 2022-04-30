@@ -47,7 +47,8 @@ class CreateMemberServiceTest {
                 member.getPassword(),
                 member.getNickname(),
                 member.getProfileDog(),
-                member.getIntroduce());
+                member.getIntroduce()
+        );
 
         // when
         final long memberId = createMemberService.create(createDto);
@@ -67,12 +68,15 @@ class CreateMemberServiceTest {
                 member.getPassword(),
                 member.getNickname(),
                 member.getProfileDog(),
-                member.getIntroduce());
+                member.getIntroduce()
+        );
         createMemberService.create(createDto);
 
         // when
-        final BusinessException exception = assertThrows(BusinessException.class,
-                () -> createMemberService.create(createDto));
+        final BusinessException exception = assertThrows(
+                BusinessException.class,
+                () -> createMemberService.create(createDto)
+        );
 
         // then
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.EXISTS_EMAIL);

@@ -16,8 +16,10 @@ public class TestUtil {
 
     public static <T> List<T> mvcResultToList(final MvcResult result, final Class<T> valueType)
         throws Exception {
-        return objectMapper.readValue(result.getResponse().getContentAsString(),
-            objectMapper.getTypeFactory().constructCollectionType(List.class, valueType));
+        return objectMapper.readValue(
+            result.getResponse().getContentAsString(),
+            objectMapper.getTypeFactory().constructCollectionType(List.class, valueType)
+        );
     }
 
     public static <T> T mvcResultToObject(final MvcResult result, final Class<T> valueType)

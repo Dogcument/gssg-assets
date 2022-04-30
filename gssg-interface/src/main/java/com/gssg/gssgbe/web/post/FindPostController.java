@@ -38,7 +38,8 @@ public class FindPostController {
         @RequestParam(defaultValue = "10") @Positive final Integer size,
         @RequestParam(defaultValue = "ID") final SortType sortType) {
         final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentPostId, size,
-            Sort.by(sortType.name()));
+                Sort.by(sortType.name())
+        );
         final List<PostDto> postDtos = findPostService.findAll(loginMember, pageRequest);
 
         return FindAllPostResponse.of(postDtos);

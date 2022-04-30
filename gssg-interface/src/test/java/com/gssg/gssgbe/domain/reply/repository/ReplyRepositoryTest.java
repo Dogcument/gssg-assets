@@ -67,7 +67,8 @@ class ReplyRepositoryTest {
                                     // when
                                     final List<Reply> replies = replyRepository.findAllByPostId(
                                             post.getId(),
-                                            pageRequest);
+                                            pageRequest
+                                    );
 
                                     // then
                                     final List<LocalDateTime> createdAts = replies.stream()
@@ -78,12 +79,14 @@ class ReplyRepositoryTest {
                                 dynamicTest("좋아요 순서", () -> {
                                     // given
                                     final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(null, 5,
-                                            Sort.by(DESC, LIKE_COUNT.name()));
+                                            Sort.by(DESC, LIKE_COUNT.name())
+                                    );
 
                                     // when
                                     final List<Reply> replies = replyRepository.findAllByPostId(
                                             post.getId(),
-                                            pageRequest);
+                                            pageRequest
+                                    );
 
                                     // then
                                     final List<Integer> likeCounts = replies.stream()

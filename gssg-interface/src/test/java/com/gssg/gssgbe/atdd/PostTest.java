@@ -64,28 +64,37 @@ class PostTest {
 
         final AtomicLong createdPostId = new AtomicLong();
 
-        return TestData.VALID_MEMBER().map(member -> dynamicContainer("글",
-            Stream.of(
-                dynamicTest("회원 가입 & 로그인", () -> {
-                    memberRepository.save(new Member(member.getEmail(), member.getPassword()));
-                    jwtAuthToken = jwtAuthTokenProvider.createAuthToken(member.getEmail(),
-                        Role.MEMBER.name());
-                }),
+        return TestData.VALID_MEMBER().map(member -> dynamicContainer(
+                "글",
+                Stream.of(
+                        dynamicTest("회원 가입 & 로그인", () -> {
+                            memberRepository.save(
+                                    new Member(member.getEmail(), member.getPassword()));
+                            jwtAuthToken = jwtAuthTokenProvider.createAuthToken(
+                                    member.getEmail(),
+                                    Role.MEMBER.name()
+                            );
+                        }),
 
-                dynamicContainer("글 작성", Stream.of(
+                        dynamicContainer("글 작성", Stream.of(
                     dynamicTest("[성공] 글 작성", () -> {
                         // given
-                        final CreatePostRequest request = new CreatePostRequest(subject.getName(),
-                            "TEST 글 작성 TEST");
+                        final CreatePostRequest request = new CreatePostRequest(
+                                subject.getName(),
+                                "TEST 글 작성 TEST"
+                        );
 
                         // when
                         final MvcResult mvcResult = mockMvc.perform(post("/api/v1/posts")
-                                .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtAuthToken.getToken())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(new ObjectMapper().writeValueAsString(request)))
-                            .andDo(print())
-                            .andExpect(status().isCreated())
-                            .andReturn();
+                                        .header(
+                                                HttpHeaders.AUTHORIZATION,
+                                                "bearer " + jwtAuthToken.getToken()
+                                        )
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(new ObjectMapper().writeValueAsString(request)))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
 
                         // then
                         createdPostId.set(TestUtil.mvcResultToObject(mvcResult, Long.class));
@@ -101,9 +110,11 @@ class PostTest {
 
                         // when
                         final MvcResult mvcResult = mockMvc.perform(
-                                post("/api/v1/posts/" + createdPostId.get() + "/like")
-                                    .header(HttpHeaders.AUTHORIZATION,
-                                        "bearer " + jwtAuthToken.getToken()))
+                                        post("/api/v1/posts/" + createdPostId.get() + "/like")
+                                                .header(
+                                                        HttpHeaders.AUTHORIZATION,
+                                                        "bearer " + jwtAuthToken.getToken()
+                                                ))
                             .andDo(print())
                             .andExpect(status().isCreated())
                             .andReturn();
@@ -114,11 +125,12 @@ class PostTest {
                     })
                 )),
 
-                dynamicTest("afterAll", () -> {
-                    postLikeRepository.deleteAll();
-                    postRepository.deleteAll();
-                    memberRepository.deleteAll();
-                })
-            )));
+                        dynamicTest("afterAll", () -> {
+                            postLikeRepository.deleteAll();
+                            postRepository.deleteAll();
+                            memberRepository.deleteAll();
+                        })
+                )
+        ));
     }
 }

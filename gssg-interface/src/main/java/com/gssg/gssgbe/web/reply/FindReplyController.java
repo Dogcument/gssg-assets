@@ -40,9 +40,11 @@ public class FindReplyController {
         @RequestParam(defaultValue = "10") @Positive final Integer size,
         @RequestParam(defaultValue = "ID") final SortType sortType) {
         final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentReplyId, size,
-            Sort.by(sortType.name()));
+                Sort.by(sortType.name())
+        );
         final List<ReplyDto> replyDtos = findReplyService.findAllByPostId(loginMember, postId,
-            pageRequest);
+                pageRequest
+        );
 
         return FindAllReplyResponse.of(replyDtos);
     }

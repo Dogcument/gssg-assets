@@ -34,7 +34,8 @@ public class TestData {
                 .password("1q2w3e4r!")
                 .nickname("hyune")
                 .introduce("dandan")
-                .build());
+                .build()
+        );
     }
 
     public static Stream<Member> NOT_VALID_MEMBER() {

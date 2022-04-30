@@ -80,7 +80,8 @@ public class ErrorResponse {
     public static ErrorResponse of(final ConstraintViolationException ex) {
         final List<FieldError> errors = ex.getConstraintViolations().stream()
             .map(violation -> FieldError.of(extractPropertyName(violation.getPropertyPath()), null,
-                violation.getMessage()))
+                    violation.getMessage()
+            ))
             .collect(Collectors.toList());
         return ErrorResponse.of(ErrorCode.BAD_REQUEST, errors);
     }
@@ -114,10 +115,11 @@ public class ErrorResponse {
 
         public static FieldError of(final org.springframework.validation.FieldError fieldError) {
             return new FieldError(
-                fieldError.getField(),
-                (fieldError.getRejectedValue() == null) ? ""
-                    : fieldError.getRejectedValue().toString(),
-                fieldError.getDefaultMessage());
+                    fieldError.getField(),
+                    (fieldError.getRejectedValue() == null) ? ""
+                            : fieldError.getRejectedValue().toString(),
+                    fieldError.getDefaultMessage()
+            );
         }
 
         private static List<FieldError> of(final BindingResult bindingResult) {

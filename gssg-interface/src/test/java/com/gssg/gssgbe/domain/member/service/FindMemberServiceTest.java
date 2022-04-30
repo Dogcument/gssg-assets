@@ -39,7 +39,8 @@ class FindMemberServiceTest {
             member.getPassword(),
             member.getNickname(),
             member.getProfileDog(),
-            member.getIntroduce());
+            member.getIntroduce()
+        );
         createMemberService.create(createDto);
 
         // when

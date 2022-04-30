@@ -57,15 +57,19 @@ public class AuthBaseExceptionAdvice extends BaseExceptionAdvice {
     protected ResponseEntity<ErrorResponse> handleCustomAuthenticationException(
         final CustomAuthenticationException ex) {
         preHandle(ex);
-        return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode()),
-            ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(
+                ErrorResponse.whtioutDetail(ex.getErrorCode()),
+                ex.getErrorCode().getStatus()
+        );
     }
 
     @ExceptionHandler(CustomAuthrizationException.class)
     protected ResponseEntity<ErrorResponse> handleCustomAuthrizationException(
         final CustomAuthrizationException ex) {
         preHandle(ex);
-        return new ResponseEntity<>(ErrorResponse.whtioutDetail(ex.getErrorCode()),
-            ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(
+                ErrorResponse.whtioutDetail(ex.getErrorCode()),
+                ex.getErrorCode().getStatus()
+        );
     }
 }

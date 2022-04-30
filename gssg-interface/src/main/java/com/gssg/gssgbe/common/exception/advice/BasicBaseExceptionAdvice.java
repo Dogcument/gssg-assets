@@ -49,16 +49,20 @@ public class BasicBaseExceptionAdvice extends BaseExceptionAdvice {
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException ex) {
         preHandle(ex);
-        return new ResponseEntity<>(ErrorResponse.of(
-            ex.getErrorCode()),
-            ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(
+            ErrorResponse.of(
+                ex.getErrorCode()),
+            ex.getErrorCode().getStatus()
+        );
     }
 
     @ExceptionHandler(CustomSecurityException.class)
     protected ResponseEntity<ErrorResponse> handleCustomSecurityException(
         final CustomSecurityException ex) {
         preHandle(ex);
-        return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode()),
-            ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(
+            ErrorResponse.of(ex.getErrorCode()),
+            ex.getErrorCode().getStatus()
+        );
     }
 }

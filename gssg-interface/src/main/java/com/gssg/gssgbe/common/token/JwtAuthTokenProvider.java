@@ -41,6 +41,7 @@ public class JwtAuthTokenProvider implements AuthTokenProvider<JwtAuthToken> {
             LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault())
                 .toInstant());
         return new JwtAuthToken(refreshToken.getSubject(), refreshToken.getRole(), expiredDate,
-            secreatKey);
+                secreatKey
+        );
     }
 }

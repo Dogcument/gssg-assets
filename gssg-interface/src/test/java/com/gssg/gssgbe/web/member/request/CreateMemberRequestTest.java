@@ -42,7 +42,8 @@ class CreateMemberRequestTest {
             member.getPassword(),
             member.getNickname(),
             member.getProfileDog(),
-            member.getIntroduce());
+            member.getIntroduce()
+        );
 
         // when
         final Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(
@@ -61,7 +62,8 @@ class CreateMemberRequestTest {
             member.getPassword(),
             member.getNickname(),
             member.getProfileDog(),
-            member.getIntroduce());
+            member.getIntroduce()
+        );
 
         // when
         final Set<ConstraintViolation<CreateMemberRequest>> violations = validator.validate(
