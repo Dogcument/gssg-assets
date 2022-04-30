@@ -18,7 +18,7 @@ public class UpdateMemberService {
 
     public Long update(final Long memberId, final UpdateMemberDto dto) {
         final Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         member.updateNickname(dto.getNickname());
         member.updateIntroduce(dto.getIntroduce());
@@ -29,7 +29,7 @@ public class UpdateMemberService {
 
     public Long updatePassword(final Long memberId, final String passsword) {
         final Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         member.updatePassword(passsword);
 

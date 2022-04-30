@@ -1,21 +1,27 @@
 package com.gssg.gssgbe.domain.member.entity;
 
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
+
 import com.gssg.gssgbe.common.converter.PasswordEncryptConverter;
 import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.common.token.Role;
 import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.domain.member.dto.request.CreateMemberDto;
+import java.util.Objects;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
-import java.util.Objects;
-
-import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Builder
@@ -57,7 +63,8 @@ public class Member extends BaseDateTime {
         this.deleted = false;
     }
 
-    public Member(final String email, final String password, final String nickname, final String introduce) {
+    public Member(final String email, final String password, final String nickname,
+        final String introduce) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -101,10 +108,12 @@ public class Member extends BaseDateTime {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Member))
+        }
+        if (!(o instanceof Member)) {
             return false;
+        }
         final Member member = (Member) o;
         return Objects.equals(getEmail(), member.getEmail());
     }

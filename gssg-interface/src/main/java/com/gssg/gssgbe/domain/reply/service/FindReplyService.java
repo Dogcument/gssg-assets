@@ -4,12 +4,11 @@ import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.reply.dto.response.ReplyDto;
 import com.gssg.gssgbe.domain.reply.repository.ReplyRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -19,9 +18,9 @@ public class FindReplyService {
     private final ReplyRepository replyRepository;
 
     public List<ReplyDto> findAllByPostId(final Member loginMember, final long postId,
-                                          final NoOffsetPageRequest pageRequest) {
+        final NoOffsetPageRequest pageRequest) {
         return replyRepository.findAllByPostId(postId, pageRequest).stream()
-                .map(reply -> ReplyDto.of(reply, reply.isLike(loginMember)))
-                .collect(Collectors.toList());
+            .map(reply -> ReplyDto.of(reply, reply.isLike(loginMember)))
+            .collect(Collectors.toList());
     }
 }

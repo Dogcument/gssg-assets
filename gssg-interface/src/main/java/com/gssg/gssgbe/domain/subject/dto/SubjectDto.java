@@ -15,10 +15,10 @@ public class SubjectDto {
 
     public static SubjectDto of(final Subject entity) {
         return SubjectDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .description(entity.getDescription())
-                .build();
+            .id(entity.getId())
+            .name(entity.getName())
+            .description(entity.getDescription())
+            .build();
     }
 
     public static SubjectDto of(final SubjectOfDate entity) {

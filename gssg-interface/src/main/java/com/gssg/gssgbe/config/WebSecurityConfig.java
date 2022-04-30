@@ -23,36 +23,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf().disable()
+            .csrf().disable()
 
-                // 인증 또는 인가에 실패한 경우 Exception 처리
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationErrorHandler)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+            // 인증 또는 인가에 실패한 경우 Exception 처리
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationErrorHandler)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                .and()
-                .headers()
-                .frameOptions()
-                .sameOrigin()
+            .and()
+            .headers()
+            .frameOptions()
+            .sameOrigin()
 
-                // 세션 기능을 사용하지 않는다
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            // 세션 기능을 사용하지 않는다
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and()
-                .authorizeRequests()
-                .anyRequest().permitAll()
+            .and()
+            .authorizeRequests()
+            .anyRequest().permitAll()
 
-                .and()
-                .apply(securityConfigurerAdapter());
+            .and()
+            .apply(securityConfigurerAdapter());
     }
 
     @Override
     public void configure(final WebSecurity web) {
         web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .antMatchers("/", "/h2-console/**");
+            .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/", "/h2-console/**");
     }
 
     private JWTConfigurer securityConfigurerAdapter() {

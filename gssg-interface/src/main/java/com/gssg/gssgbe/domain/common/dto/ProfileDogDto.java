@@ -14,9 +14,9 @@ public class ProfileDogDto {
 
     public static ProfileDogDto of(final ProfileDog profileDog) {
         return ProfileDogDto.builder()
-                .englishName(profileDog.getEnglishName())
-                .koreanName(profileDog.getKoreanName())
-                .highlight(profileDog.getHighlight())
-                .build();
+            .englishName(profileDog.getEnglishName())
+            .koreanName(profileDog.getKoreanName())
+            .highlight(profileDog.getHighlight())
+            .build();
     }
 }

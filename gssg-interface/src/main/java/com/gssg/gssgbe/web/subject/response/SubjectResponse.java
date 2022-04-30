@@ -17,8 +17,8 @@ public class SubjectResponse {
 
     public static SubjectResponse of(final SubjectDto dto) {
         return SubjectResponse.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .build();
+            .name(dto.getName())
+            .description(dto.getDescription())
+            .build();
     }
 }

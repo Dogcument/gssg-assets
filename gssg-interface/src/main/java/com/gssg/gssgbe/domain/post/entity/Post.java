@@ -4,13 +4,20 @@ import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
 import com.gssg.gssgbe.domain.reply.entity.Reply;
 import com.gssg.gssgbe.domain.subject.entity.Subject;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -71,6 +78,6 @@ public class Post extends BaseDateTime {
 
     public boolean isLike(final Member member) {
         return postLikes.stream()
-                .anyMatch(like -> like.isMine(member));
+            .anyMatch(like -> like.isMine(member));
     }
 }

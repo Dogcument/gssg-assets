@@ -3,13 +3,12 @@ package com.gssg.gssgbe.web.member.request;
 import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.domain.member.dto.request.UpdateMemberDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor

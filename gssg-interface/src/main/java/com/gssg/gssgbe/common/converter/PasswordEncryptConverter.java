@@ -1,11 +1,10 @@
 package com.gssg.gssgbe.common.converter;
 
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 @Slf4j
 @RequiredArgsConstructor

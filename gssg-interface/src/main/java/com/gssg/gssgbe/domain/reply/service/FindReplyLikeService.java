@@ -20,9 +20,9 @@ public class FindReplyLikeService {
 
     public boolean exist(final long replyId, final Member loginMember) {
         final Reply reply = replyRepository.findById(replyId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         return replyLikeRepository.findByReplyAndMember(reply, loginMember)
-                .isPresent();
+            .isPresent();
     }
 }

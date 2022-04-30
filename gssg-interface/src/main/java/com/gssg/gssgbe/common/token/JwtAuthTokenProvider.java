@@ -2,7 +2,6 @@ package com.gssg.gssgbe.common.token;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -19,14 +18,16 @@ public class JwtAuthTokenProvider implements AuthTokenProvider<JwtAuthToken> {
     }
 
     @Override
-    public JwtAuthToken createAuthToken(final String email, final String role, final Date expiredDate) {
+    public JwtAuthToken createAuthToken(final String email, final String role,
+        final Date expiredDate) {
         return new JwtAuthToken(email, role, expiredDate, secreatKey);
     }
 
     @Override
     public JwtAuthToken createAuthToken(final String email, final String role) {
         final Date expiredDate = Date.from(
-                LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault()).toInstant());
+            LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault())
+                .toInstant());
         return new JwtAuthToken(email, role, expiredDate, secreatKey);
     }
 
@@ -37,7 +38,9 @@ public class JwtAuthTokenProvider implements AuthTokenProvider<JwtAuthToken> {
 
     public JwtAuthToken convertAuthToken(final RefreshToken refreshToken) {
         final Date expiredDate = Date.from(
-                LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault()).toInstant());
-        return new JwtAuthToken(refreshToken.getSubject(), refreshToken.getRole(), expiredDate, secreatKey);
+            LocalDateTime.now().plusMinutes(JWT_RETENTION_MINUTES).atZone(ZoneId.systemDefault())
+                .toInstant());
+        return new JwtAuthToken(refreshToken.getSubject(), refreshToken.getRole(), expiredDate,
+            secreatKey);
     }
 }

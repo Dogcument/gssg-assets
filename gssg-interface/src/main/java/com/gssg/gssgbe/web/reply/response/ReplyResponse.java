@@ -3,10 +3,9 @@ package com.gssg.gssgbe.web.reply.response;
 import com.gssg.gssgbe.domain.reply.dto.response.ReplyDto;
 import com.gssg.gssgbe.web.member.response.MemberResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -32,13 +31,13 @@ public class ReplyResponse {
 
     public static ReplyResponse of(final ReplyDto dto) {
         return ReplyResponse.builder()
-                .id(dto.getId())
-                .member(new MemberResponse(dto.getMemberDto()))
-                .content(dto.getContent())
-                .like(dto.getLike())
-                .likeCount(dto.getLikeCount())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .build();
+            .id(dto.getId())
+            .member(new MemberResponse(dto.getMemberDto()))
+            .content(dto.getContent())
+            .like(dto.getLike())
+            .likeCount(dto.getLikeCount())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .build();
     }
 }

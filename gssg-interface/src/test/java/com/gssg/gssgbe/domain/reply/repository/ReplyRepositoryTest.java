@@ -1,5 +1,12 @@
 package com.gssg.gssgbe.domain.reply.repository;
 
+import static com.gssg.gssgbe.domain.reply.repository.ReplyRepositoryImpl.SortType.LIKE_COUNT;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import com.gssg.gssgbe.common.clazz.NoOffsetPageRequest;
 import com.gssg.gssgbe.common.entity.BaseDateTime;
 import com.gssg.gssgbe.domain.member.entity.Member;
@@ -12,6 +19,11 @@ import com.gssg.gssgbe.util.TestMemberInit;
 import com.gssg.gssgbe.util.TestPostInit;
 import com.gssg.gssgbe.util.TestReplyInit;
 import com.gssg.gssgbe.util.TestSubjectInit;
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
@@ -20,19 +32,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static com.gssg.gssgbe.domain.reply.repository.ReplyRepositoryImpl.SortType.LIKE_COUNT;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @DisplayName("[repo] 댓글 좋아요")
 @Transactional
@@ -66,7 +65,9 @@ class ReplyRepositoryTest {
                                     final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(null, 5);
 
                                     // when
-                                    final List<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
+                                    final List<Reply> replies = replyRepository.findAllByPostId(
+                                            post.getId(),
+                                            pageRequest);
 
                                     // then
                                     final List<LocalDateTime> createdAts = replies.stream()
@@ -80,7 +81,9 @@ class ReplyRepositoryTest {
                                             Sort.by(DESC, LIKE_COUNT.name()));
 
                                     // when
-                                    final List<Reply> replies = replyRepository.findAllByPostId(post.getId(), pageRequest);
+                                    final List<Reply> replies = replyRepository.findAllByPostId(
+                                            post.getId(),
+                                            pageRequest);
 
                                     // then
                                     final List<Integer> likeCounts = replies.stream()

@@ -12,8 +12,8 @@ public class PostMessageDto {
 
     public static PostMessageDto of(final String channel, final String text) {
         return PostMessageDto.builder()
-                .channel(channel)
-                .text(text)
-                .build();
+            .channel(channel)
+            .text(text)
+            .build();
     }
 }

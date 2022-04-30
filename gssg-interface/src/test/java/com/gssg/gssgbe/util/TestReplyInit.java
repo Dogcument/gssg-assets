@@ -23,6 +23,6 @@ public class TestReplyInit {
     public void testReplyInit() {
         final Post post = postRepository.findById(1L).get();
         memberRepository.findAll().forEach(member ->
-                replyRepository.save(new Reply(member, post, member.getNickname() + " reply")));
+            replyRepository.save(new Reply(member, post, member.getNickname() + " reply")));
     }
 }

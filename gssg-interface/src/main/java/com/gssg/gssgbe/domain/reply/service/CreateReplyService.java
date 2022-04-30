@@ -19,7 +19,7 @@ public class CreateReplyService {
 
     public long create(final CreateReplyRequestDto request) {
         final Post post = postRepository.findById(request.getPostId())
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_EXISTS_SUBJECT));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_EXISTS_SUBJECT));
         final Reply reply = new Reply(request.getMember(), post, request.getContent());
 
         return replyRepository.save(reply).getId();

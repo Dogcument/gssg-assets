@@ -1,9 +1,8 @@
 package com.gssg.gssgbe.common.clazz;
 
+import java.util.Optional;
 import lombok.Getter;
 import org.springframework.data.domain.Sort;
-
-import java.util.Optional;
 
 @Getter
 public class NoOffsetPageRequest {

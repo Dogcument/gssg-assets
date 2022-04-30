@@ -1,10 +1,9 @@
 package com.gssg.gssgbe.domain.member.repository;
 
 import com.gssg.gssgbe.domain.member.entity.Member;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {

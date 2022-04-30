@@ -13,15 +13,19 @@ import com.gssg.gssgbe.web.post.response.FindAllPostResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import javax.annotation.Nullable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Positive;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "회원")
 @Validated
@@ -55,15 +59,16 @@ public class MemberController {
     @Operation(summary = "다른 사람 정보 조회")
     @GetMapping("/api/v1/member/info")
     public MemberDto getMemberInfo(@RequestParam final String nickname) {
-        return findMemberService.findByNickname(nickname).orElseThrow(() -> new CustomAuthenticationException(ErrorCode.NOT_EXISTS_MEMBER));
+        return findMemberService.findByNickname(nickname)
+            .orElseThrow(() -> new CustomAuthenticationException(ErrorCode.NOT_EXISTS_MEMBER));
     }
 
     @Operation(summary = "다른 사람 글 조회")
     @GetMapping("/api/v1/member/post/")
     public FindAllPostResponse findUserPosts(
-            @Parameter final String nickname,
-            @RequestParam @Nullable @Positive final Long currentPostId,
-            @RequestParam(defaultValue = "10") @Positive final Integer size) {
+        @Parameter final String nickname,
+        @RequestParam @Nullable @Positive final Long currentPostId,
+        @RequestParam(defaultValue = "10") @Positive final Integer size) {
         final NoOffsetPageRequest pageRequest = NoOffsetPageRequest.of(currentPostId, size);
         final List<PostDto> postDtos = findPostService.findByNickname(nickname, pageRequest);
         return FindAllPostResponse.of(postDtos);

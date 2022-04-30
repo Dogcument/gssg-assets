@@ -20,9 +20,9 @@ public class DeleteReplyLikeService {
 
     public void delete(final long replyId, final Member loginMember) {
         final Reply reply = replyRepository.findById(replyId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         replyLikeRepository.findByReplyAndMember(reply, loginMember)
-                .ifPresent(replyLikeRepository::delete);
+            .ifPresent(replyLikeRepository::delete);
     }
 }

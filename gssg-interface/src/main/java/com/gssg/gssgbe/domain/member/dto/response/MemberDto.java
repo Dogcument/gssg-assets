@@ -2,10 +2,9 @@ package com.gssg.gssgbe.domain.member.dto.response;
 
 import com.gssg.gssgbe.common.type.ProfileDogType;
 import com.gssg.gssgbe.domain.member.entity.Member;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -21,13 +20,13 @@ public class MemberDto {
 
     public static MemberDto of(final Member member) {
         return MemberDto.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .profileDog(ProfileDogType.getDefault())
-                .introduce(member.getIntroduce())
-                .createdAt(member.getCreatedAt())
-                .updatedAt(member.getUpdatedAt())
-                .build();
+            .id(member.getId())
+            .email(member.getEmail())
+            .nickname(member.getNickname())
+            .profileDog(ProfileDogType.getDefault())
+            .introduce(member.getIntroduce())
+            .createdAt(member.getCreatedAt())
+            .updatedAt(member.getUpdatedAt())
+            .build();
     }
 }

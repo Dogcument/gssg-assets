@@ -4,10 +4,9 @@ import com.gssg.gssgbe.domain.post.dto.reponse.PostDto;
 import com.gssg.gssgbe.web.member.response.MemberResponse;
 import com.gssg.gssgbe.web.subject.response.SubjectResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -39,15 +38,15 @@ public class PostResponse {
 
     public static PostResponse of(final PostDto dto) {
         return PostResponse.builder()
-                .id(dto.getId())
-                .subject(SubjectResponse.of(dto.getSubjectDto()))
-                .content(dto.getContent())
-                .member(new MemberResponse(dto.getMemberDto()))
-                .like(dto.getLike())
-                .likeCount(dto.getLikeCount())
-                .replyCount(dto.getReplyCount())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .build();
+            .id(dto.getId())
+            .subject(SubjectResponse.of(dto.getSubjectDto()))
+            .content(dto.getContent())
+            .member(new MemberResponse(dto.getMemberDto()))
+            .like(dto.getLike())
+            .likeCount(dto.getLikeCount())
+            .replyCount(dto.getReplyCount())
+            .createdAt(dto.getCreatedAt())
+            .updatedAt(dto.getUpdatedAt())
+            .build();
     }
 }

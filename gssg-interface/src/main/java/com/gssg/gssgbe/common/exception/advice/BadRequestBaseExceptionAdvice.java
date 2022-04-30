@@ -2,6 +2,7 @@ package com.gssg.gssgbe.common.exception.advice;
 
 import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.ErrorResponse;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import javax.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class BadRequestBaseExceptionAdvice extends BaseExceptionAdvice {
@@ -39,42 +38,43 @@ public class BadRequestBaseExceptionAdvice extends BaseExceptionAdvice {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse handleMissingServletRequestParameterException(
-            final MissingServletRequestParameterException ex) {
+        final MissingServletRequestParameterException ex) {
         preHandle(ex);
         return ErrorResponse.of(ex);
     }
 
     /**
-     * type 이 일치하지 않아 binding 못할 경우 발생합니다.
-     * 주로 @RequestParam enum 으로 binding 못했을 경우 발생합니다.
+     * type 이 일치하지 않아 binding 못할 경우 발생합니다. 주로 @RequestParam enum 으로 binding 못했을 경우 발생합니다.
      *
      * @param ex
      * @return
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponse handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException ex) {
+    protected ErrorResponse handleMethodArgumentTypeMismatchException(
+        final MethodArgumentTypeMismatchException ex) {
         preHandle(ex);
         return ErrorResponse.of(ex);
     }
 
     /**
-     * javax.validation 을 통과하지 못하면 에러가 발생합니다.
-     * 주로 @NotBlank, @NotEmpty, @NotNull 에서 발생합니다.
+     * javax.validation 을 통과하지 못하면 에러가 발생합니다. 주로 @NotBlank, @NotEmpty, @NotNull 에서 발생합니다.
      *
      * @param ex
      * @return
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponse handleConstraintViolationException(final ConstraintViolationException ex) {
+    protected ErrorResponse handleConstraintViolationException(
+        final ConstraintViolationException ex) {
         preHandle(ex);
         return ErrorResponse.of(ex);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponse handleHttpMessageNotReadableException(final HttpMessageNotReadableException ex) {
+    protected ErrorResponse handleHttpMessageNotReadableException(
+        final HttpMessageNotReadableException ex) {
         preHandle(ex);
         return ErrorResponse.of(ErrorCode.NOT_VALID_REQUEST_BODY);
     }
@@ -87,16 +87,16 @@ public class BadRequestBaseExceptionAdvice extends BaseExceptionAdvice {
     }
 
     /**
-     * Valid or Validated 으로 binding error 발생시 발생합니다.
-     * HttpMessageConverter 에서 등록한 HttpMessageConverter binding 이 실패하는 경우 발생합니다.
-     * 주로 @RequestBody, @RequestPart 어노테이션에서 발생합니다.
+     * Valid or Validated 으로 binding error 발생시 발생합니다. HttpMessageConverter 에서 등록한
+     * HttpMessageConverter binding 이 실패하는 경우 발생합니다. 주로 @RequestBody, @RequestPart 어노테이션에서 발생합니다.
      *
      * @param ex
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException ex) {
+    protected ErrorResponse handleMethodArgumentNotValidException(
+        final MethodArgumentNotValidException ex) {
         preHandle(ex);
         return ErrorResponse.of(ErrorCode.BAD_REQUEST, ex.getBindingResult());
     }

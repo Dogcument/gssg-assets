@@ -4,14 +4,13 @@ import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.ErrorResponse;
 import com.gssg.gssgbe.common.exception.custom.BusinessException;
 import com.gssg.gssgbe.common.exception.custom.CustomSecurityException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.persistence.EntityNotFoundException;
 
 @RestControllerAdvice
 public class BasicBaseExceptionAdvice extends BaseExceptionAdvice {
@@ -25,7 +24,7 @@ public class BasicBaseExceptionAdvice extends BaseExceptionAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     protected ErrorResponse handleHttpRequestMethodNotSupportedException(
-            final HttpRequestMethodNotSupportedException ex) {
+        final HttpRequestMethodNotSupportedException ex) {
         preHandle(ex);
         return ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED);
     }
@@ -50,12 +49,16 @@ public class BasicBaseExceptionAdvice extends BaseExceptionAdvice {
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException ex) {
         preHandle(ex);
-        return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode()), ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(ErrorResponse.of(
+            ex.getErrorCode()),
+            ex.getErrorCode().getStatus());
     }
 
     @ExceptionHandler(CustomSecurityException.class)
-    protected ResponseEntity<ErrorResponse> handleCustomSecurityException(final CustomSecurityException ex) {
+    protected ResponseEntity<ErrorResponse> handleCustomSecurityException(
+        final CustomSecurityException ex) {
         preHandle(ex);
-        return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode()), ex.getErrorCode().getStatus());
+        return new ResponseEntity<>(ErrorResponse.of(ex.getErrorCode()),
+            ex.getErrorCode().getStatus());
     }
 }

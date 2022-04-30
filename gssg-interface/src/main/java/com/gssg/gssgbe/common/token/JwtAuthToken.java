@@ -1,9 +1,24 @@
 package com.gssg.gssgbe.common.token;
 
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_VALID_TOKEN;
+
 import com.gssg.gssgbe.common.exception.ErrorCode;
 import com.gssg.gssgbe.common.exception.custom.CustomAuthenticationException;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SecurityException;
+import java.security.Key;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,12 +26,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import java.security.Key;
-import java.time.Instant;
-import java.util.*;
-
-import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_VALID_TOKEN;
 
 @Slf4j
 public class JwtAuthToken implements AuthToken<Claims> {
@@ -32,7 +41,8 @@ public class JwtAuthToken implements AuthToken<Claims> {
         this.secreatKey = secreatKey;
     }
 
-    JwtAuthToken(final String email, final String role, final Date expiredDate, final Key secreatKey) {
+    JwtAuthToken(final String email, final String role, final Date expiredDate,
+        final Key secreatKey) {
         final Map<String, Object> claims = new HashMap<>() {
             {
                 put(AUTHORITIES_KEY, role);
@@ -40,12 +50,12 @@ public class JwtAuthToken implements AuthToken<Claims> {
         };
 
         this.token = Jwts.builder()
-                .setClaims(claims)
-                .setSubject(email)
-                .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(expiredDate)
-                .signWith(secreatKey, signatureAlgorithm)
-                .compact();
+            .setClaims(claims)
+            .setSubject(email)
+            .setIssuedAt(Date.from(Instant.now()))
+            .setExpiration(expiredDate)
+            .signWith(secreatKey, signatureAlgorithm)
+            .compact();
         this.secreatKey = secreatKey;
     }
 
@@ -57,7 +67,8 @@ public class JwtAuthToken implements AuthToken<Claims> {
     @Override
     public Claims getClaims() {
         try {
-            return Jwts.parserBuilder().setSigningKey(secreatKey).build().parseClaimsJws(token).getBody();
+            return Jwts.parserBuilder().setSigningKey(secreatKey).build().parseClaimsJws(token)
+                .getBody();
         } catch (final SecurityException e) {
             log.info("### Invalid JWT signature.");
         } catch (final MalformedJwtException e) {
@@ -78,7 +89,7 @@ public class JwtAuthToken implements AuthToken<Claims> {
         if (this.validate()) {
             final Claims claims = this.getClaims();
             final Collection<? extends GrantedAuthority> authorities = Collections.singleton(
-                    new SimpleGrantedAuthority(claims.get(AUTHORITIES_KEY).toString()));
+                new SimpleGrantedAuthority(claims.get(AUTHORITIES_KEY).toString()));
             final User principal = new User(claims.getSubject(), "", authorities);
 
             return new UsernamePasswordAuthenticationToken(principal, this, authorities);
@@ -89,13 +100,13 @@ public class JwtAuthToken implements AuthToken<Claims> {
 
     public String getSubject() {
         return Optional.ofNullable(getClaims())
-                .orElseThrow(() -> new CustomAuthenticationException(NOT_VALID_TOKEN))
-                .get("sub").toString();
+            .orElseThrow(() -> new CustomAuthenticationException(NOT_VALID_TOKEN))
+            .get("sub").toString();
     }
 
     public String getRole() {
         return Optional.ofNullable(getClaims())
-                .orElseThrow(() -> new CustomAuthenticationException(NOT_VALID_TOKEN))
-                .get(AUTHORITIES_KEY).toString();
+            .orElseThrow(() -> new CustomAuthenticationException(NOT_VALID_TOKEN))
+            .get(AUTHORITIES_KEY).toString();
     }
 }

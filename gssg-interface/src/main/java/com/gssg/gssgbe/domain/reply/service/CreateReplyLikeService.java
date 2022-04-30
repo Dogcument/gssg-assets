@@ -21,7 +21,7 @@ public class CreateReplyLikeService {
 
     public long create(final long replyId, final Member loginMember) {
         final Reply reply = replyRepository.findById(replyId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         return replyLikeRepository.save(new ReplyLike(reply, loginMember)).getId();
     }

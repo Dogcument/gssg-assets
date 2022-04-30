@@ -11,11 +11,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "댓글")
 @RequiredArgsConstructor
@@ -31,8 +34,8 @@ public class ReplyController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/v1/replies")
     public Long create(
-            @Parameter(hidden = true) @LoginMember final Member loginMember,
-            @RequestBody @Valid final CreateReplyRequest request) {
+        @Parameter(hidden = true) @LoginMember final Member loginMember,
+        @RequestBody @Valid final CreateReplyRequest request) {
         return createReplyService.create(request.toDto(loginMember));
     }
 
@@ -40,8 +43,8 @@ public class ReplyController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/v1/replies/{replyId}/like")
     public Boolean like(
-            @Parameter(hidden = true) @LoginMember final Member loginMember,
-            @PathVariable final Long replyId) {
+        @Parameter(hidden = true) @LoginMember final Member loginMember,
+        @PathVariable final Long replyId) {
         if (findReplyLikeService.exist(replyId, loginMember)) {
             deleteReplyLikeService.delete(replyId, loginMember);
             return false;

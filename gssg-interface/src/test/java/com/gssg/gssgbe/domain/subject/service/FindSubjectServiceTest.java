@@ -1,5 +1,7 @@
 package com.gssg.gssgbe.domain.subject.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.gssg.gssgbe.domain.subject.dto.SubjectDto;
 import com.gssg.gssgbe.util.TestMemberInit;
 import com.gssg.gssgbe.util.TestPostInit;
@@ -13,8 +15,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @Import({TestMemberInit.class, TestSubjectInit.class, TestPostInit.class, TestReplyInit.class})

@@ -2,7 +2,6 @@ package com.gssg.gssgbe.common.token;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -19,17 +18,18 @@ public class RefreshTokenProvider implements AuthTokenProvider<RefreshToken> {
     }
 
     @Override
-    public RefreshToken createAuthToken(final String email, final String role, final Date expiredDate) {
+    public RefreshToken createAuthToken(final String email, final String role,
+        final Date expiredDate) {
         return new RefreshToken(email, role, expiredDate, secreatKey);
     }
 
     @Override
     public RefreshToken createAuthToken(final String email, final String role) {
         final Date expiredDate = Date.from(
-                LocalDateTime.now()
-                        .plusMinutes(REFRESH_TOKEN_RETENTION_MINUTES)
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant());
+            LocalDateTime.now()
+                .plusMinutes(REFRESH_TOKEN_RETENTION_MINUTES)
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
         return new RefreshToken(email, role, expiredDate, secreatKey);
     }
 
@@ -40,10 +40,10 @@ public class RefreshTokenProvider implements AuthTokenProvider<RefreshToken> {
 
     public RefreshToken convertAuthToken(final JwtAuthToken jwtAuthToken) {
         final Date expiredDate = Date.from(
-                LocalDateTime.now()
-                        .plusMinutes(REFRESH_TOKEN_RETENTION_MINUTES)
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant());
+            LocalDateTime.now()
+                .plusMinutes(REFRESH_TOKEN_RETENTION_MINUTES)
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
         return createAuthToken(jwtAuthToken.getSubject(), jwtAuthToken.getRole(), expiredDate);
     }
 }

@@ -6,6 +6,10 @@ import com.gssg.gssgbe.web.common.response.ErrorCodeResponse;
 import com.gssg.gssgbe.web.common.response.ProfileDogResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -13,11 +17,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Tag(name = "공통")
 @Slf4j
@@ -32,8 +31,8 @@ public class CommonController {
     @GetMapping("/api/v1/common/profileDogs")
     public List<ProfileDogResponse> findAllProfileDogs() {
         return findProfileDogService.findAll().stream()
-                .map(ProfileDogResponse::new)
-                .collect(Collectors.toList());
+            .map(ProfileDogResponse::new)
+            .collect(Collectors.toList());
     }
 
     @CacheEvict(allEntries = true, value = "profileDog")
@@ -48,8 +47,8 @@ public class CommonController {
     @GetMapping("/api/v1/common/errorCode")
     public List<ErrorCodeResponse> findAll() {
         return Arrays.stream(ErrorCode.values())
-                .map(ErrorCodeResponse::new)
-                .collect(Collectors.toList());
+            .map(ErrorCodeResponse::new)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "헬스 체크 - 서버 기동 시간")

@@ -3,10 +3,9 @@ package com.gssg.gssgbe.domain.post.dto.reponse;
 import com.gssg.gssgbe.domain.member.dto.response.MemberDto;
 import com.gssg.gssgbe.domain.post.entity.Post;
 import com.gssg.gssgbe.domain.subject.dto.SubjectDto;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -24,16 +23,16 @@ public class PostDto {
 
     public static PostDto of(final Post post, final boolean like) {
         return PostDto.builder()
-                .id(post.getId())
-                .subjectDto(SubjectDto.of(post.getSubject()))
-                .content(post.getContent())
-                .memberDto(MemberDto.of(post.getMember()))
-                .createdAt(post.getCreatedAt())
-                .updatedAt(post.getUpdatedAt())
-                .like(like)
-                .likeCount(post.getPostLikes().size())
-                .replyCount(post.getReplies().size())
-                .build();
+            .id(post.getId())
+            .subjectDto(SubjectDto.of(post.getSubject()))
+            .content(post.getContent())
+            .memberDto(MemberDto.of(post.getMember()))
+            .createdAt(post.getCreatedAt())
+            .updatedAt(post.getUpdatedAt())
+            .like(like)
+            .likeCount(post.getPostLikes().size())
+            .replyCount(post.getReplies().size())
+            .build();
     }
 
     public static PostDto of(final Post post) {

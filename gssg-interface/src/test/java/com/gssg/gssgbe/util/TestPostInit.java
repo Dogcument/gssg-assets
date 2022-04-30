@@ -23,7 +23,7 @@ public class TestPostInit {
     public void testPostInit() {
         final Subject subject = subjectRepository.findById(1L).get();
         memberRepository.findAll()
-                .forEach(member ->
-                        postRepository.save(Post.of(member, subject, member.getNickname() + " contents")));
+            .forEach(member ->
+                postRepository.save(Post.of(member, subject, member.getNickname() + " contents")));
     }
 }

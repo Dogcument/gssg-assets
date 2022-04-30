@@ -20,9 +20,9 @@ public class FindPostLikeService {
 
     public boolean exist(final long postId, final Member loginMember) {
         final Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         return postLikeRepository.findByPostAndMember(post, loginMember)
-                .isPresent();
+            .isPresent();
     }
 }

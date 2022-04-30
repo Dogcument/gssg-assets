@@ -2,10 +2,9 @@ package com.gssg.gssgbe.domain.reply.dto.response;
 
 import com.gssg.gssgbe.domain.member.dto.response.MemberDto;
 import com.gssg.gssgbe.domain.reply.entity.Reply;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -21,14 +20,14 @@ public class ReplyDto {
 
     public static ReplyDto of(final Reply reply, final boolean like) {
         return ReplyDto.builder()
-                .id(reply.getId())
-                .content(reply.getContent())
-                .memberDto(MemberDto.of(reply.getMember()))
-                .like(like)
-                .likeCount(reply.getReplyLikes().size())
-                .createdAt(reply.getCreatedAt())
-                .updatedAt(reply.getUpdatedAt())
-                .build();
+            .id(reply.getId())
+            .content(reply.getContent())
+            .memberDto(MemberDto.of(reply.getMember()))
+            .like(like)
+            .likeCount(reply.getReplyLikes().size())
+            .createdAt(reply.getCreatedAt())
+            .updatedAt(reply.getUpdatedAt())
+            .build();
     }
 
     public static ReplyDto of(final Reply reply) {

@@ -1,5 +1,9 @@
 package com.gssg.gssgbe.domain.auth.service;
 
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_EXISTS_AUTHORIZATION;
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_EXISTS_MEMBER;
+import static com.gssg.gssgbe.common.exception.ErrorCode.NOT_VALID_PASSWORD;
+
 import com.gssg.gssgbe.common.exception.custom.CustomAuthenticationException;
 import com.gssg.gssgbe.common.exception.custom.CustomAuthrizationException;
 import com.gssg.gssgbe.common.token.JwtAuthToken;
@@ -17,8 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.gssg.gssgbe.common.exception.ErrorCode.*;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -32,7 +34,7 @@ public class LoginService {
 
     public JwtAuthToken login(final String loginId, final String password) {
         final Member member = memberRepository.findByEmail(loginId)
-                .orElseThrow(() -> new CustomAuthenticationException(NOT_EXISTS_MEMBER));
+            .orElseThrow(() -> new CustomAuthenticationException(NOT_EXISTS_MEMBER));
 
         if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new CustomAuthenticationException(NOT_VALID_PASSWORD);
@@ -44,19 +46,20 @@ public class LoginService {
         return createJwtAuthToken(member, authentication);
     }
 
-    private JwtAuthToken createJwtAuthToken(final Member member, final Authentication authentication) {
+    private JwtAuthToken createJwtAuthToken(final Member member,
+        final Authentication authentication) {
         final Role role = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .findFirst()
-                .map(Role::of)
-                .orElseThrow(() -> new CustomAuthrizationException(NOT_EXISTS_AUTHORIZATION));
+            .map(GrantedAuthority::getAuthority)
+            .findFirst()
+            .map(Role::of)
+            .orElseThrow(() -> new CustomAuthrizationException(NOT_EXISTS_AUTHORIZATION));
 
         return jwtAuthTokenProvider.createAuthToken(member.getEmail(), role.getCode());
     }
 
     private Authentication getAuthentication(final Member member, final String password) {
         final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                member.getEmail(), password);
+            member.getEmail(), password);
         return authenticationManagerBuilder.getObject().authenticate(authenticationToken);
     }
 }

@@ -20,9 +20,9 @@ public class DeletePostLikeService {
 
     public void delete(final long postId, final Member loginMember) {
         final Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         postLikeRepository.findByPostAndMember(post, loginMember)
-                .ifPresent(postLikeRepository::delete);
+            .ifPresent(postLikeRepository::delete);
     }
 }

@@ -1,5 +1,7 @@
 package com.gssg.gssgbe.domain.external.slack.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.gssg.gssgbe.domain.external.slack.dto.PostMessageDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -7,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /*
     botToken 을 public repository 에 올리지 못하는 이슈로 Disabled
@@ -31,8 +31,8 @@ class PostMessageServiceTest {
 
         // when
         final String block = postMessageService
-                .sendChatPostMessage(postMessageDto)
-                .block();
+            .sendChatPostMessage(postMessageDto)
+            .block();
 
         // then
         assertThat(block).startsWith("{\"ok\":true");
