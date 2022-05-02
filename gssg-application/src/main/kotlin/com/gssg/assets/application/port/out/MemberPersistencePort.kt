@@ -1,6 +1,7 @@
 package com.gssg.assets.application.port.out
 
 import com.gssg.assets.domain.member.Member
+import com.gssg.assets.domain.member.MemberDisplayName
 import com.gssg.assets.domain.member.MemberId
 
 /**
@@ -8,5 +9,9 @@ import com.gssg.assets.domain.member.MemberId
  */
 interface MemberPersistencePort {
 
-    fun find(memberId: MemberId): Member?
+    fun findById(memberId: MemberId): Member?
+
+    fun findByDisplayName(memberDisplayName: MemberDisplayName): Member?
+
+    fun existDisplayName(memberDisplayName: MemberDisplayName): Boolean
 }
