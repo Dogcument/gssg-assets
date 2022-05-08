@@ -1,6 +1,9 @@
 package com.gssg.assets.application.domain.member.port.`in`
 
-import com.gssg.assets.domain.member.*
+import com.gssg.assets.domain.member.MemberDisplayName
+import com.gssg.assets.domain.member.MemberId
+import com.gssg.assets.domain.member.MemberIntroduce
+import com.gssg.assets.domain.member.MemberProfileDog
 
 /**
  * @Author Heli
@@ -11,12 +14,8 @@ interface ModifyMemberUseCase {
 
     data class Command(
         val memberId: MemberId,
-        val memberEmail: MemberEmail? = null,
-        val memberPassword: MemberPassword? = null,
         val memberDisplayName: MemberDisplayName? = null,
         val memberIntroduce: MemberIntroduce? = null,
         val memberProfileDog: MemberProfileDog? = null,
-        val memberRole: MemberRole? = null,
-        val memberStatus: MemberStatus? = null
     )
 }

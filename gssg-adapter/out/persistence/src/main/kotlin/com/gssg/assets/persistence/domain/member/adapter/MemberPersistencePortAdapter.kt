@@ -3,6 +3,7 @@ package com.gssg.assets.persistence.domain.member.adapter
 import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
 import com.gssg.assets.domain.member.Member
 import com.gssg.assets.domain.member.MemberDisplayName
+import com.gssg.assets.domain.member.MemberEmail
 import com.gssg.assets.domain.member.MemberId
 import com.gssg.assets.persistence.domain.member.adapter.mapper.MemberMapper
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
@@ -21,7 +22,7 @@ class MemberPersistencePortAdapter(
 
     override fun update(member: Member) {
         val memberDefinition = MemberMapper.toDefinition(member = member)
-        memberRepository.update(id = member.requiredId, memberDefinition = memberDefinition)
+        memberRepository.update(id = member.longId, memberDefinition = memberDefinition)
     }
 
     override fun findById(memberId: MemberId): Member? {
@@ -36,10 +37,10 @@ class MemberPersistencePortAdapter(
         return MemberMapper.toApplication(memberEntity = memberEntity)
     }
 
-    override fun existBy(memberDisplayName: MemberDisplayName): Boolean {
-        val member = memberRepository.findByDisplayName(
-            memberDisplayName = memberDisplayName
-        )
-        return member != null
+    override fun findByEmail(memberEmail: MemberEmail): Member? {
+        val memberEntity = memberRepository.findByEmail(
+            memberEmail = memberEmail
+        ) ?: return null
+        return MemberMapper.toApplication(memberEntity = memberEntity)
     }
 }

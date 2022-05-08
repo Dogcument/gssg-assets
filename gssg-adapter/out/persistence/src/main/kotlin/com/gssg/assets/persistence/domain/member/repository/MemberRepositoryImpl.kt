@@ -1,9 +1,11 @@
 package com.gssg.assets.persistence.domain.member.repository
 
 import com.gssg.assets.domain.member.MemberDisplayName
+import com.gssg.assets.domain.member.MemberEmail
 import com.gssg.assets.persistence.common.CommonRepository
 import com.gssg.assets.persistence.domain.member.entity.MemberEntities
 import com.gssg.assets.persistence.domain.member.entity.MemberEntities.displayName
+import com.gssg.assets.persistence.domain.member.entity.MemberEntities.email
 import com.gssg.assets.persistence.domain.member.entity.MemberEntity
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 
@@ -44,5 +46,9 @@ class MemberRepositoryImpl : MemberRepository,
 
     override fun findByDisplayName(memberDisplayName: MemberDisplayName): MemberEntity? {
         return MemberEntity.find { displayName eq memberDisplayName.displayName }.singleOrNull()
+    }
+
+    override fun findByEmail(memberEmail: MemberEmail): MemberEntity? {
+        return MemberEntity.find { email eq memberEmail.email }.singleOrNull()
     }
 }

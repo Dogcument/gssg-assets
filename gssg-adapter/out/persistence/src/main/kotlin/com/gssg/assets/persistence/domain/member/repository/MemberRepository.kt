@@ -1,6 +1,7 @@
 package com.gssg.assets.persistence.domain.member.repository
 
 import com.gssg.assets.domain.member.MemberDisplayName
+import com.gssg.assets.domain.member.MemberEmail
 import com.gssg.assets.domain.member.enums.ProfileDogType
 import com.gssg.assets.domain.member.enums.Role
 import com.gssg.assets.domain.member.enums.Status
@@ -19,6 +20,8 @@ interface MemberRepository {
     fun findById(id: Long): MemberEntity?
 
     fun findByDisplayName(memberDisplayName: MemberDisplayName): MemberEntity?
+
+    fun findByEmail(memberEmail: MemberEmail): MemberEntity?
 
     data class MemberDefinition(
         val email: String,

@@ -1,33 +1,25 @@
-package com.gssg.assets.application.domain.member.service
+package com.gssg.assets.application.domain.member.service.validation
 
-import com.gssg.assets.application.domain.member.port.`in`.CreateMemberUseCase
 import com.gssg.assets.application.domain.member.port.out.MockMemberPersistencePortAdapter
+import com.gssg.assets.application.domain.member.service.QueryMember
 import com.gssg.assets.application.domain.member.service.exception.MemberDisplayNameIntegrityConstraintViolationException
 import com.gssg.assets.application.domain.member.service.exception.MemberEmailIntegrityConstraintViolationException
 import com.gssg.assets.application.domain.member.service.mock.mockMember
-import com.gssg.assets.application.domain.member.service.validation.CommandMemberValidator
-import com.gssg.assets.domain.member.Member
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 
 /**
  * @Author Heli
  */
-internal class CreateMemberTest {
+internal class CommandMemberValidatorTest {
 
     private val memberPersistencePort = MockMemberPersistencePortAdapter()
 
-    private val queryMemberUseCase = QueryMember(
+    private val queryMember = QueryMember(
         memberPersistencePort = memberPersistencePort
     )
 
     private val memberValidator = CommandMemberValidator(
-        queryMemberUseCase = queryMemberUseCase
-    )
-
-    private val createMember = CreateMember(
-        memberPersistencePort = memberPersistencePort,
-        memberValidator = memberValidator
+        queryMemberUseCase = queryMember
     )
 
     @BeforeEach
@@ -41,17 +33,9 @@ internal class CreateMemberTest {
     }
 
     @Test
-    fun `멤버를 만들 수 있다`() {
-        assertDoesNotThrow {
-            createMember()
-        }
-        assertThat(true)
-    }
-
-    @Test
     fun `이미 등록된 DisplayName 인 경우 Exception 를 발생시킨다`() {
         assertThrows<MemberDisplayNameIntegrityConstraintViolationException> {
-            createMember(
+            memberValidator.requireValid(
                 member = mockMember(
                     newDisplayName = "first",
                     newEmail = "heli@example.com"
@@ -63,19 +47,36 @@ internal class CreateMemberTest {
     @Test
     fun `이미 등록된 Email 인 경우 Exception 를 발생시킨다`() {
         assertThrows<MemberEmailIntegrityConstraintViolationException> {
-            createMember(
+            memberValidator.requireValid(
                 member = mockMember(
                     newDisplayName = "heli",
-                    newEmail = "first@example.com"
+                    newEmail = "first@example.com",
                 )
             )
         }
     }
 
-    private fun createMember(member: Member? = null) {
-        val command = CreateMemberUseCase.Command(
-            member = member ?: mockMember()
-        )
-        createMember.command(command = command)
+    @Test
+    fun `등록되지 않은 DisplayName 인 경우 정상 등록된다`() {
+        assertDoesNotThrow {
+            memberValidator.requireValid(
+                member = mockMember(
+                    newDisplayName = "heli",
+                    newEmail = "heli@example.com",
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `등록되지 않은 Email 인 경우 정상 등록된다`() {
+        assertDoesNotThrow {
+            memberValidator.requireValid(
+                member = mockMember(
+                    newDisplayName = "heli",
+                    newEmail = "heli@example.com",
+                )
+            )
+        }
     }
 }
