@@ -27,17 +27,15 @@ class Member(
             newPassword: MemberPassword,
             newDisplayName: MemberDisplayName,
             newIntroduce: MemberIntroduce
-        ): Member {
-            return Member(
-                email = newEmail,
-                password = newPassword,
-                displayName = newDisplayName,
-                introduce = newIntroduce,
-                profileDog = MemberProfileDog.default(),
-                role = MemberRole(role = Role.USER),
-                status = MemberStatus(status = Status.ACTIVE)
-            )
-        }
+        ) = Member(
+            email = newEmail,
+            password = newPassword,
+            displayName = newDisplayName,
+            introduce = newIntroduce,
+            profileDog = MemberProfileDog.default(),
+            role = MemberRole(role = Role.USER),
+            status = MemberStatus(status = Status.ACTIVE)
+        )
     }
 
     fun update(
