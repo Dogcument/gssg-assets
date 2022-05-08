@@ -1,14 +1,11 @@
 package com.gssg.assets.persistence.domain.member.entity
 
-import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.javatime.datetime
+import com.gssg.assets.persistence.common.CommonLongIdEntityTable
 
 /**
  * @Author Heli
  */
-object Members : LongIdTable(name = "member") {
-    val createdAt = datetime("createdAt")
-    val modifiedAt = datetime("modifiedAt")
+object MemberEntities : CommonLongIdEntityTable(name = "member") {
     val email = varchar("email", 50)
     val password = varchar("password", 128)
     val displayName = varchar("displayName", 20)

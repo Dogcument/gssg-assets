@@ -1,15 +1,17 @@
 package com.gssg.assets.domain.member
 
+import com.gssg.assets.domain.BaseDomain
 import com.gssg.assets.domain.member.enums.Role
 import com.gssg.assets.domain.member.enums.Status
+import java.time.LocalDateTime
 
 /**
  * @Author Heli
  */
 class Member(
-    val id: MemberId? = null,
-    val createdAt: MemberCreatedAt? = null,
-    val modifiedAt: MemberModifiedAt? = null,
+    override val id: MemberId = MemberId(-1L),
+    val createdAt: MemberCreatedAt = MemberCreatedAt(LocalDateTime.MIN),
+    val modifiedAt: MemberModifiedAt = MemberModifiedAt(LocalDateTime.MIN),
     val email: MemberEmail,
     val password: MemberPassword,
     val displayName: MemberDisplayName,
@@ -17,7 +19,8 @@ class Member(
     val profileDog: MemberProfileDog,
     val role: MemberRole,
     val status: MemberStatus
-) {
+) : BaseDomain() {
+
     companion object {
         fun create(
             newEmail: MemberEmail,
