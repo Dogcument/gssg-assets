@@ -5,4 +5,4 @@ import java.time.LocalDate
 /**
  * @Author Heli
  */
-data class PickDate(val date: LocalDate)
+data class PickTargetDate(val targetDate: LocalDate)

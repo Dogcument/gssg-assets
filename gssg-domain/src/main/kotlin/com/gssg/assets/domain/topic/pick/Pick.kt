@@ -12,16 +12,16 @@ class Pick(
     val createdAt: PickCreatedAt = PickCreatedAt(LocalDateTime.MIN),
     val modifiedAt: PickModifiedAt = PickModifiedAt(LocalDateTime.MIN),
     val topicId: TopicId,
-    val date: PickDate
+    val targetDate: PickTargetDate
 ) : BaseDomain() {
 
     companion object {
         fun create(
             newTopicId: TopicId,
-            newDate: PickDate
+            newTargetDate: PickTargetDate
         ) = Pick(
             topicId = newTopicId,
-            date = newDate
+            targetDate = newTargetDate
         )
     }
 }
