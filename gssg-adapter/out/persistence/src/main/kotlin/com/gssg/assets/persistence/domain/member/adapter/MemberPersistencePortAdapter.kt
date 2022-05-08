@@ -1,6 +1,6 @@
 package com.gssg.assets.persistence.domain.member.adapter
 
-import com.gssg.assets.application.port.out.MemberPersistencePort
+import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
 import com.gssg.assets.domain.member.Member
 import com.gssg.assets.domain.member.MemberDisplayName
 import com.gssg.assets.domain.member.MemberId
@@ -14,16 +14,26 @@ class MemberPersistencePortAdapter(
     private val memberRepository: MemberRepository
 ) : MemberPersistencePort {
 
+    override fun insert(member: Member) {
+        val memberDefinition = MemberMapper.toDefinition(member = member)
+        memberRepository.insert(memberDefinition = memberDefinition)
+    }
+
+    override fun update(member: Member) {
+        val memberDefinition = MemberMapper.toDefinition(member = member)
+        memberRepository.update(id = member.requiredId, memberDefinition = memberDefinition)
+    }
+
     override fun findById(memberId: MemberId): Member? {
-        val member = memberRepository.findById(memberId = memberId) ?: return null
-        return MemberMapper.toApplication(member)
+        val memberEntity = memberRepository.findById(id = memberId.id) ?: return null
+        return MemberMapper.toApplication(memberEntity = memberEntity)
     }
 
     override fun findByDisplayName(memberDisplayName: MemberDisplayName): Member? {
-        val member = memberRepository.findByDisplayName(
+        val memberEntity = memberRepository.findByDisplayName(
             memberDisplayName = memberDisplayName
         ) ?: return null
-        return MemberMapper.toApplication(member)
+        return MemberMapper.toApplication(memberEntity = memberEntity)
     }
 
     override fun existDisplayName(memberDisplayName: MemberDisplayName): Boolean {

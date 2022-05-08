@@ -1,5 +1,6 @@
 package com.gssg.assets.domain.member
 
+import com.gssg.assets.domain.BaseDomain
 import com.gssg.assets.domain.member.enums.Role
 import com.gssg.assets.domain.member.enums.Status
 
@@ -7,7 +8,7 @@ import com.gssg.assets.domain.member.enums.Status
  * @Author Heli
  */
 class Member(
-    val id: MemberId? = null,
+    override val id: MemberId? = null,
     val createdAt: MemberCreatedAt? = null,
     val modifiedAt: MemberModifiedAt? = null,
     val email: MemberEmail,
@@ -17,7 +18,8 @@ class Member(
     val profileDog: MemberProfileDog,
     val role: MemberRole,
     val status: MemberStatus
-) {
+) : BaseDomain() {
+
     companion object {
         fun create(
             newEmail: MemberEmail,

@@ -1,6 +1,6 @@
 package com.gssg.assets.persistence.config
 
-import com.gssg.assets.application.port.out.MemberPersistencePort
+import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
 import com.gssg.assets.persistence.domain.member.adapter.MemberPersistencePortAdapter
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import org.springframework.context.annotation.Bean

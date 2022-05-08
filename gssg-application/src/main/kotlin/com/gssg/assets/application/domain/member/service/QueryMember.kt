@@ -1,0 +1,28 @@
+package com.gssg.assets.application.domain.member.service
+
+import com.gssg.assets.application.domain.member.port.`in`.QueryMemberUseCase
+import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
+import com.gssg.assets.domain.logger
+import org.springframework.stereotype.Service
+
+/**
+ * @Author Heli
+ */
+@Service
+class QueryMember(
+    private val memberPersistencePort: MemberPersistencePort
+) : QueryMemberUseCase {
+
+    private val logger = logger()
+
+    override fun query(query: QueryMemberUseCase.Query): QueryMemberUseCase.Result? {
+        val memberId = query.memberId
+
+        logger.info("멤버를 데이터베이스에서 조회하기 위해 영속성 포트를 호출")
+        val member = memberPersistencePort.findById(memberId = memberId) ?: return null
+
+        return QueryMemberUseCase.Result(
+            member = member
+        )
+    }
+}
