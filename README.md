@@ -17,24 +17,13 @@
 ## 2. Local 실행 방법
 
 ```shell
-# 1. jar 생성
-> ./gradlew bootjar
-BUILD SUCCESSFUL in 9s
+# 1. Application 실행 (기본으로 local profile 셋업)
+> ./gradlew :gssg-interface:bootRun -x test
 
-> ls build/libs
-gssg-assets-0.0.1-SNAPSHOT.jar
-
-# 2. local profile 로 jar 실행
-## linux
-> java -jar -Dspring.profiles.active=local build/libs/gssg-assets-0.0.1-SNAPSHOT.jar
-## windows
-> java -jar "-Dspring.profiles.active=local" .\build/libs/gssg-assets-0.0.1-SNAPSHOT.jar
-
-2021-06-06 22:27:24.611  INFO 17114 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2021-06-06 22:27:24.777  INFO 17114 --- [           main] com.gssg.gssgbe.GssgBeApplication        : Started GssgBeApplication in 4.857 seconds (JVM running for 5.4)
+2022-05-09 04:00:13.133 - INFO 39863 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : [] Tomcat started on port(s): 8080 (http) with context path ''
+2022-05-09 04:00:13.154 - INFO 39863 --- [  restartedMain] com.gssg.gssgbe.GssgBeApplication        : [] Started GssgBeApplication in 9.104 seconds (JVM running for 9.668)
 
 # 3. http://localhost:8080/swagger-ui.html
 ```
 
-- `prod` 로 실행하려면 mysql 세팅이 필요합니다.
-
+- `local` 을 제외한 PHASE 로 실행은 지원하지 않습니다.
