@@ -36,7 +36,7 @@ class MemberPersistencePortAdapter(
         return MemberMapper.toApplication(memberEntity = memberEntity)
     }
 
-    override fun existDisplayName(memberDisplayName: MemberDisplayName): Boolean {
+    override fun existBy(memberDisplayName: MemberDisplayName): Boolean {
         val member = memberRepository.findByDisplayName(
             memberDisplayName = memberDisplayName
         )

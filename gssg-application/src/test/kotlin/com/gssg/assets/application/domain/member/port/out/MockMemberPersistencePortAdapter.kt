@@ -33,7 +33,7 @@ internal class MockMemberPersistencePortAdapter : MemberPersistencePort {
         }
     }
 
-    override fun existDisplayName(memberDisplayName: MemberDisplayName): Boolean {
+    override fun existBy(memberDisplayName: MemberDisplayName): Boolean {
         return db.values.find {
             it.displayName == memberDisplayName
         } != null

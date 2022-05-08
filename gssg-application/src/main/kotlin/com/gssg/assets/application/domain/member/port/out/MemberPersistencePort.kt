@@ -17,5 +17,5 @@ interface MemberPersistencePort {
 
     fun findByDisplayName(memberDisplayName: MemberDisplayName): Member?
 
-    fun existDisplayName(memberDisplayName: MemberDisplayName): Boolean
+    fun existBy(memberDisplayName: MemberDisplayName): Boolean
 }
