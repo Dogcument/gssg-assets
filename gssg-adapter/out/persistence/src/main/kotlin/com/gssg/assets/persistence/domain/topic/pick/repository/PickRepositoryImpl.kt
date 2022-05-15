@@ -10,30 +10,32 @@ import java.time.LocalDate
  * @Author Heli
  */
 class PickRepositoryImpl : PickRepository,
-    CommonRepository<Long, PickEntity, PickEntities>(PickEntities) {
+    CommonRepository<Long, PickEntities>(PickEntities) {
 
-    override fun insert(pickDefinition: PickRepository.PickDefinition) {
+    override fun insert(definition: PickRepository.PickDefinition) {
         execInsert {
-            insertOrUpdate(it, pickDefinition)
+            insertOrUpdate(it, definition)
         }
     }
 
-    override fun update(id: Long, pickDefinition: PickRepository.PickDefinition) {
+    override fun update(id: Long, definition: PickRepository.PickDefinition) {
         execUpdate(id = id) {
-            insertOrUpdate(it, pickDefinition)
+            insertOrUpdate(it, definition)
         }
     }
 
     private fun PickEntities.insertOrUpdate(
         it: UpdateBuilder<Number>,
-        pickDefinition: PickRepository.PickDefinition
+        definition: PickRepository.PickDefinition
     ) {
-        it[topicId] = pickDefinition.topicIds
-        it[targetDate] = pickDefinition.targetDate
+        it[topicId] = definition.topicId
+        it[targetDate] = definition.targetDate
     }
 
     override fun findById(id: Long): PickEntity? {
-        return queryById(id = id)
+        return queryById(id = id) {
+            PickEntity.wrapRow(it)
+        }
     }
 
     override fun findByTargetDate(targetDate: LocalDate): List<PickEntity> {

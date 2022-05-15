@@ -9,16 +9,16 @@ import java.time.LocalDate
  */
 interface PickRepository {
 
-    fun insert(pickDefinition: PickDefinition)
+    fun insert(definition: PickDefinition)
 
-    fun update(id: Long, pickDefinition: PickDefinition)
+    fun update(id: Long, definition: PickDefinition)
 
     fun findById(id: Long): PickEntity?
 
     fun findByTargetDate(targetDate: LocalDate): List<PickEntity>
 
     data class PickDefinition(
-        val topicIds: List<Long>,
+        val topicId: Long,
         val targetDate: LocalDate
     ) : CommonDefinition
 }
