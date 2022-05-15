@@ -1,6 +1,7 @@
 package com.gssg.assets.persistence.common
 
 import org.jetbrains.exposed.dao.Entity
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -13,7 +14,6 @@ import java.time.LocalDateTime
  */
 abstract class CommonRepository<
         ID : Comparable<ID>,
-        out ENTITY : Entity<ID>,
         TABLE : CommonLongIdEntityTable>(
     private val entityTable: TABLE
 ) {
@@ -35,8 +35,14 @@ abstract class CommonRepository<
         }
     }
 
-    fun queryById(id: Long): ENTITY? {
-        @Suppress("UNCHECKED_CAST")
-        return entityTable.select { entityTable.id eq id }.singleOrNull() as? ENTITY?
+    fun <ENTITY : Entity<ID>> queryById(
+        id: Long,
+        mapper: (ResultRow) -> ENTITY
+    ): ENTITY? {
+        return entityTable.select {
+            entityTable.id eq id
+        }.singleOrNull()?.let {
+            mapper(it)
+        }
     }
 }

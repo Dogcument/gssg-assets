@@ -14,13 +14,13 @@ class PickPersistencePortAdapter(
     private val pickRepository: PickRepository
 ) : PickPersistencePort {
     override fun insert(pick: Pick) {
-        val pickDefinition = PickMapper.toDefinition(pick)
-        pickRepository.insert(pickDefinition = pickDefinition)
+        val definition = PickMapper.toDefinition(pick)
+        pickRepository.insert(definition = definition)
     }
 
     override fun update(pick: Pick) {
-        val pickDefinition = PickMapper.toDefinition(pick)
-        pickRepository.update(id = pick.longId, pickDefinition = pickDefinition)
+        val definition = PickMapper.toDefinition(pick)
+        pickRepository.update(id = pick.longId, definition = definition)
     }
 
     override fun findById(pickId: PickId): Pick? {

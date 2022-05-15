@@ -1,9 +1,6 @@
 package com.gssg.assets.persistence
 
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
@@ -11,7 +8,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
  */
 abstract class MockTransactionRunManager(
     private vararg val tables: Table,
-    private val initStatement: Transaction.() -> Unit
+    private val initStatement: (Transaction.() -> Unit)? = null
 ) {
     init {
         Database.connect(
@@ -24,8 +21,9 @@ abstract class MockTransactionRunManager(
 
     internal fun <T> runTransaction(statement: Transaction.() -> T) {
         transaction {
+            addLogger(StdOutSqlLogger)
             SchemaUtils.create(*tables)
-            initStatement()
+            initStatement?.let { it() }
             statement()
             SchemaUtils.drop(*tables)
         }

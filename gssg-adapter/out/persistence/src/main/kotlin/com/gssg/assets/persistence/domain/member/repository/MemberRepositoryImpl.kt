@@ -13,7 +13,7 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
  * @Author Heli
  */
 class MemberRepositoryImpl : MemberRepository,
-    CommonRepository<Long, MemberEntity, MemberEntities>(MemberEntities) {
+    CommonRepository<Long, MemberEntities>(MemberEntities) {
 
     override fun insert(memberDefinition: MemberRepository.MemberDefinition) {
         execInsert {
@@ -41,7 +41,9 @@ class MemberRepositoryImpl : MemberRepository,
     }
 
     override fun findById(id: Long): MemberEntity? {
-        return queryById(id = id)
+        return queryById(id = id) {
+            MemberEntity.wrapRow(it)
+        }
     }
 
     override fun findByDisplayName(memberDisplayName: MemberDisplayName): MemberEntity? {

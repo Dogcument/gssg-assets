@@ -13,6 +13,6 @@ class PickEntity(id: EntityID<Long>) : LongEntity(id) {
 
     val createdAt by PickEntities.createdAt
     val modifiedAt by PickEntities.modifiedAt
-    val topics by TopicEntity referrersOn PickEntities.topicId
+    val topic by TopicEntity referencedOn PickEntities.topicId
     val targetDate by PickEntities.targetDate
 }
