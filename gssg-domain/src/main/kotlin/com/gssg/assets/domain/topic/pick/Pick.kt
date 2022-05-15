@@ -1,7 +1,7 @@
 package com.gssg.assets.domain.topic.pick
 
 import com.gssg.assets.domain.BaseDomain
-import com.gssg.assets.domain.topic.base.TopicId
+import com.gssg.assets.domain.topic.base.Topic
 import java.time.LocalDateTime
 
 /**
@@ -11,16 +11,16 @@ class Pick(
     override val id: PickId = PickId(-1L),
     val createdAt: PickCreatedAt = PickCreatedAt(LocalDateTime.MIN),
     val modifiedAt: PickModifiedAt = PickModifiedAt(LocalDateTime.MIN),
-    val topicId: TopicId,
+    val topics: List<Topic>,
     val targetDate: PickTargetDate
 ) : BaseDomain() {
 
     companion object {
         fun create(
-            newTopicId: TopicId,
+            existTopics: List<Topic>,
             newTargetDate: PickTargetDate
         ) = Pick(
-            topicId = newTopicId,
+            topics = existTopics,
             targetDate = newTargetDate
         )
     }

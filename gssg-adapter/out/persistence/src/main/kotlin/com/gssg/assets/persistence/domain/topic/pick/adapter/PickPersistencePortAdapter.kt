@@ -28,8 +28,12 @@ class PickPersistencePortAdapter(
         return PickMapper.toApplication(pickEntity = pickEntity)
     }
 
-    override fun findByTargetDate(pickTargetDate: PickTargetDate): Pick? {
-        // FIXME: 2022/05/09
-        TODO("하루에 할당되는 글감 2개 이상될 수 있는지 확인")
+    override fun findByTargetDate(pickTargetDate: PickTargetDate): List<Pick> {
+        val pickEntities = pickRepository.findByTargetDate(
+            targetDate = pickTargetDate.targetDate
+        )
+        return pickEntities.map {
+            PickMapper.toApplication(pickEntity = it)
+        }
     }
 }
