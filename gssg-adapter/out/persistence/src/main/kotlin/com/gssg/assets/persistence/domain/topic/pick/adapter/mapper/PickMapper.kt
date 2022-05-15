@@ -27,7 +27,7 @@ object PickMapper {
             id = PickId(pickEntity.id.value),
             createdAt = PickCreatedAt(pickEntity.createdAt),
             modifiedAt = PickModifiedAt(pickEntity.modifiedAt),
-            topicId = TopicId(pickEntity.topicId),
+            topicId = TopicId(pickEntity.topicId.value),
             targetDate = PickTargetDate(pickEntity.targetDate)
         )
     }
