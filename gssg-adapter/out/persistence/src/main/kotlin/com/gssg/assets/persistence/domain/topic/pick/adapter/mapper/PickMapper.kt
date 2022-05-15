@@ -1,8 +1,8 @@
 package com.gssg.assets.persistence.domain.topic.pick.adapter.mapper
 
 import com.gssg.assets.domain.logger
-import com.gssg.assets.domain.topic.base.TopicId
 import com.gssg.assets.domain.topic.pick.*
+import com.gssg.assets.persistence.domain.topic.base.adapter.mapper.TopicMapper
 import com.gssg.assets.persistence.domain.topic.pick.entity.PickEntity
 import com.gssg.assets.persistence.domain.topic.pick.repository.PickRepository
 
@@ -16,7 +16,7 @@ object PickMapper {
     fun toDefinition(pick: Pick): PickRepository.PickDefinition {
         logger.info("어댑터 모듈의 매퍼에서 글감 피커 객체를 엔티티 정의로 변경")
         return PickRepository.PickDefinition(
-            topicId = pick.topicId.id,
+            topicIds = pick.topics.map { it.longId },
             targetDate = pick.targetDate.targetDate
         )
     }
@@ -27,7 +27,7 @@ object PickMapper {
             id = PickId(pickEntity.id.value),
             createdAt = PickCreatedAt(pickEntity.createdAt),
             modifiedAt = PickModifiedAt(pickEntity.modifiedAt),
-            topicId = TopicId(pickEntity.topicId.value),
+            topics = pickEntity.topics.map { TopicMapper.toApplication(it) },
             targetDate = PickTargetDate(pickEntity.targetDate)
         )
     }
