@@ -8,6 +8,6 @@ import org.jetbrains.exposed.sql.javatime.date
  * @Author Heli
  */
 object PickEntities : CommonLongIdEntityTable(name = "pick") {
-    val topicId = reference("topicId", TopicEntities)
+    val topicId = reference("topicId", TopicEntities.id)
     val targetDate = date("targetDate")
 }

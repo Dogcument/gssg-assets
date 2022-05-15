@@ -32,7 +32,7 @@ internal class PickRepositoryImplTest : MockTransactionRunManager(
     fun `글감 피커를 데이터베이스에 INSERT 할 수 있다`() {
         val nowDate = LocalDate.now()
         val definition = PickRepository.PickDefinition(
-            topicId = 1L,
+            topicIds = 1L,
             targetDate = nowDate
         )
 

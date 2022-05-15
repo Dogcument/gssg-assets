@@ -15,5 +15,5 @@ interface PickPersistencePort {
 
     fun findById(pickId: PickId): Pick?
 
-    fun findByTargetDate(pickTargetDate: PickTargetDate): Pick?
+    fun findByTargetDate(pickTargetDate: PickTargetDate): List<Pick>
 }

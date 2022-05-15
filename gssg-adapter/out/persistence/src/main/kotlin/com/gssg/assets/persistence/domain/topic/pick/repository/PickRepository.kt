@@ -15,8 +15,10 @@ interface PickRepository {
 
     fun findById(id: Long): PickEntity?
 
+    fun findByTargetDate(targetDate: LocalDate): List<PickEntity>
+
     data class PickDefinition(
-        val topicId: Long,
+        val topicIds: List<Long>,
         val targetDate: LocalDate
     ) : CommonDefinition
 }
