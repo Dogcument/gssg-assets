@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
  * @Author Heli
  */
 class TopicRepositoryImpl : TopicRepository,
-    CommonRepository<Long, TopicEntity, TopicEntities>(TopicEntities) {
+    CommonRepository<Long, TopicEntities>(TopicEntities) {
 
     override fun insert(topicDefinition: TopicRepository.TopicDefinition) {
         execInsert {
@@ -32,6 +32,8 @@ class TopicRepositoryImpl : TopicRepository,
     }
 
     override fun findById(id: Long): TopicEntity? {
-        return queryById(id = id)
+        return queryById(id = id) {
+            TopicEntity.wrapRow(it)
+        }
     }
 }

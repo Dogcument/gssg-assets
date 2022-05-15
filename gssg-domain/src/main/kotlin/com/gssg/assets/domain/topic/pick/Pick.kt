@@ -11,16 +11,16 @@ class Pick(
     override val id: PickId = PickId(-1L),
     val createdAt: PickCreatedAt = PickCreatedAt(LocalDateTime.MIN),
     val modifiedAt: PickModifiedAt = PickModifiedAt(LocalDateTime.MIN),
-    val topics: List<Topic>,
+    val topic: Topic,
     val targetDate: PickTargetDate
 ) : BaseDomain() {
 
     companion object {
         fun create(
-            existTopics: List<Topic>,
+            existTopic: Topic,
             newTargetDate: PickTargetDate
         ) = Pick(
-            topics = existTopics,
+            topic = existTopic,
             targetDate = newTargetDate
         )
     }
