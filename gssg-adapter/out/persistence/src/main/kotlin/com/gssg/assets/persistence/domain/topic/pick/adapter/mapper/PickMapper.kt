@@ -16,7 +16,7 @@ object PickMapper {
     fun toDefinition(pick: Pick): PickRepository.PickDefinition {
         logger.info("어댑터 모듈의 매퍼에서 글감 피커 객체를 엔티티 정의로 변경")
         return PickRepository.PickDefinition(
-            topicId = pick.topic.longId,
+            topicId = pick.topic.topic.longId,
             targetDate = pick.targetDate.targetDate
         )
     }
@@ -27,7 +27,7 @@ object PickMapper {
             id = PickId(pickEntity.id.value),
             createdAt = PickCreatedAt(pickEntity.createdAt),
             modifiedAt = PickModifiedAt(pickEntity.modifiedAt),
-            topic = TopicMapper.toApplication(pickEntity.topic),
+            topic = PickTopic(TopicMapper.toApplication(pickEntity.topic)),
             targetDate = PickTargetDate(pickEntity.targetDate)
         )
     }

@@ -42,9 +42,11 @@ internal class MockPickPersistencePortAdapter : PickPersistencePort {
                 id = PickId(id = longId),
                 createdAt = PickCreatedAt(createdAt = now),
                 modifiedAt = PickModifiedAt(modifiedAt = now),
-                topic = Topic.create(
-                    newText = TopicText("topic text"),
-                    newDescription = TopicDescription("topic description")
+                topic = PickTopic(
+                    Topic.create(
+                        newText = TopicText("topic text"),
+                        newDescription = TopicDescription("topic description")
+                    )
                 ),
                 targetDate = PickTargetDate(targetDate = now.plusDays(longId - 1L).toLocalDate())
             )
