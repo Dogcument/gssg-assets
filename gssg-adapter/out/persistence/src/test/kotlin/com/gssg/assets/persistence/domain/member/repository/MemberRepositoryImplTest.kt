@@ -4,7 +4,7 @@ import com.gssg.assets.config.utils.notNull
 import com.gssg.assets.domain.member.enums.ProfileDogType
 import com.gssg.assets.domain.member.enums.Role
 import com.gssg.assets.domain.member.enums.Status
-import com.gssg.assets.persistence.MockTransactionRunManager
+import com.gssg.assets.persistence.ExposedRepositoryTestManager
 import com.gssg.assets.persistence.domain.member.entity.MemberEntities
 import org.assertj.core.api.Assertions
 import org.jetbrains.exposed.sql.Database
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test
  */
 // FIXME: 2022/05/09
 // TODO Repository 테스트 방식 변경
-internal class MemberRepositoryImplTest : MockTransactionRunManager(
+internal class MemberRepositoryImplTest : ExposedRepositoryTestManager(
     tables = arrayOf(MemberEntities)
 ) {
     private val memberRepository = MemberRepositoryImpl()
@@ -38,7 +38,7 @@ internal class MemberRepositoryImplTest : MockTransactionRunManager(
             status = Status.ACTIVE
         )
 
-        runTransaction {
+        runTestTransaction {
             memberRepository.insert(definition)
             val actual = memberRepository.findById(id = 1L)
             Assertions.assertThat(actual).notNull()

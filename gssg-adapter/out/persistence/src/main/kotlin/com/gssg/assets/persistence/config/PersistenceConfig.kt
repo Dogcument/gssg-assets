@@ -1,5 +1,7 @@
 package com.gssg.assets.persistence.config
 
+import com.gssg.assets.persistence.domain.article.repository.ArticleRepository
+import com.gssg.assets.persistence.domain.article.repository.ArticleRepositoryImpl
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import com.gssg.assets.persistence.domain.member.repository.MemberRepositoryImpl
 import com.gssg.assets.persistence.domain.topic.base.repository.TopicRepository
@@ -27,5 +29,10 @@ class PersistenceConfig {
     @Bean
     fun pickRepository(): PickRepository {
         return PickRepositoryImpl()
+    }
+
+    @Bean
+    fun articleRepository(): ArticleRepository {
+        return ArticleRepositoryImpl()
     }
 }
