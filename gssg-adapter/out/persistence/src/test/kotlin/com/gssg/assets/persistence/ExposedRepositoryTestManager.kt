@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 /**
  * @Author Heli
  */
-abstract class MockTransactionRunManager(
+abstract class ExposedRepositoryTestManager(
     private vararg val tables: Table,
     private val initStatement: (Transaction.() -> Unit)? = null
 ) {
@@ -19,7 +19,7 @@ abstract class MockTransactionRunManager(
         )
     }
 
-    internal fun <T> runTransaction(statement: Transaction.() -> T) {
+    internal fun <T> runTestTransaction(statement: Transaction.() -> T) {
         transaction {
             addLogger(StdOutSqlLogger)
             SchemaUtils.create(*tables)

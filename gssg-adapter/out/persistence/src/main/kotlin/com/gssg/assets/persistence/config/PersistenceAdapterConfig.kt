@@ -1,8 +1,11 @@
 package com.gssg.assets.persistence.config
 
+import com.gssg.assets.application.domain.article.port.out.ArticlePersistencePort
 import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
 import com.gssg.assets.application.domain.topic.base.port.out.TopicPersistencePort
 import com.gssg.assets.application.domain.topic.pick.port.out.PickPersistencePort
+import com.gssg.assets.persistence.domain.article.adapter.ArticlePersistencePortAdapter
+import com.gssg.assets.persistence.domain.article.repository.ArticleRepository
 import com.gssg.assets.persistence.domain.member.adapter.MemberPersistencePortAdapter
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import com.gssg.assets.persistence.domain.topic.base.adapter.TopicPersistencePortAdapter
@@ -39,5 +42,12 @@ class PersistenceAdapterConfig {
         pickRepository: PickRepository
     ): PickPersistencePort {
         return PickPersistencePortAdapter(pickRepository = pickRepository)
+    }
+
+    @Bean
+    fun articlePersistencePort(
+        articleRepository: ArticleRepository
+    ): ArticlePersistencePort {
+        return ArticlePersistencePortAdapter(articleRepository = articleRepository)
     }
 }
