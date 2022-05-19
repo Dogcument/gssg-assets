@@ -1,7 +1,7 @@
 package com.gssg.assets.persistence.domain.topic.pick.repository
 
 import com.gssg.assets.config.utils.notNull
-import com.gssg.assets.persistence.MockTransactionRunManager
+import com.gssg.assets.persistence.ExposedRepositoryTestManager
 import com.gssg.assets.persistence.domain.topic.base.entity.TopicEntities
 import com.gssg.assets.persistence.domain.topic.pick.entity.PickEntities
 import org.assertj.core.api.Assertions
@@ -13,12 +13,13 @@ import java.time.LocalDateTime
 /**
  * @Author Heli
  */
-internal class PickRepositoryImplTest : MockTransactionRunManager(
+internal class PickRepositoryImplTest : ExposedRepositoryTestManager(
     tables = arrayOf(TopicEntities, PickEntities),
     initStatement = {
+        val now = LocalDateTime.now()
         TopicEntities.insert {
-            it[createdAt] = LocalDateTime.now()
-            it[modifiedAt] = LocalDateTime.now()
+            it[createdAt] = now
+            it[modifiedAt] = now
             it[text] = "Temporary Text"
             it[description] = "Temporary Description"
         }
@@ -35,7 +36,7 @@ internal class PickRepositoryImplTest : MockTransactionRunManager(
             targetDate = nowDate
         )
 
-        runTransaction {
+        runTestTransaction {
             pickRepository.insert(definition = definition)
             val actual = pickRepository.findById(1L)
             Assertions.assertThat(actual).notNull()
