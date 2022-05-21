@@ -21,6 +21,7 @@ object ArticleMapper {
             title = article.title.title,
             content = article.content.content,
             authorId = article.author.author.longId,
+            pickId = article.pick.pick.longId,
             status = article.status.status
         )
     }
