@@ -6,6 +6,7 @@ import com.gssg.assets.domain.logger
 import com.gssg.assets.persistence.domain.article.entity.ArticleEntity
 import com.gssg.assets.persistence.domain.article.repository.ArticleRepository
 import com.gssg.assets.persistence.domain.member.adapter.mapper.MemberMapper
+import com.gssg.assets.persistence.domain.topic.pick.adapter.mapper.PickMapper
 
 /**
  * @Author Heli
@@ -20,6 +21,7 @@ object ArticleMapper {
             title = article.title.title,
             content = article.content.content,
             authorId = article.author.author.longId,
+            pickId = article.pick.pick.longId,
             status = article.status.status
         )
     }
@@ -33,6 +35,7 @@ object ArticleMapper {
             title = ArticleTitle(title = articleEntity.title),
             content = ArticleContent(content = articleEntity.content),
             author = ArticleAuthor(author = MemberMapper.toApplication(articleEntity.author)),
+            pick = ArticlePick(pick = PickMapper.toApplication(articleEntity.pick)),
             status = ArticleStatus(status = Status.of(articleEntity.status))
         )
     }
