@@ -14,6 +14,7 @@ class Article(
     val title: ArticleTitle,
     val content: ArticleContent,
     val author: ArticleAuthor,
+    val pick: ArticlePick,
     val status: ArticleStatus
 ) : BaseDomain() {
 
@@ -21,11 +22,13 @@ class Article(
         fun create(
             newTitle: ArticleTitle,
             newContent: ArticleContent,
-            author: ArticleAuthor
+            existAuthor: ArticleAuthor,
+            existPick: ArticlePick
         ) = Article(
             title = newTitle,
             content = newContent,
-            author = author,
+            author = existAuthor,
+            pick = existPick,
             status = ArticleStatus(status = Status.ACTIVE)
         )
     }
@@ -43,6 +46,7 @@ class Article(
             title = title,
             content = content,
             author = author,
+            pick = pick,
             status = status
         )
     }
@@ -54,6 +58,7 @@ class Article(
         title = title,
         content = content,
         author = author,
+        pick = pick,
         status = ArticleStatus(status = Status.DELETED)
     )
 }
