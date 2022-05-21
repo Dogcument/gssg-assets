@@ -1,6 +1,7 @@
 package com.gssg.assets.persistence.domain.article.entity
 
 import com.gssg.assets.persistence.domain.member.entity.MemberEntity
+import com.gssg.assets.persistence.domain.topic.pick.entity.PickEntity
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -16,5 +17,6 @@ class ArticleEntity(id: EntityID<Long>) : LongEntity(id) {
     val title by ArticleEntities.title
     val content by ArticleEntities.content
     val author by MemberEntity referencedOn ArticleEntities.authorId
+    val pick by PickEntity referencedOn ArticleEntities.pickId
     val status by ArticleEntities.status
 }
