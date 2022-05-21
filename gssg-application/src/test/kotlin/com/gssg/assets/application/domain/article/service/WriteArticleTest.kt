@@ -54,7 +54,7 @@ internal class WriteArticleTest {
     private fun writeArticle() {
         val command = WriteArticleUseCase.Command(
             article = Article.create(
-                existAuthor = ArticleAuthor(
+                author = ArticleAuthor(
                     author = Member.create(
                         newEmail = MemberEmail(email = "heli@example.com"),
                         newPassword = MemberPassword(password = "password"),
@@ -62,7 +62,7 @@ internal class WriteArticleTest {
                         newIntroduce = MemberIntroduce(introduce = "Hello, I am Heli")
                     )
                 ),
-                existPick = ArticlePick(
+                pick = ArticlePick(
                     pick = Pick.create(
                         existTopic = PickTopic(
                             topic = Topic.create(

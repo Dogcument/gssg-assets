@@ -22,13 +22,13 @@ class Article(
         fun create(
             newTitle: ArticleTitle,
             newContent: ArticleContent,
-            existAuthor: ArticleAuthor,
-            existPick: ArticlePick
+            author: ArticleAuthor,
+            pick: ArticlePick
         ) = Article(
             title = newTitle,
             content = newContent,
-            author = existAuthor,
-            pick = existPick,
+            author = author,
+            pick = pick,
             status = ArticleStatus(status = Status.ACTIVE)
         )
     }

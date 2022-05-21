@@ -34,7 +34,7 @@ internal class QueryBaseTopicTest {
         val query = QueryBaseTopicUseCase.Query(
             topicId = TopicId(id = 1L)
         )
-        val result = queryBaseTopic.queryById(query = query)
+        val result = queryBaseTopic.query(query = query)
         Assertions.assertNotNull(result)
     }
 
@@ -43,7 +43,7 @@ internal class QueryBaseTopicTest {
         val query = QueryBaseTopicUseCase.Query(
             topicId = TopicId(id = 4L)
         )
-        val result = queryBaseTopic.queryById(query = query)
+        val result = queryBaseTopic.query(query = query)
         Assertions.assertNull(result)
     }
 }

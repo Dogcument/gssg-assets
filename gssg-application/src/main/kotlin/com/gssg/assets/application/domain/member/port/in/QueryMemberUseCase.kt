@@ -10,8 +10,8 @@ import com.gssg.assets.domain.member.MemberId
  */
 interface QueryMemberUseCase {
 
-    fun queryById(query: Query.ById): Result?
-    fun queryByDisplayName(query: Query.ByDisplayName): Result?
+    fun query(query: Query.ById): Result?
+    fun query(query: Query.ByDisplayName): Result?
     fun existBy(query: Query.ByDisplayName): Boolean
     fun existBy(query: Query.ByEmail): Boolean
 

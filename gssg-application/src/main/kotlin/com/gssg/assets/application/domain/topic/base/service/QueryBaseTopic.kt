@@ -15,7 +15,7 @@ class QueryBaseTopic(
 
     private val logger = logger()
 
-    override fun queryById(query: QueryBaseTopicUseCase.Query): QueryBaseTopicUseCase.Result? {
+    override fun query(query: QueryBaseTopicUseCase.Query): QueryBaseTopicUseCase.Result? {
         val topicId = query.topicId
 
         logger.info("베이스 토픽을 데이터베이스에서 조회하기 위해 영속성 포트를 호출")
