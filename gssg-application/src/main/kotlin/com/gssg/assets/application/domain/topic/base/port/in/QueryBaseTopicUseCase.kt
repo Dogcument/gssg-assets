@@ -8,7 +8,7 @@ import com.gssg.assets.domain.topic.base.TopicId
  */
 interface QueryBaseTopicUseCase {
 
-    fun queryById(query: Query): Result?
+    fun query(query: Query): Result?
 
     data class Query(
         val topicId: TopicId

@@ -36,7 +36,7 @@ internal class QueryMemberTest {
         val query = QueryMemberUseCase.Query.ById(
             memberId = MemberId(id = 1L)
         )
-        val result = queryMember.queryById(query = query)
+        val result = queryMember.query(query = query)
         Assertions.assertNotNull(result)
     }
 
@@ -45,7 +45,7 @@ internal class QueryMemberTest {
         val query = QueryMemberUseCase.Query.ById(
             memberId = MemberId(id = 4L)
         )
-        val result = queryMember.queryById(query = query)
+        val result = queryMember.query(query = query)
         Assertions.assertNull(result)
     }
 
@@ -54,7 +54,7 @@ internal class QueryMemberTest {
         val query = QueryMemberUseCase.Query.ByDisplayName(
             memberDisplayName = MemberDisplayName(displayName = "first")
         )
-        val result = queryMember.queryByDisplayName(query = query)
+        val result = queryMember.query(query = query)
         Assertions.assertNotNull(result)
     }
 
@@ -63,7 +63,7 @@ internal class QueryMemberTest {
         val query = QueryMemberUseCase.Query.ByDisplayName(
             memberDisplayName = MemberDisplayName(displayName = "heli")
         )
-        val result = queryMember.queryByDisplayName(query = query)
+        val result = queryMember.query(query = query)
         Assertions.assertNull(result)
     }
 
