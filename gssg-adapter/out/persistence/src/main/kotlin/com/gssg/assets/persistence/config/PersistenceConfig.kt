@@ -2,6 +2,8 @@ package com.gssg.assets.persistence.config
 
 import com.gssg.assets.persistence.domain.article.repository.ArticleRepository
 import com.gssg.assets.persistence.domain.article.repository.ArticleRepositoryImpl
+import com.gssg.assets.persistence.domain.comment.repository.CommentRepository
+import com.gssg.assets.persistence.domain.comment.repository.CommentRepositoryImpl
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import com.gssg.assets.persistence.domain.member.repository.MemberRepositoryImpl
 import com.gssg.assets.persistence.domain.topic.base.repository.TopicRepository
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration
 class PersistenceConfig {
+
     @Bean
     fun memberRepository(): MemberRepository {
         return MemberRepositoryImpl()
@@ -34,5 +37,10 @@ class PersistenceConfig {
     @Bean
     fun articleRepository(): ArticleRepository {
         return ArticleRepositoryImpl()
+    }
+
+    @Bean
+    fun commentRepository(): CommentRepository {
+        return CommentRepositoryImpl()
     }
 }

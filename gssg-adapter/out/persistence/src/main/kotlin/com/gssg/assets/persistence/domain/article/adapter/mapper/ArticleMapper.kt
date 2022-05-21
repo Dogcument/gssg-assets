@@ -16,7 +16,7 @@ object ArticleMapper {
     private val logger = logger()
 
     fun toDefinition(article: Article): ArticleRepository.ArticleDefinition {
-        logger.info("어댑터 모듈의 래퍼에서 아티클 객체를 엔티티 정의로 변경")
+        logger.info("어댑터 모듈의 매퍼에서 아티클 객체를 엔티티 정의로 변경")
         return ArticleRepository.ArticleDefinition(
             title = article.title.title,
             content = article.content.content,
