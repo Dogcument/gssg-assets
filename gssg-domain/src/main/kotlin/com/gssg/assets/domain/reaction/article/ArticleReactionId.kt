@@ -1,10 +1,10 @@
-package com.gssg.assets.domain.reaction
+package com.gssg.assets.domain.reaction.article
 
 import com.gssg.assets.domain.BaseId
 
 /**
  * @Author Heli
  */
-data class ReactionId(
+data class ArticleReactionId(
     override val id: Long
 ) : BaseId()

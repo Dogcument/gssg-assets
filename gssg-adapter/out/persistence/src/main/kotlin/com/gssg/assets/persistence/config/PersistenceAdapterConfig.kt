@@ -3,6 +3,7 @@ package com.gssg.assets.persistence.config
 import com.gssg.assets.application.domain.article.port.out.ArticlePersistencePort
 import com.gssg.assets.application.domain.comment.port.out.CommentPersistencePort
 import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
+import com.gssg.assets.application.domain.reaction.article.port.out.ArticleReactionPersistencePort
 import com.gssg.assets.application.domain.topic.base.port.out.TopicPersistencePort
 import com.gssg.assets.application.domain.topic.pick.port.out.PickPersistencePort
 import com.gssg.assets.persistence.domain.article.adapter.ArticlePersistencePortAdapter
@@ -11,6 +12,8 @@ import com.gssg.assets.persistence.domain.comment.adapter.CommentPersistencePort
 import com.gssg.assets.persistence.domain.comment.repository.CommentRepository
 import com.gssg.assets.persistence.domain.member.adapter.MemberPersistencePortAdapter
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
+import com.gssg.assets.persistence.domain.reaction.article.adapter.ArticleReactionPersistencePortAdapter
+import com.gssg.assets.persistence.domain.reaction.article.repository.ArticleReactionRepository
 import com.gssg.assets.persistence.domain.topic.base.adapter.TopicPersistencePortAdapter
 import com.gssg.assets.persistence.domain.topic.base.repository.TopicRepository
 import com.gssg.assets.persistence.domain.topic.pick.adapter.PickPersistencePortAdapter
@@ -59,5 +62,12 @@ class PersistenceAdapterConfig {
         commentRepository: CommentRepository
     ): CommentPersistencePort {
         return CommentPersistencePortAdapter(commentRepository = commentRepository)
+    }
+
+    @Bean
+    fun articleReactionPersistencePort(
+        articleReactionRepository: ArticleReactionRepository
+    ): ArticleReactionPersistencePort {
+        return ArticleReactionPersistencePortAdapter(articleReactionRepository = articleReactionRepository)
     }
 }
