@@ -42,14 +42,14 @@ internal class MemberRepositoryImplTest : ExposedRepositoryTestManager(
             memberRepository.insert(definition)
             val actual = memberRepository.findById(id = 1L)
             Assertions.assertThat(actual).notNull()
-            Assertions.assertThat(actual?.id?.value).isEqualTo(1L)
-            Assertions.assertThat(actual?.displayName).isEqualTo("Heli")
-            Assertions.assertThat(actual?.password).isEqualTo("password")
-            Assertions.assertThat(actual?.email).isEqualTo("heli@xample.com")
-            Assertions.assertThat(actual?.introduce).isEqualTo("Hi I am heli")
-            Assertions.assertThat(actual?.profileDog).isEqualTo(ProfileDogType.ALEX.name)
-            Assertions.assertThat(actual?.role).isEqualTo(Role.ADMIN.name)
-            Assertions.assertThat(actual?.status).isEqualTo(Status.ACTIVE.name)
+            Assertions.assertThat(actual!!.id.value).isEqualTo(1L)
+            Assertions.assertThat(actual.displayName).isEqualTo("Heli")
+            Assertions.assertThat(actual.password).isEqualTo("password")
+            Assertions.assertThat(actual.email).isEqualTo("heli@xample.com")
+            Assertions.assertThat(actual.introduce).isEqualTo("Hi I am heli")
+            Assertions.assertThat(actual.profileDog).isEqualTo(ProfileDogType.ALEX.name)
+            Assertions.assertThat(actual.role).isEqualTo(Role.ADMIN.name)
+            Assertions.assertThat(actual.status).isEqualTo(Status.ACTIVE.name)
         }
     }
 }

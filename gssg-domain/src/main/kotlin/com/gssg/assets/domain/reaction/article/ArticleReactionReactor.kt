@@ -1,10 +1,10 @@
-package com.gssg.assets.domain.reaction
+package com.gssg.assets.domain.reaction.article
 
 import com.gssg.assets.domain.member.Member
 
 /**
  * @Author Heli
  */
-data class ReactionReactor(
+data class ArticleReactionReactor(
     val reactor: Member
 )

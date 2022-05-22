@@ -1,12 +1,13 @@
-package com.gssg.assets.persistence.domain.article.repository
+package com.gssg.assets.persistence.domain.reaction.article.repository
 
 import com.gssg.assets.config.utils.notNull
-import com.gssg.assets.domain.article.enums.Status
 import com.gssg.assets.domain.member.enums.ProfileDogType
 import com.gssg.assets.domain.member.enums.Role
+import com.gssg.assets.domain.reaction.enums.Status
 import com.gssg.assets.persistence.ExposedRepositoryTestManager
 import com.gssg.assets.persistence.domain.article.entity.ArticleEntities
 import com.gssg.assets.persistence.domain.member.entity.MemberEntities
+import com.gssg.assets.persistence.domain.reaction.article.entity.ArticleReactionEntities
 import com.gssg.assets.persistence.domain.topic.base.entity.TopicEntities
 import com.gssg.assets.persistence.domain.topic.pick.entity.PickEntities
 import org.assertj.core.api.Assertions.assertThat
@@ -17,8 +18,14 @@ import java.time.LocalDateTime
 /**
  * @Author Heli
  */
-internal class ArticleRepositoryImplTest : ExposedRepositoryTestManager(
-    tables = arrayOf(MemberEntities, TopicEntities, PickEntities, ArticleEntities),
+internal class ArticleReactionRepositoryImplTest : ExposedRepositoryTestManager(
+    tables = arrayOf(
+        MemberEntities,
+        TopicEntities,
+        PickEntities,
+        ArticleEntities,
+        ArticleReactionEntities
+    ),
     initStatement = {
         val now = LocalDateTime.now()
         MemberEntities.insert {
@@ -44,30 +51,35 @@ internal class ArticleRepositoryImplTest : ExposedRepositoryTestManager(
             it[topicId] = 1L
             it[targetDate] = now.toLocalDate()
         }
+        ArticleEntities.insert {
+            it[createdAt] = now
+            it[modifiedAt] = now
+            it[title] = "Article Title"
+            it[content] = "Article Content"
+            it[authorId] = 1L
+            it[pickId] = 1L
+            it[status] = com.gssg.assets.domain.article.enums.Status.ACTIVE.name
+        }
     }
 ) {
 
-    private val articleRepository = ArticleRepositoryImpl()
+    private val articleReactionRepository = ArticleReactionRepositoryImpl()
 
     @Test
-    fun `게시글을 데이터베이스에 INSERT 할 수 있다`() {
-        val definition = ArticleRepository.ArticleDefinition(
-            title = "Article Title",
-            content = "Article Content",
-            authorId = 1L,
-            pickId = 1L,
+    fun `게시글 리액션을 데이터베이스에 INSERT 할 수 있다`() {
+        val definition = ArticleReactionRepository.ArticleReactionDefinition(
+            reactorId = 1L,
+            targetId = 1L,
             status = Status.ACTIVE
         )
 
         runTestTransaction {
-            articleRepository.insert(definition = definition)
-            val actual = articleRepository.findById(1L)
+            articleReactionRepository.insert(definition = definition)
+            val actual = articleReactionRepository.findById(1L)
             assertThat(actual).notNull()
             assertThat(actual!!.id.value).isEqualTo(1L)
-            assertThat(actual.title).isEqualTo("Article Title")
-            assertThat(actual.content).isEqualTo("Article Content")
-            assertThat(actual.author.id.value).isEqualTo(1L)
-            assertThat(actual.status).isEqualTo(Status.ACTIVE.name)
+            assertThat(actual.reactor.id.value).isEqualTo(1L)
+            assertThat(actual.target.id.value).isEqualTo(1L)
         }
     }
 }

@@ -40,9 +40,9 @@ internal class PickRepositoryImplTest : ExposedRepositoryTestManager(
             pickRepository.insert(definition = definition)
             val actual = pickRepository.findById(1L)
             Assertions.assertThat(actual).notNull()
-            Assertions.assertThat(actual?.id?.value).isEqualTo(1L)
-            Assertions.assertThat(actual?.topic?.id?.value).isEqualTo(1L)
-            Assertions.assertThat(actual?.targetDate).isEqualTo(nowDate)
+            Assertions.assertThat(actual!!.id.value).isEqualTo(1L)
+            Assertions.assertThat(actual.topic.id.value).isEqualTo(1L)
+            Assertions.assertThat(actual.targetDate).isEqualTo(nowDate)
         }
     }
 }

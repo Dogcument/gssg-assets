@@ -72,11 +72,11 @@ internal class CommentRepositoryImplTest : ExposedRepositoryTestManager(
             commentRepository.insert(definition = definition)
             val actual = commentRepository.findById(1L)
             assertThat(actual).notNull()
-            assertThat(actual?.id?.value).isEqualTo(1L)
-            assertThat(actual?.content).isEqualTo("Comment Content")
-            assertThat(actual?.author?.id?.value).isEqualTo(1L)
-            assertThat(actual?.article?.id?.value).isEqualTo(1L)
-            assertThat(actual?.status).isEqualTo(Status.ACTIVE.name)
+            assertThat(actual!!.id.value).isEqualTo(1L)
+            assertThat(actual.content).isEqualTo("Comment Content")
+            assertThat(actual.author.id.value).isEqualTo(1L)
+            assertThat(actual.article.id.value).isEqualTo(1L)
+            assertThat(actual.status).isEqualTo(Status.ACTIVE.name)
         }
     }
 }
