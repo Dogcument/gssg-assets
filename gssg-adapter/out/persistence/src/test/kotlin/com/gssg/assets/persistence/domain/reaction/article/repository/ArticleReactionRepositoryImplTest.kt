@@ -52,6 +52,8 @@ internal class ArticleReactionRepositoryImplTest : ExposedRepositoryTestManager(
             it[targetDate] = now.toLocalDate()
         }
         ArticleEntities.insert {
+            it[createdAt] = now
+            it[modifiedAt] = now
             it[title] = "Article Title"
             it[content] = "Article Content"
             it[authorId] = 1L
