@@ -1,6 +1,6 @@
 package com.gssg.assets.persistence.domain.reaction.article.repository
 
-import com.gssg.assets.domain.reaction.enums.Status
+import com.gssg.assets.domain.reaction.enums.ReactionType
 import com.gssg.assets.persistence.domain.reaction.article.entity.ArticleReactionEntity
 
 /**
@@ -19,6 +19,6 @@ interface ArticleReactionRepository {
     data class ArticleReactionDefinition(
         val reactorId: Long,
         val targetId: Long,
-        val status: Status
+        val type: ReactionType
     )
 }

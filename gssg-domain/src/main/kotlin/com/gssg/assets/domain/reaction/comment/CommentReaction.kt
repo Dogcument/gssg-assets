@@ -1,7 +1,7 @@
 package com.gssg.assets.domain.reaction.comment
 
 import com.gssg.assets.domain.BaseDomain
-import com.gssg.assets.domain.reaction.enums.Status
+import com.gssg.assets.domain.reaction.enums.ReactionType
 import java.time.LocalDateTime
 
 /**
@@ -13,31 +13,26 @@ class CommentReaction(
     val modifiedAt: CommentReactionModifiedAt = CommentReactionModifiedAt(LocalDateTime.MIN),
     val reactor: CommentReactionReactor,
     val target: CommentReactionTarget,
-    val status: CommentReactionStatus
+    val type: CommentReactionType
 ) : BaseDomain() {
 
     companion object {
-        fun create(
+        fun like(
             reactor: CommentReactionReactor,
             target: CommentReactionTarget
         ) = CommentReaction(
             reactor = reactor,
             target = target,
-            status = CommentReactionStatus(status = Status.ACTIVE)
+            type = CommentReactionType(type = ReactionType.LIKE)
         )
     }
 
-    fun update(
-        changedStatus: CommentReactionStatus?
-    ): CommentReaction {
-        val status = changedStatus ?: status
-        return CommentReaction(
-            id = id,
-            createdAt = createdAt,
-            modifiedAt = modifiedAt,
-            reactor = reactor,
-            target = target,
-            status = status
-        )
-    }
+    fun unlike() = CommentReaction(
+        id = id,
+        createdAt = createdAt,
+        modifiedAt = modifiedAt,
+        reactor = reactor,
+        target = target,
+        type = CommentReactionType(type = ReactionType.NONE)
+    )
 }

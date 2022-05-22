@@ -10,5 +10,5 @@ import com.gssg.assets.persistence.domain.member.entity.MemberEntities
 object ArticleReactionEntities : CommonLongIdEntityTable(name = "article_reaction") {
     val reactorId = reference("reactorId", MemberEntities)
     val targetId = reference("targetId", ArticleEntities)
-    val status = varchar("status", 32)
+    val type = varchar("type", 32)
 }

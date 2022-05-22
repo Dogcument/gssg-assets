@@ -1,17 +1,17 @@
-package com.gssg.assets.persistence.domain.reaction.article.repository
+package com.gssg.assets.persistence.domain.reaction.comment.repository
 
 import com.gssg.assets.config.utils.notNull
-import com.gssg.assets.domain.article.enums.Status
 import com.gssg.assets.domain.member.enums.ProfileDogType
 import com.gssg.assets.domain.member.enums.Role
 import com.gssg.assets.domain.reaction.enums.ReactionType
 import com.gssg.assets.persistence.ExposedRepositoryTestManager
 import com.gssg.assets.persistence.domain.article.entity.ArticleEntities
+import com.gssg.assets.persistence.domain.comment.entity.CommentEntities
 import com.gssg.assets.persistence.domain.member.entity.MemberEntities
-import com.gssg.assets.persistence.domain.reaction.article.entity.ArticleReactionEntities
+import com.gssg.assets.persistence.domain.reaction.comment.entity.CommentReactionEntities
 import com.gssg.assets.persistence.domain.topic.base.entity.TopicEntities
 import com.gssg.assets.persistence.domain.topic.pick.entity.PickEntities
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.jetbrains.exposed.sql.insert
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -19,13 +19,14 @@ import java.time.LocalDateTime
 /**
  * @Author Heli
  */
-internal class ArticleReactionRepositoryImplTest : ExposedRepositoryTestManager(
+internal class CommentReactionRepositoryImplTest : ExposedRepositoryTestManager(
     tables = arrayOf(
         MemberEntities,
         TopicEntities,
         PickEntities,
         ArticleEntities,
-        ArticleReactionEntities
+        CommentEntities,
+        CommentReactionEntities
     ),
     initStatement = {
         val now = LocalDateTime.now()
@@ -59,29 +60,37 @@ internal class ArticleReactionRepositoryImplTest : ExposedRepositoryTestManager(
             it[content] = "Article Content"
             it[authorId] = 1L
             it[pickId] = 1L
-            it[status] = Status.ACTIVE.name
+            it[status] = com.gssg.assets.domain.article.enums.Status.ACTIVE.name
+        }
+        CommentEntities.insert {
+            it[createdAt] = now
+            it[modifiedAt] = now
+            it[content] = "Comment Content"
+            it[authorId] = 1L
+            it[articleId] = 1L
+            it[status] = com.gssg.assets.domain.comment.enums.Status.ACTIVE.name
         }
     }
 ) {
 
-    private val articleReactionRepository = ArticleReactionRepositoryImpl()
+    private val commentReactionRepository = CommentReactionRepositoryImpl()
 
     @Test
-    fun `게시글 리액션을 데이터베이스에 INSERT 할 수 있다`() {
-        val definition = ArticleReactionRepository.ArticleReactionDefinition(
+    fun `댓글 리액션을 데이터베이스에 INSERT 할 수 있다`() {
+        val definition = CommentReactionRepository.CommentReactionDefinition(
             reactorId = 1L,
             targetId = 1L,
             type = ReactionType.LIKE
         )
 
         runTestTransaction {
-            articleReactionRepository.insert(definition = definition)
-            val actual = articleReactionRepository.findById(1L)
-            assertThat(actual).notNull()
-            assertThat(actual!!.id.value).isEqualTo(1L)
-            assertThat(actual.type).isEqualTo(ReactionType.LIKE.name)
-            assertThat(actual.reactor.id.value).isEqualTo(1L)
-            assertThat(actual.target.id.value).isEqualTo(1L)
+            commentReactionRepository.insert(definition = definition)
+            val actual = commentReactionRepository.findById(1L)
+            Assertions.assertThat(actual).notNull()
+            Assertions.assertThat(actual!!.id.value).isEqualTo(1L)
+            Assertions.assertThat(actual.type).isEqualTo(ReactionType.LIKE.name)
+            Assertions.assertThat(actual.reactor.id.value).isEqualTo(1L)
+            Assertions.assertThat(actual.target.id.value).isEqualTo(1L)
         }
     }
 }

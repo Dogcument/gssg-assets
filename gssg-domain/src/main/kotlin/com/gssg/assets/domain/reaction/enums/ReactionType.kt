@@ -5,11 +5,11 @@ import com.gssg.assets.config.utils.notNull
 /**
  * @Author Heli
  */
-enum class Status {
-    ACTIVE, INACTIVE;
+enum class ReactionType {
+    LIKE, NONE;
 
     companion object {
         private val types = values().associateBy { it.name.lowercase() }
-        fun of(type: String) = types[type].notNull { "can not parse Reaction.Status by $type" }
+        fun of(type: String) = types[type].notNull { "can not parse Reaction.Type by $type" }
     }
 }

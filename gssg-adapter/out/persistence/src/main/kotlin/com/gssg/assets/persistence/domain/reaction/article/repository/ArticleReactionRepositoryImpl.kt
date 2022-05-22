@@ -38,7 +38,7 @@ class ArticleReactionRepositoryImpl : ArticleReactionRepository,
     ) {
         it[reactorId] = definition.reactorId
         it[targetId] = definition.targetId
-        it[status] = definition.status.name
+        it[type] = definition.type.name
     }
 
     override fun findByTarget(targetId: Long): List<ArticleReactionEntity> {
