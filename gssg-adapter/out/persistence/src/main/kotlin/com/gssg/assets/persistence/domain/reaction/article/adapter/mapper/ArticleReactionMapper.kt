@@ -2,7 +2,7 @@ package com.gssg.assets.persistence.domain.reaction.article.adapter.mapper
 
 import com.gssg.assets.domain.logger
 import com.gssg.assets.domain.reaction.article.*
-import com.gssg.assets.domain.reaction.enums.Status
+import com.gssg.assets.domain.reaction.enums.ReactionType
 import com.gssg.assets.persistence.domain.article.adapter.mapper.ArticleMapper
 import com.gssg.assets.persistence.domain.member.adapter.mapper.MemberMapper
 import com.gssg.assets.persistence.domain.reaction.article.entity.ArticleReactionEntity
@@ -20,7 +20,7 @@ object ArticleReactionMapper {
         return ArticleReactionRepository.ArticleReactionDefinition(
             reactorId = articleReaction.reactor.reactor.longId,
             targetId = articleReaction.target.target.longId,
-            status = articleReaction.status.status
+            type = articleReaction.type.type
         )
     }
 
@@ -40,7 +40,7 @@ object ArticleReactionMapper {
                     articleReactionEntity.target
                 )
             ),
-            status = ArticleReactionStatus(status = Status.of(articleReactionEntity.status))
+            type = ArticleReactionType(type = ReactionType.of(articleReactionEntity.type))
         )
     }
 }

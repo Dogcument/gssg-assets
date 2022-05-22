@@ -16,5 +16,5 @@ class ArticleReactionEntity(id: EntityID<Long>) : LongEntity(id) {
     val modifiedAt by ArticleReactionEntities.modifiedAt
     val reactor by MemberEntity referencedOn ArticleReactionEntities.reactorId
     val target by ArticleEntity referencedOn ArticleReactionEntities.targetId
-    val status by ArticleReactionEntities.status
+    val type by ArticleReactionEntities.type
 }

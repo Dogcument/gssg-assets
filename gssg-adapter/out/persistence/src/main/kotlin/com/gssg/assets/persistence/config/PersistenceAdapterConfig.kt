@@ -4,6 +4,7 @@ import com.gssg.assets.application.domain.article.port.out.ArticlePersistencePor
 import com.gssg.assets.application.domain.comment.port.out.CommentPersistencePort
 import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
 import com.gssg.assets.application.domain.reaction.article.port.out.ArticleReactionPersistencePort
+import com.gssg.assets.application.domain.reaction.comment.port.out.CommentReactionPersistencePort
 import com.gssg.assets.application.domain.topic.base.port.out.TopicPersistencePort
 import com.gssg.assets.application.domain.topic.pick.port.out.PickPersistencePort
 import com.gssg.assets.persistence.domain.article.adapter.ArticlePersistencePortAdapter
@@ -14,6 +15,8 @@ import com.gssg.assets.persistence.domain.member.adapter.MemberPersistencePortAd
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import com.gssg.assets.persistence.domain.reaction.article.adapter.ArticleReactionPersistencePortAdapter
 import com.gssg.assets.persistence.domain.reaction.article.repository.ArticleReactionRepository
+import com.gssg.assets.persistence.domain.reaction.comment.adapter.CommentReactionPersistencePortAdapter
+import com.gssg.assets.persistence.domain.reaction.comment.repository.CommentReactionRepository
 import com.gssg.assets.persistence.domain.topic.base.adapter.TopicPersistencePortAdapter
 import com.gssg.assets.persistence.domain.topic.base.repository.TopicRepository
 import com.gssg.assets.persistence.domain.topic.pick.adapter.PickPersistencePortAdapter
@@ -69,5 +72,12 @@ class PersistenceAdapterConfig {
         articleReactionRepository: ArticleReactionRepository
     ): ArticleReactionPersistencePort {
         return ArticleReactionPersistencePortAdapter(articleReactionRepository = articleReactionRepository)
+    }
+
+    @Bean
+    fun commentReactionPersistencePort(
+        commentReactionRepository: CommentReactionRepository
+    ): CommentReactionPersistencePort {
+        return CommentReactionPersistencePortAdapter(commentReactionRepository = commentReactionRepository)
     }
 }

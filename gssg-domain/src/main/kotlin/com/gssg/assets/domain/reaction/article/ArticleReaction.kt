@@ -1,7 +1,7 @@
 package com.gssg.assets.domain.reaction.article
 
 import com.gssg.assets.domain.BaseDomain
-import com.gssg.assets.domain.reaction.enums.Status
+import com.gssg.assets.domain.reaction.enums.ReactionType
 import java.time.LocalDateTime
 
 /**
@@ -13,31 +13,26 @@ class ArticleReaction(
     val modifiedAt: ArticleReactionModifiedAt = ArticleReactionModifiedAt(LocalDateTime.MIN),
     val reactor: ArticleReactionReactor,
     val target: ArticleReactionTarget,
-    val status: ArticleReactionStatus
+    val type: ArticleReactionType
 ) : BaseDomain() {
 
     companion object {
-        fun create(
+        fun like(
             reactor: ArticleReactionReactor,
             target: ArticleReactionTarget
         ) = ArticleReaction(
             reactor = reactor,
             target = target,
-            status = ArticleReactionStatus(status = Status.ACTIVE)
+            type = ArticleReactionType(type = ReactionType.LIKE)
         )
     }
 
-    fun update(
-        changedStatus: ArticleReactionStatus?
-    ): ArticleReaction {
-        val status = changedStatus ?: status
-        return ArticleReaction(
-            id = id,
-            createdAt = createdAt,
-            modifiedAt = modifiedAt,
-            reactor = reactor,
-            target = target,
-            status = status
-        )
-    }
+    fun unlike() = ArticleReaction(
+        id = id,
+        createdAt = createdAt,
+        modifiedAt = modifiedAt,
+        reactor = reactor,
+        target = target,
+        type = ArticleReactionType(type = ReactionType.NONE)
+    )
 }

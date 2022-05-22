@@ -1,6 +1,6 @@
 package com.gssg.assets.application.domain.reaction.comment.port.out
 
-import com.gssg.assets.domain.comment.Comment
+import com.gssg.assets.domain.comment.CommentId
 import com.gssg.assets.domain.reaction.comment.CommentReaction
 
 /**
@@ -12,5 +12,5 @@ interface CommentReactionPersistencePort {
 
     fun update(commentReaction: CommentReaction)
 
-    fun findBy(target: Comment): List<CommentReaction>
+    fun findBy(commentId: CommentId): List<CommentReaction>
 }

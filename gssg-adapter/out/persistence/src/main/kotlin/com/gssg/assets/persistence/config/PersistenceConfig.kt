@@ -8,6 +8,8 @@ import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import com.gssg.assets.persistence.domain.member.repository.MemberRepositoryImpl
 import com.gssg.assets.persistence.domain.reaction.article.repository.ArticleReactionRepository
 import com.gssg.assets.persistence.domain.reaction.article.repository.ArticleReactionRepositoryImpl
+import com.gssg.assets.persistence.domain.reaction.comment.repository.CommentReactionRepository
+import com.gssg.assets.persistence.domain.reaction.comment.repository.CommentReactionRepositoryImpl
 import com.gssg.assets.persistence.domain.topic.base.repository.TopicRepository
 import com.gssg.assets.persistence.domain.topic.base.repository.TopicRepositoryImpl
 import com.gssg.assets.persistence.domain.topic.pick.repository.PickRepository
@@ -49,5 +51,10 @@ class PersistenceConfig {
     @Bean
     fun articleReactionRepository(): ArticleReactionRepository {
         return ArticleReactionRepositoryImpl()
+    }
+
+    @Bean
+    fun commentReactionRepository(): CommentReactionRepository {
+        return CommentReactionRepositoryImpl()
     }
 }
