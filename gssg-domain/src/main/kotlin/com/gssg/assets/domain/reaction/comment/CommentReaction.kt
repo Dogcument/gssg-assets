@@ -11,28 +11,28 @@ class CommentReaction(
     override val id: CommentReactionId = CommentReactionId(-1L),
     val createdAt: CommentReactionCreatedAt = CommentReactionCreatedAt(LocalDateTime.MIN),
     val modifiedAt: CommentReactionModifiedAt = CommentReactionModifiedAt(LocalDateTime.MIN),
-    val reactor: CommentReactionReactor,
-    val target: CommentReactionTarget,
+    val reactorId: CommentReactionReactorId,
+    val targetId: CommentReactionTargetId,
     val type: CommentReactionType
 ) : BaseDomain() {
 
     companion object {
         fun like(
-            reactor: CommentReactionReactor,
-            target: CommentReactionTarget
+            reactorId: CommentReactionReactorId,
+            targetId: CommentReactionTargetId
         ) = CommentReaction(
-            reactor = reactor,
-            target = target,
+            reactorId = reactorId,
+            targetId = targetId,
             type = CommentReactionType(type = ReactionType.LIKE)
         )
     }
 
-    fun unlike() = CommentReaction(
+    fun cancel() = CommentReaction(
         id = id,
         createdAt = createdAt,
         modifiedAt = modifiedAt,
-        reactor = reactor,
-        target = target,
+        reactorId = reactorId,
+        targetId = targetId,
         type = CommentReactionType(type = ReactionType.NONE)
     )
 }

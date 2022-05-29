@@ -3,8 +3,6 @@ package com.gssg.assets.persistence.domain.reaction.comment.adapter.mapper
 import com.gssg.assets.domain.logger
 import com.gssg.assets.domain.reaction.comment.*
 import com.gssg.assets.domain.reaction.enums.ReactionType
-import com.gssg.assets.persistence.domain.comment.adapter.mapper.CommentMapper
-import com.gssg.assets.persistence.domain.member.adapter.mapper.MemberMapper
 import com.gssg.assets.persistence.domain.reaction.comment.entity.CommentReactionEntity
 import com.gssg.assets.persistence.domain.reaction.comment.repository.CommentReactionRepository
 
@@ -18,8 +16,8 @@ object CommentReactionMapper {
     fun toDefinition(commentReaction: CommentReaction): CommentReactionRepository.CommentReactionDefinition {
         logger.info("어댑터 모듈의 매퍼에서 댓글 리액션 객체를 엔티티 정의로 변경")
         return CommentReactionRepository.CommentReactionDefinition(
-            reactorId = commentReaction.reactor.reactor.longId,
-            targetId = commentReaction.target.target.longId,
+            reactorId = commentReaction.reactorId.reactorId,
+            targetId = commentReaction.targetId.targetId,
             type = commentReaction.type.type
         )
     }
@@ -30,16 +28,8 @@ object CommentReactionMapper {
             id = CommentReactionId(id = commentReactionEntity.id.value),
             createdAt = CommentReactionCreatedAt(createdAt = commentReactionEntity.createdAt),
             modifiedAt = CommentReactionModifiedAt(modifiedAt = commentReactionEntity.modifiedAt),
-            reactor = CommentReactionReactor(
-                reactor = MemberMapper.toApplication(
-                    commentReactionEntity.reactor
-                )
-            ),
-            target = CommentReactionTarget(
-                target = CommentMapper.toApplication(
-                    commentReactionEntity.target
-                )
-            ),
+            reactorId = CommentReactionReactorId(reactorId = commentReactionEntity.reactor.id.value),
+            targetId = CommentReactionTargetId(targetId = commentReactionEntity.target.id.value),
             type = CommentReactionType(type = ReactionType.of(commentReactionEntity.type))
         )
     }
