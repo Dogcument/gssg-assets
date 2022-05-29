@@ -11,28 +11,28 @@ class ArticleReaction(
     override val id: ArticleReactionId = ArticleReactionId(-1L),
     val createdAt: ArticleReactionCreatedAt = ArticleReactionCreatedAt(LocalDateTime.MIN),
     val modifiedAt: ArticleReactionModifiedAt = ArticleReactionModifiedAt(LocalDateTime.MIN),
-    val reactor: ArticleReactionReactor,
-    val target: ArticleReactionTarget,
+    val reactorId: ArticleReactionReactorId,
+    val targetId: ArticleReactionTargetId,
     val type: ArticleReactionType
 ) : BaseDomain() {
 
     companion object {
         fun like(
-            reactor: ArticleReactionReactor,
-            target: ArticleReactionTarget
+            reactorId: ArticleReactionReactorId,
+            targetId: ArticleReactionTargetId
         ) = ArticleReaction(
-            reactor = reactor,
-            target = target,
+            reactorId = reactorId,
+            targetId = targetId,
             type = ArticleReactionType(type = ReactionType.LIKE)
         )
     }
 
-    fun unlike() = ArticleReaction(
+    fun cancel() = ArticleReaction(
         id = id,
         createdAt = createdAt,
         modifiedAt = modifiedAt,
-        reactor = reactor,
-        target = target,
+        reactorId = reactorId,
+        targetId = targetId,
         type = ArticleReactionType(type = ReactionType.NONE)
     )
 }
