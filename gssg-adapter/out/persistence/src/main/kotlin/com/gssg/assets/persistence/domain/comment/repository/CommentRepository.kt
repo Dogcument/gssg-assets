@@ -13,7 +13,7 @@ interface CommentRepository {
 
     fun update(id: Long, definition: CommentDefinition)
 
-    fun findById(commentId: Long): CommentEntity?
+    fun findById(id: Long): CommentEntity?
 
     fun findByArticleId(articleId: Long): List<CommentEntity>
 

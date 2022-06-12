@@ -2,6 +2,7 @@ package com.gssg.assets.persistence.config
 
 import com.gssg.assets.application.domain.article.port.out.ArticlePersistencePort
 import com.gssg.assets.application.domain.comment.port.out.CommentPersistencePort
+import com.gssg.assets.application.domain.friendship.port.out.FriendshipPersistencePort
 import com.gssg.assets.application.domain.member.port.out.MemberPersistencePort
 import com.gssg.assets.application.domain.reaction.article.port.out.ArticleReactionPersistencePort
 import com.gssg.assets.application.domain.reaction.comment.port.out.CommentReactionPersistencePort
@@ -11,6 +12,8 @@ import com.gssg.assets.persistence.domain.article.adapter.ArticlePersistencePort
 import com.gssg.assets.persistence.domain.article.repository.ArticleRepository
 import com.gssg.assets.persistence.domain.comment.adapter.CommentPersistencePortAdapter
 import com.gssg.assets.persistence.domain.comment.repository.CommentRepository
+import com.gssg.assets.persistence.domain.friendship.adapter.FriendshipPersistencePortAdapter
+import com.gssg.assets.persistence.domain.friendship.repository.FriendshipRepository
 import com.gssg.assets.persistence.domain.member.adapter.MemberPersistencePortAdapter
 import com.gssg.assets.persistence.domain.member.repository.MemberRepository
 import com.gssg.assets.persistence.domain.reaction.article.adapter.ArticleReactionPersistencePortAdapter
@@ -79,5 +82,12 @@ class PersistenceAdapterConfig {
         commentReactionRepository: CommentReactionRepository
     ): CommentReactionPersistencePort {
         return CommentReactionPersistencePortAdapter(commentReactionRepository = commentReactionRepository)
+    }
+
+    @Bean
+    fun friendshipPersistencePort(
+        friendshipRepository: FriendshipRepository
+    ): FriendshipPersistencePort {
+        return FriendshipPersistencePortAdapter(friendshipRepository = friendshipRepository)
     }
 }

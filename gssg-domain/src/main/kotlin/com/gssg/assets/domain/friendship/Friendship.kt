@@ -23,12 +23,17 @@ class Friendship(
         fun follow(
             fromMemberId: FriendshipFromMemberId,
             toMemberId: FriendshipToMemberId
-        ) = Friendship(
-            fromMemberId = fromMemberId,
-            toMemberId = toMemberId,
-            type = FriendshipType(type = Type.FOLLOW),
-            status = FriendshipStatus(status = Status.ACTIVE)
-        )
+        ): Friendship {
+            require(fromMemberId.fromMemberId != toMemberId.toMemberId) {
+                "fromMemberId 와 toMemberId 는 같을 수 없습니다. [fromMemberId=$fromMemberId, toMemberId=$toMemberId]"
+            }
+            return Friendship(
+                fromMemberId = fromMemberId,
+                toMemberId = toMemberId,
+                type = FriendshipType(type = Type.FOLLOW),
+                status = FriendshipStatus(status = Status.ACTIVE)
+            )
+        }
     }
 
     fun unfollow() = Friendship(
