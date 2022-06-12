@@ -5,6 +5,6 @@ import com.gssg.assets.domain.friendship.enums.Status
 /**
  * @Author Heli
  */
-data class FriendShipStatus(
+data class FriendshipStatus(
     val status: Status
 )

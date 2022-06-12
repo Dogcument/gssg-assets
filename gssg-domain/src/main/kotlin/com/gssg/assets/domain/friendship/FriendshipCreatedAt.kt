@@ -5,6 +5,6 @@ import java.time.LocalDateTime
 /**
  * @Author Heli
  */
-data class FriendShipCreatedAt(
+data class FriendshipCreatedAt(
     val createdAt: LocalDateTime
 )
