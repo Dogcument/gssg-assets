@@ -5,6 +5,6 @@ import com.gssg.assets.domain.friendship.enums.Type
 /**
  * @Author Heli
  */
-data class FriendShipType(
+data class FriendshipType(
     val type: Type
 )

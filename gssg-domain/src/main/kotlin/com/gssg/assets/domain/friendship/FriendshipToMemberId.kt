@@ -3,6 +3,6 @@ package com.gssg.assets.domain.friendship
 /**
  * @Author Heli
  */
-class FriendShipToMemberId(
+class FriendshipToMemberId(
     val toMemberId: Long
 )

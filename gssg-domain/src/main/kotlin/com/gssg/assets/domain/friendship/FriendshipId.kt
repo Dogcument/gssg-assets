@@ -5,6 +5,6 @@ import com.gssg.assets.domain.BaseId
 /**
  * @Author Heli
  */
-data class FriendShipId(
+data class FriendshipId(
     override val id: Long
 ) : BaseId()
