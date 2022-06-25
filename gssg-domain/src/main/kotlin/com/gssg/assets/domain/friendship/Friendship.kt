@@ -3,6 +3,7 @@ package com.gssg.assets.domain.friendship
 import com.gssg.assets.domain.BaseDomain
 import com.gssg.assets.domain.friendship.enums.Status
 import com.gssg.assets.domain.friendship.enums.Type
+import com.gssg.assets.domain.member.MemberId
 import java.time.LocalDateTime
 
 /**
@@ -36,13 +37,16 @@ class Friendship(
         }
     }
 
-    fun unfollow() = Friendship(
-        id = id,
-        createdAt = createdAt,
-        modifiedAt = modifiedAt,
-        fromMemberId = fromMemberId,
-        toMemberId = toMemberId,
-        type = type,
-        status = FriendshipStatus(status = Status.INACTIVE)
-    )
+    fun unfollow(requestMemberId: MemberId): Friendship {
+        require(requestMemberId.id == fromMemberId.fromMemberId) { "unfollow 권한이 없습니다" }
+        return Friendship(
+            id = id,
+            createdAt = createdAt,
+            modifiedAt = modifiedAt,
+            fromMemberId = fromMemberId,
+            toMemberId = toMemberId,
+            type = type,
+            status = FriendshipStatus(status = Status.INACTIVE)
+        )
+    }
 }
