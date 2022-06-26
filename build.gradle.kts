@@ -55,6 +55,10 @@ subprojects {
         set("openapiVersion", "1.5.9")
     }
 
+    jacoco {
+        toolVersion = "0.8.7"
+    }
+
     dependencies {
         val openapiVersion: String by project
         val p6spyVersion: String by project
@@ -100,11 +104,8 @@ subprojects {
     bootJar.enabled = false
     jar.enabled = true
 
-    tasks.withType<Test> {
-        useJUnitPlatform()
-    }
-
     tasks.test {
+        useJUnitPlatform()
         extensions.configure(JacocoTaskExtension::class) {
             setDestinationFile(file("$buildDir/jacoco/jacoco.exec"))
         }
@@ -112,14 +113,11 @@ subprojects {
         finalizedBy("jacocoTestReport")
     }
 
-    jacoco {
-        toolVersion = "0.8.7"
-    }
-
     tasks.jacocoTestReport {
         reports {
-            xml.isEnabled = true
             html.isEnabled = true
+            xml.isEnabled = true
+            csv.isEnabled = true
         }
         finalizedBy("jacocoTestCoverageVerification")
 

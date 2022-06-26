@@ -11,6 +11,6 @@ enum class Role {
     companion object {
         private val types = values().associateBy { it.name.lowercase() }
         fun of(type: String) =
-            types[type].notNull { "can not parse Member.Role by $type" }
+            types[type.lowercase()].notNull { "can not parse Member.Role by $type" }
     }
 }

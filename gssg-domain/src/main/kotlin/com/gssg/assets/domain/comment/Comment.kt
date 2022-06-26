@@ -12,20 +12,20 @@ class Comment(
     val createdAt: CommentCreatedAt = CommentCreatedAt(LocalDateTime.MIN),
     val modifiedAt: CommentModifiedAt = CommentModifiedAt(LocalDateTime.MIN),
     val content: CommentContent,
-    val author: CommentAuthor,
-    val article: CommentArticle,
+    val authorId: CommentAuthorId,
+    val articleId: CommentArticleId,
     val status: CommentStatus
 ) : BaseDomain() {
 
     companion object {
         fun create(
             newContent: CommentContent,
-            author: CommentAuthor,
-            article: CommentArticle
+            authorId: CommentAuthorId,
+            articleId: CommentArticleId
         ) = Comment(
             content = newContent,
-            author = author,
-            article = article,
+            authorId = authorId,
+            articleId = articleId,
             status = CommentStatus(status = Status.ACTIVE)
         )
     }
@@ -39,8 +39,8 @@ class Comment(
             createdAt = createdAt,
             modifiedAt = modifiedAt,
             content = content,
-            author = author,
-            article = article,
+            authorId = authorId,
+            articleId = articleId,
             status = status
         )
     }
@@ -50,8 +50,8 @@ class Comment(
         createdAt = createdAt,
         modifiedAt = modifiedAt,
         content = content,
-        author = author,
-        article = article,
+        authorId = authorId,
+        articleId = articleId,
         status = CommentStatus(status = Status.DELETED)
     )
 }

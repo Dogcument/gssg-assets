@@ -72,7 +72,7 @@ internal class MockMemberPersistencePortAdapter : MemberPersistencePort {
             modifiedAt = MemberModifiedAt(modifiedAt = now),
             email = MemberEmail(email = "third@example.com"),
             password = MemberPassword(password = "password"),
-            displayName = MemberDisplayName(displayName = "second"),
+            displayName = MemberDisplayName(displayName = "third"),
             introduce = MemberIntroduce(introduce = "Hello, I am Third"),
             profileDog = MemberProfileDog.default(),
             role = MemberRole(role = Role.ADMIN),

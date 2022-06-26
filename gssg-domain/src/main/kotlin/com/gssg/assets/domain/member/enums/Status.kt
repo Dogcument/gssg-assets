@@ -10,6 +10,6 @@ enum class Status {
 
     companion object {
         private val types = values().associateBy { it.name.lowercase() }
-        fun of(type: String) = types[type].notNull { "can not parse Member.Status by $type" }
+        fun of(type: String) = types[type.lowercase()].notNull { "can not parse Member.Status by $type" }
     }
 }

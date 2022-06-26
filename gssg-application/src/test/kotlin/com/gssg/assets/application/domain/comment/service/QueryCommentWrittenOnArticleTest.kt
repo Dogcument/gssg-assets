@@ -42,12 +42,12 @@ internal class QueryCommentWrittenOnArticleTest {
         Assertions.assertThat(result.comments[1].id.id).isEqualTo(2L)
         Assertions.assertThat(result.comments[2].id.id).isEqualTo(3L)
 
-        Assertions.assertThat(result.comments[0].article.article.id.id).isEqualTo(1L)
-        Assertions.assertThat(result.comments[1].article.article.id.id).isEqualTo(1L)
-        Assertions.assertThat(result.comments[2].article.article.id.id).isEqualTo(1L)
+        Assertions.assertThat(result.comments[0].articleId.id).isEqualTo(1L)
+        Assertions.assertThat(result.comments[1].articleId.id).isEqualTo(1L)
+        Assertions.assertThat(result.comments[2].articleId.id).isEqualTo(1L)
 
-        Assertions.assertThat(result.comments[0].author.author.id.id).isEqualTo(1L)
-        Assertions.assertThat(result.comments[1].author.author.id.id).isEqualTo(1L)
-        Assertions.assertThat(result.comments[2].author.author.id.id).isEqualTo(1L)
+        Assertions.assertThat(result.comments[0].authorId.id).isEqualTo(1L)
+        Assertions.assertThat(result.comments[1].authorId.id).isEqualTo(1L)
+        Assertions.assertThat(result.comments[2].authorId.id).isEqualTo(1L)
     }
 }
