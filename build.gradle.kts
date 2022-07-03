@@ -61,11 +61,15 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
 
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.38.2")
-        
+
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
             exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         }
         testImplementation("org.springframework.security:spring-security-test")
+    }
+    
+    jacoco {
+        toolVersion = "0.8.7"
     }
 
     val jar: Jar by tasks

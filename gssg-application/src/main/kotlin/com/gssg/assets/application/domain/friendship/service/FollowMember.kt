@@ -4,7 +4,7 @@ import com.gssg.assets.application.domain.friendship.port.`in`.FollowMemberUseCa
 import com.gssg.assets.application.domain.friendship.port.out.FriendshipPersistencePort
 import com.gssg.assets.domain.logger
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @Author Heli

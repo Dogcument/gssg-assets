@@ -6,7 +6,7 @@ import com.gssg.assets.application.domain.friendship.service.exception.Friendshi
 import com.gssg.assets.domain.logger
 import com.gssg.assets.domain.member.MemberId
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @Author Heli

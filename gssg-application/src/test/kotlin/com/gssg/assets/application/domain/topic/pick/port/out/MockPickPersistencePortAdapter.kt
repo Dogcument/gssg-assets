@@ -1,5 +1,6 @@
 package com.gssg.assets.application.domain.topic.pick.port.out
 
+import com.gssg.assets.domain.topic.base.*
 import com.gssg.assets.domain.topic.pick.*
 import java.time.LocalDateTime
 import java.util.concurrent.atomic.AtomicLong
@@ -39,7 +40,15 @@ internal class MockPickPersistencePortAdapter : PickPersistencePort {
                 id = PickId(id = longId),
                 createdAt = PickCreatedAt(createdAt = now),
                 modifiedAt = PickModifiedAt(modifiedAt = now),
-                topicId = PickTopicId(1L),
+                topic = PickTopic(
+                    topic = Topic(
+                        id = TopicId(id = 1L),
+                        createdAt = TopicCreatedAt(createdAt = now),
+                        modifiedAt = TopicModifiedAt(modifiedAt = now),
+                        text = TopicText(text = "text $longId"),
+                        description = TopicDescription(description = "description $longId")
+                    )
+                ),
                 targetDate = PickTargetDate(targetDate = now.plusDays(longId - 1L).toLocalDate())
             )
         }

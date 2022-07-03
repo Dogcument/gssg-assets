@@ -1,5 +1,6 @@
 package com.gssg.assets.domain.topic.pick
 
+import com.gssg.assets.domain.topic.base.*
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -29,12 +30,23 @@ internal class PickTest {
 
         val actual = generatePick()
 
-        Assertions.assertThat(actual.topicId.topicId).isEqualTo(DEFAULT_PICK_TOPIC_ID)
+        Assertions.assertThat(actual.topic.topic.longId).isEqualTo(DEFAULT_PICK_TOPIC_ID)
         Assertions.assertThat(actual.targetDate.targetDate).isEqualTo(DEFAULT_PICK_TARGET_DATE)
     }
 
-    private fun generatePick() = Pick.create(
-        existTopicId = PickTopicId(DEFAULT_PICK_TOPIC_ID),
-        newTargetDate = PickTargetDate(DEFAULT_PICK_TARGET_DATE)
-    )
+    private fun generatePick(): Pick {
+        val now = LocalDateTime.now()
+        return Pick.create(
+            existTopic = PickTopic(
+                topic = Topic(
+                    id = TopicId(id = DEFAULT_PICK_TOPIC_ID),
+                    createdAt = TopicCreatedAt(createdAt = now),
+                    modifiedAt = TopicModifiedAt(modifiedAt = now),
+                    text = TopicText(text = "text"),
+                    description = TopicDescription(description = "description")
+                )
+            ),
+            newTargetDate = PickTargetDate(DEFAULT_PICK_TARGET_DATE)
+        )
+    }
 }
