@@ -4,6 +4,7 @@ import com.gssg.assets.application.domain.topic.base.port.`in`.CreateBaseTopicUs
 import com.gssg.assets.application.domain.topic.base.port.out.TopicPersistencePort
 import com.gssg.assets.domain.logger
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @Author Heli
@@ -15,6 +16,7 @@ class CreateBaseTopic(
 
     private val logger = logger()
 
+    @Transactional
     override fun command(command: CreateBaseTopicUseCase.Command) {
         val topic = command.topic
 

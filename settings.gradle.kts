@@ -13,11 +13,8 @@ pluginManagement {
 
 rootProject.name = "gssg-assets"
 
-
-include("gssg-adapter:out:persistence")
-
 include("gssg-interface")
 include("gssg-application")
 include("gssg-domain")
-include("gssg-adapter:inbound")
-include("gssg-adapter:outbound")
+include("gssg-adapter:outbound:persistence")
+include("gssg-adapter:inbound:webapp")

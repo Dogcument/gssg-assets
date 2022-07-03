@@ -1,0 +1,15 @@
+logging.level.Exposed: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:31006/gssg-assets?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: local-password-123!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  exposed:
+    generate-ddl: true
+

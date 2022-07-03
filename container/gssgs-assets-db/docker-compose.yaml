@@ -1,0 +1,16 @@
+version: "3"
+services:
+  gssg-assets-db:
+    platform: linux/amd64
+    image: mysql:5.7
+    container_name: 'gssg-assets-db'
+    ports:
+      - '31006:3306'
+    environment:
+      MYSQL_DATABASE: 'gssg-assets'
+      MYSQL_ROOT_PASSWORD: 'local-password-123!'
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+    volumes:
+      - '~/mysql/gssg-assets:/var/lib/mysql'

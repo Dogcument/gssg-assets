@@ -33,7 +33,6 @@ subprojects {
 
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "java")
 
     apply(plugin = "kotlin")
     apply(plugin = "kotlin-spring")
@@ -50,48 +49,19 @@ subprojects {
         }
     }
 
-    ext {
-        set("p6spyVersion", "1.7.1")
-        set("openapiVersion", "1.5.9")
-    }
-
-    jacoco {
-        toolVersion = "0.8.7"
-    }
-
     dependencies {
-        val openapiVersion: String by project
-        val p6spyVersion: String by project
-
         implementation(kotlin("stdlib-jdk8"))
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
         implementation("org.springframework.boot:spring-boot-starter-actuator")
         implementation("org.springframework.boot:spring-boot-starter-security")
-        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.springframework.boot:spring-boot-starter-validation")
         implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-        implementation("io.jsonwebtoken:jjwt-api:0.11.2")
-        runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
-        runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
-
-        implementation("org.springdoc:springdoc-openapi-ui:${openapiVersion}")
-
-        implementation("commons-codec:commons-codec")
-        implementation("org.apache.commons:commons-lang3")
-
-        implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:${p6spyVersion}")
-
-        compileOnly("org.projectlombok:lombok")
-        runtimeOnly("com.h2database:h2")
-        runtimeOnly("mysql:mysql-connector-java")
-        annotationProcessor("org.projectlombok:lombok")
-
-        developmentOnly("org.springframework.boot:spring-boot-devtools")
-
+        implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.38.2")
+        
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
             exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         }
