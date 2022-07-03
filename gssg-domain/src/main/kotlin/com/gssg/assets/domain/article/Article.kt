@@ -13,8 +13,8 @@ class Article(
     val modifiedAt: ArticleModifiedAt = ArticleModifiedAt(LocalDateTime.MIN),
     val title: ArticleTitle,
     val content: ArticleContent,
-    val author: ArticleAuthor,
-    val pick: ArticlePick,
+    val authorId: ArticleAuthorId,
+    val pickId: ArticlePickId,
     val status: ArticleStatus
 ) : BaseDomain() {
 
@@ -22,13 +22,13 @@ class Article(
         fun create(
             newTitle: ArticleTitle,
             newContent: ArticleContent,
-            author: ArticleAuthor,
-            pick: ArticlePick
+            authorId: ArticleAuthorId,
+            pickId: ArticlePickId
         ) = Article(
             title = newTitle,
             content = newContent,
-            author = author,
-            pick = pick,
+            authorId = authorId,
+            pickId = pickId,
             status = ArticleStatus(status = Status.ACTIVE)
         )
     }
@@ -45,8 +45,8 @@ class Article(
             modifiedAt = modifiedAt,
             title = title,
             content = content,
-            author = author,
-            pick = pick,
+            authorId = authorId,
+            pickId = pickId,
             status = status
         )
     }
@@ -57,8 +57,8 @@ class Article(
         modifiedAt = modifiedAt,
         title = title,
         content = content,
-        author = author,
-        pick = pick,
+        authorId = authorId,
+        pickId = pickId,
         status = ArticleStatus(status = Status.DELETED)
     )
 }

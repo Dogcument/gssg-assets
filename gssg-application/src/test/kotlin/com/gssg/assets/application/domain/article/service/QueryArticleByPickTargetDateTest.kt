@@ -50,6 +50,5 @@ internal class QueryArticleByPickTargetDateTest {
         val (articles) = result
         assertThat(articles).hasSize(1)
         assertThat(articles[0].id.id).isEqualTo(1L)
-        assertThat(articles[0].pick.pick.targetDate.targetDate).isEqualTo(nowDate)
     }
 }

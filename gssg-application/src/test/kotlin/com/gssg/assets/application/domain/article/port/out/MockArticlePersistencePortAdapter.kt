@@ -3,13 +3,7 @@ package com.gssg.assets.application.domain.article.port.out
 import com.gssg.assets.application.domain.topic.pick.port.out.PickPersistencePort
 import com.gssg.assets.domain.article.*
 import com.gssg.assets.domain.article.enums.Status
-import com.gssg.assets.domain.member.*
-import com.gssg.assets.domain.topic.base.Topic
-import com.gssg.assets.domain.topic.base.TopicDescription
-import com.gssg.assets.domain.topic.base.TopicText
-import com.gssg.assets.domain.topic.pick.Pick
 import com.gssg.assets.domain.topic.pick.PickTargetDate
-import com.gssg.assets.domain.topic.pick.PickTopic
 import java.time.LocalDateTime
 import java.util.concurrent.atomic.AtomicLong
 
@@ -57,25 +51,8 @@ class MockArticlePersistencePortAdapter(
                 modifiedAt = ArticleModifiedAt(modifiedAt = now),
                 title = ArticleTitle(title = "Article Title"),
                 content = ArticleContent(content = "Article Content"),
-                author = ArticleAuthor(
-                    author = Member.create(
-                        newEmail = MemberEmail(email = "heli@example.com"),
-                        newPassword = MemberPassword(password = "password"),
-                        newDisplayName = MemberDisplayName(displayName = "Heli"),
-                        newIntroduce = MemberIntroduce(introduce = "Hello, I am Heli")
-                    )
-                ),
-                pick = ArticlePick(
-                    pick = Pick.create(
-                        existTopic = PickTopic(
-                            topic = Topic.create(
-                                newText = TopicText(text = "First"),
-                                newDescription = TopicDescription(description = "First Description")
-                            )
-                        ),
-                        newTargetDate = PickTargetDate(targetDate = now.toLocalDate())
-                    )
-                ),
+                authorId = ArticleAuthorId(id = 1L),
+                pickId = ArticlePickId(id = 1L),
                 status = ArticleStatus(status = Status.ACTIVE)
             )
         }

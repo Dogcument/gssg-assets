@@ -25,9 +25,9 @@ class UnFollowMember(
         val friendship = friendshipPersistencePort.findBy(id = friendshipId)
             ?: throw FriendshipNotFoundException(friendshipId = friendshipId)
 
-
         // TODO Authentication 정보 가져와 검증 필요
         val temporaryRequestMemberId = MemberId(1L)
+        logger.info("Friendship 을 데이터베이스에 반영하기 위해 영속성 포트 호출 [Friendship.Id=${friendship.id.id}]")
         friendshipPersistencePort.update(friendship.unfollow(temporaryRequestMemberId))
     }
 }
